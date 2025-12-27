@@ -48,6 +48,9 @@
 ## 画面遷移図
 Figma：https://www.figma.com/design/MOaiD71mhWoOIQzpAOrrDl/%E5%8D%92%E6%A5%AD%E5%88%B6%E4%BD%9C?node-id=0-1&t=UyLnZ2JTuP0qgDMV-1
 
+## ER図
+https://i.gyazo.com/f0d1a4a58327cb92d29aaa3b37295d8a.png
+
 ## 機能候補
 ### MVP（最初に作るもの）
 - ユーザー登録 / ログイン（Devise）
