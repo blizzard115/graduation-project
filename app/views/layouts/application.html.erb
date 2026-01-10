@@ -1,16 +1,51 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>App</title>
+    <title>Stylog</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-    <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
+    <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
   </head>
 
-  <body>
-    <%= yield %>
+  <body class="d-flex flex-column min-vh-100">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+      <div class="container-fluid px-4">
+        <%= link_to "Stylog", root_path, class: "navbar-brand fw-bold" %>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbar">
+          <ul class="navbar-nav ms-auto align-items-lg-center gap-2">
+            <li class="nav-item">
+              <%= link_to "投稿を見る", "#", class: "nav-link" %>
+            </li>
+            <li class="nav-item">
+              <%= link_to "ログイン", "#", class: "btn btn-outline-secondary btn-sm" %>
+            </li>
+            <li class="nav-item">
+              <%= link_to "新規登録", "#", class: "btn btn-primary btn-sm" %>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <main class="flex-grow-1">
+      <div class="container py-4">
+        <%= yield %>
+      </div>
+    </main>
+
+    <footer class="border-top py-3 bg-light">
+      <div class="container small text-muted">
+        © <%= Time.current.year %> Stylog
+      </div>
+    </footer>
   </body>
 </html>
+
