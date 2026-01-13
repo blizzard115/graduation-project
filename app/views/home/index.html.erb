@@ -1,14 +1,19 @@
-<div class="p-4 p-md-4 mb-4 rounded-3 bg-body-tertiary">
-  <div class="container-fluid py-3">
-    <h1 class="display-6 fw-bold">コーデを、もっと気軽に。</h1>
-    <p class="col-md-8 fs-5 text-muted">
-      Stylog は「写真1枚＋ひとこと」で投稿できる、シンプルなコーデ共有アプリです。
-      顔出し不要、日常の記録として気軽に使えます。
+<div class="hero mb-5" style="background-image: url('<%= asset_path("image.jpg") %>')">
+  <div class="hero-overlay"></div>
+
+  <div class="hero-content container-fluid">
+    <h1 class="hero-title">
+      コーデを、もっと気軽に。
+    </h1>
+
+    <p class="hero-text">
+      Stylogは、写真1枚＋ひとこと、で投稿できるコーデ記録アプリです。
+      気負わず、日常のスタイルを残せます。
     </p>
 
-    <div class="d-flex gap-2">
-      <a class="btn btn-primary btn-lg" href="#">はじめる</a>
-      <a class="btn btn-outline-secondary btn-lg" href="#">投稿を見る</a>
+    <div class="d-flex align-items-center gap-3 mt-4">
+      <%= link_to "はじめる", new_user_registration_path, class: "btn btn-primary btn-lg px-4" %>
+      <%= link_to "投稿を見る", posts_path, class: "btn btn-outline-light btn-lg" %>
     </div>
   </div>
 </div>
@@ -41,3 +46,39 @@
     </div>
   </div>
 </div>
+
+<section class="mt-5">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2 class="h5 fw-bold mb-0">最新の投稿</h2>
+    <%= link_to "すべて見る", posts_path, class: "text-decoration-none small fw-semibold" %>
+  </div>
+
+  <div class="row g-3">
+    <% @latest_posts.each do |post| %>
+      <div class="col-6 col-md-3">
+        <div class="card h-100 shadow-sm">
+          <%= link_to post_path(post), class: "text-decoration-none text-dark" do %>
+            <div class="insta-thumb-wrap">
+              <% if post.image.attached? %>
+                <%= image_tag post.image, class: "insta-thumb" %>
+              <% else %>
+                <div class="insta-thumb-wrap d-flex align-items-center justify-content-center text-muted">
+                  No Image
+                </div>
+              <% end %>
+            </div>
+
+            <div class="card-body py-2">
+              <div class="fw-semibold small">
+                <%= post.user&.username.presence || "名無しユーザー" %>
+              </div>
+              <div class="text-muted small">
+                <%= l post.created_at, format: :short %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</section>

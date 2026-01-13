@@ -1,2 +1,72 @@
 @import 'bootstrap/scss/bootstrap';
 @import 'bootstrap-icons/font/bootstrap-icons';
+
+.hero {
+  position: relative;
+  min-height: 520px; // ← 大きくする核心
+  display: flex;
+  align-items: center;
+
+  background-size: cover;
+  background-position: center;
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0.55),
+    rgba(0, 0, 0, 0.25)
+  );
+}
+
+.hero-content {
+  position: relative;
+  max-width: 720px;
+  padding: 3.5rem 4rem;
+}
+
+.hero-title {
+  color: #fff;
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.hero-text {
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.8;
+  margin-top: 1rem;
+}
+
+.insta-thumb-wrap {
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border-radius: 12px;
+}
+
+.insta-thumb {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .2s ease;
+}
+
+.insta-thumb-wrap:hover .insta-thumb {
+  transform: scale(1.03);
+}
+
+.post-image-wrap {
+  width: 100%;
+  overflow: hidden;
+  background: #f5f5f5;
+}
+
+.post-image {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
