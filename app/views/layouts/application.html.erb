@@ -22,7 +22,7 @@
         <div class="collapse navbar-collapse" id="navbar">
           <ul class="navbar-nav ms-auto align-items-lg-center gap-2">
             <li class="nav-item">
-              <%= link_to "投稿を見る", "#", class: "nav-link" %>
+              <%= link_to "投稿を見る", posts_path, class: "nav-link" %>
             </li>
             <% if user_signed_in? %>
               <li class="nav-item">
