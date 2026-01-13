@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
   </head>
@@ -22,21 +22,45 @@
         <div class="collapse navbar-collapse" id="navbar">
           <ul class="navbar-nav ms-auto align-items-lg-center gap-2">
             <li class="nav-item">
-              <%= link_to "投稿を見る", posts_path, class: "nav-link" %>
+              <%= link_to posts_path, class: "nav-link" do %>
+                <i class="fa-regular fa-image me-1"></i>
+                投稿を見る
+              <% end %>
             </li>
+
             <% if user_signed_in? %>
               <li class="nav-item">
-                <%= link_to "ログアウト", destroy_user_session_path, data: { turbo_method: :delete } %>
+                <%= link_to new_post_path, class: "btn btn-primary btn-sm" do %>
+                  <i class="fa-solid fa-plus me-1"></i>
+                  新規投稿
+                <% end %>
+              </li>
+
+              <li class="nav-item">
+                <%= button_to destroy_user_session_path,
+                    method: :delete,
+                    class: "btn btn-outline-secondary btn-sm",
+                    form: { class: "d-inline" } do %>
+                  <i class="fa-solid fa-right-from-bracket me-1"></i>
+                  ログアウト
+                <% end %>
               </li>
             <% else %>
               <li class="nav-item">
-                <%= link_to "ログイン", new_user_session_path, class: "btn btn-outline-secondary btn-sm" %>
+                <%= link_to new_user_session_path, class: "btn btn-outline-secondary btn-sm" do %>
+                  <i class="fa-solid fa-right-to-bracket me-1"></i>
+                  ログイン
+                <% end %>
               </li>
               <li class="nav-item">
-                <%= link_to "新規登録", new_user_registration_path, class: "btn btn-primary btn-sm" %>
+                <%= link_to new_user_registration_path, class: "btn btn-primary btn-sm" do %>
+                  <i class="fa-solid fa-user-plus me-1"></i>
+                  新規登録
+                <% end %>
               </li>
             <% end %>
           </ul>
+
         </div>
       </div>
     </nav>
