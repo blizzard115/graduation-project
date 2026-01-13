@@ -8,6 +8,11 @@
 <% @posts.each do |post| %>
   <div class="card mb-3">
     <div class="card-body">
+
+    <% if post.image.attached? %>
+        <%= image_tag post.image, class: "img-fluid rounded mb-2" %>
+      <% end %>
+
       <p class="mb-1"><%= simple_format(post.content) %></p>
       <div class="text-muted small">
         <%= post.created_at.strftime("%Y/%m/%d %H:%M") %>
