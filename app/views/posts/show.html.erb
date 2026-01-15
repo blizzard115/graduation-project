@@ -4,14 +4,17 @@
     <div class="card shadow-sm">
       <div class="card-header bg-white d-flex justify-content-between align-items-center">
         <div class="d-flex align-items-center gap-2">
-          <div class="rounded-circle bg-secondary-subtle d-flex align-items-center justify-content-center"
-               style="width:36px;height:36px;">
-            <i class="bi bi-person"></i>
-          </div>
+          <% if @post.user&.avatar&.attached? %>
+            <%= image_tag @post.user.avatar, class: "avatar-sm" %>
+          <% else %>
+            <div class="avatar-sm bg-secondary-subtle d-flex align-items-center justify-content-center">
+              <i class="bi bi-person"></i>
+            </div>
+          <% end %>
 
           <div class="small">
             <div class="fw-semibold">
-              <%= @post.user&.username || @post.user&.email %>
+              <%= link_to (@post.user&.username || @post.user&.email), user_path(@post.user), class: "text-decoration-none text-dark" %>
             </div>
             <div class="text-muted">
               <%= @post.created_at.strftime("%Y/%m/%d %H:%M") %>
