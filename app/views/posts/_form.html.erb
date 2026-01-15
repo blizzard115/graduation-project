@@ -1,4 +1,4 @@
-<%= form_with model: post, local: true do |f| %>
+<%= form_with model: post, local: true, data: { controller: "preview" }, html: { class: "post-form" } do |f| %>
   <% if post.errors.any? %>
     <div class="alert alert-danger">
       <ul class="mb-0">
@@ -9,17 +9,48 @@
     </div>
   <% end %>
 
-  <div class="mb-3">
-    <%= f.label :content, "投稿内容", class: "form-label" %>
-    <%= f.text_area :content, rows: 5, class: "form-control" %>
-  </div>
+  <div class="card shadow-sm border-0 post-form-card">
+    <div class="card-body p-4">
+      <div class="row g-4">
+        <!-- 左：本文 -->
+        <div class="col-12 col-lg-6">
+          <div class="mb-3">
+            <%= f.label :content, "キャプション", class: "form-label fw-semibold" %>
+            <%= f.text_area :content, rows: 8, class: "form-control", placeholder: "今日のコーデのポイント、ブランド、気分など…" %>
+            <div class="form-text">写真＋ひとこと。まずは気軽に。</div>
+          </div>
 
-  <div class="mb-3">
-    <%= f.label :image, "画像", class: "form-label" %>
-    <%= f.file_field :image, class: "form-control", accept: "image/*" %>
-</div>
+          <div class="d-flex gap-2 mt-3">
+            <%= link_to "キャンセル", posts_path, class: "btn btn-outline-secondary" %>
+            <%= f.submit "投稿する", class: "btn btn-primary px-4 ms-auto" %>
+          </div>
+        </div>
 
-  <div class="text-end">
-    <%= f.submit class: "btn btn-primary" %>
+        <!-- 右：プレビュー -->
+        <div class="col-12 col-lg-6">
+          <div class="post-preview card border-0">
+            <div class="post-preview-inner">
+              <%= f.file_field :image, accept: "image/*", class: "post-preview-input", data: { preview_target: "input" } %>
+              <div class="post-preview-placeholder text-muted" data-preview-target="placeholder">
+                <div class="mb-2">
+                  <i class="fa-regular fa-image fa-2xl"></i>
+                </div>
+                画像を選択するとここにプレビューが表示されます
+              </div>
+
+              <img
+                class="post-preview-img d-none"
+                data-preview-target="img"
+                alt="preview"
+              />
+            </div>
+
+            <div class="mt-2 small text-muted">
+              推奨：縦長（4:5）／明るめの写真が映えます
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 <% end %>
