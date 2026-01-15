@@ -1,28 +1,41 @@
+<!-- プロフィールヘッダー -->
 <div class="d-flex justify-content-between align-items-start mb-4 pb-3 border-bottom">
-  <!-- 左：ユーザー情報 -->
-  <div>
-    <h1 class="h4 fw-bold mb-1">
-      <%= @user.username.presence || "名無しユーザー" %>
-    </h1>
 
-    <!-- 投稿数 -->
-    <div class="d-flex gap-3 text-muted small mb-2">
+  <!-- 左：アイコン＋情報 -->
+  <div class="d-flex align-items-center gap-3">
+
+    <% if @user.avatar.attached? %>
+      <%= image_tag @user.avatar, class: "avatar-img" %>
+    <% else %>
+      <div class="avatar-img bg-secondary text-white d-flex
+                  align-items-center justify-content-center">
+        <i class="fa-solid fa-user"></i>
+      </div>
+    <% end %>
+
+    <div>
+      <h1 class="h4 fw-bold mb-1">
+        <%= @user.username.presence || "名無しユーザー" %>
+      </h1>
+
+      <div class="d-flex gap-3 text-muted small mb-2">
         <div><strong><%= @posts.count %></strong> 投稿</div>
         <div>0 いいね</div>
-    </div>
+      </div>
 
-    <% if @user.profile.present? %>
-      <p class="text-muted mb-0">
-        <%= simple_format(@user.profile) %>
-      </p>
-    <% else %>
-      <p class="text-muted mb-0 small">
-        プロフィールが未設定です
-      </p>
-    <% end %>
+      <% if @user.profile.present? %>
+        <p class="text-muted mb-0">
+          <%= simple_format(@user.profile) %>
+        </p>
+      <% else %>
+        <p class="text-muted mb-0 small">
+          プロフィールが未設定です
+        </p>
+      <% end %>
+    </div>
   </div>
 
-  <!-- 右：編集ボタン（本人のみ） -->
+  <!-- 右：編集ボタン -->
   <% if user_signed_in? && current_user == @user %>
     <div>
       <%= link_to "プロフィール編集",
@@ -30,18 +43,17 @@
           class: "btn btn-outline-secondary btn-sm" %>
     </div>
   <% end %>
+
 </div>
 
-<!-- 投稿一覧 -->
+<!-- 投稿一覧（完全に別ブロック） -->
 <div class="row g-3">
   <% @posts.each do |post| %>
     <div class="col-6 col-md-4 col-lg-3">
       <div class="card h-100 shadow-sm">
         <%= link_to post_path(post) do %>
           <div class="insta-thumb-wrap">
-            <% if post.image.attached? %>
-              <%= image_tag post.image, class: "insta-thumb" %>
-            <% end %>
+            <%= image_tag post.image, class: "insta-thumb" if post.image.attached? %>
           </div>
         <% end %>
       </div>

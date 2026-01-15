@@ -18,15 +18,24 @@
 
         <!-- ユーザー名 -->
         <div class="card-body py-2">
-          <div class="fw-semibold small">
-            <%= link_to(
-              post.user.username.presence || "名無しユーザー",
-              user_path(post.user),
-              class: "text-decoration-none text-dark"
-            ) %>
-          </div>
-        </div>
+            <div class="d-flex align-items-center gap-2">
+                <% if post.user&.avatar&.attached? %>
+                <%= image_tag post.user.avatar, class: "avatar-xs" %>
+                <% else %>
+                <div class="avatar-xs bg-secondary-subtle d-flex align-items-center justify-content-center">
+                    <i class="bi bi-person"></i>
+                </div>
+                <% end %>
 
+                <div class="fw-semibold small">
+                <%= link_to(
+                    post.user&.username.presence || "名無しユーザー",
+                    post.user ? user_path(post.user) : "#",
+                    class: "text-decoration-none text-dark"
+                ) %>
+                </div>
+            </div>
+        </div>
       </div>
     </div>
   <% end %>
