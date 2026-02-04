@@ -1,0 +1,27 @@
+<% if user_signed_in? %>
+  <% liked = post.likes.exists?(user: current_user) %>
+
+  <% if liked %>
+    <%= button_to post_like_path(post),
+          method: :delete,
+          class: "btn btn-sm btn-danger p-1 d-inline-flex align-items-center",
+          form: { data: { turbo: true } } do %>
+      <i class="bi bi-heart-fill"></i>
+    <% end %>
+  <% else %>
+    <%= button_to post_like_path(post),
+          method: :post,
+          class: "btn btn-sm btn-outline-danger p-1 d-inline-flex align-items-center",
+          form: { data: { turbo: true } } do %>
+      <i class="bi bi-heart"></i>
+    <% end %>
+  <% end %>
+
+<% else %>
+  <!-- 未ログイン時 -->
+  <%= link_to new_user_session_path,
+        class: "btn btn-sm btn-outline-danger p-1 d-inline-flex align-items-center",
+        title: "ログインするといいねできます" do %>
+    <i class="bi bi-heart"></i>
+  <% end %>
+<% end %>

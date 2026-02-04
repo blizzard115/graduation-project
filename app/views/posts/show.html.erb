@@ -23,11 +23,17 @@
         </div>
 
         <% if user_signed_in? && @post.user == current_user %>
-          <div class="d-flex gap-2">
-            <%= link_to "編集", edit_post_path(@post), class: "btn btn-sm btn-outline-secondary" %>
-            <%= button_to "削除", post_path(@post), method: :delete,
-                  data: { turbo_confirm: "削除しますか？" },
-                  class: "btn btn-sm btn-outline-danger" %>
+          <div class="d-flex gap-2 align-items-center">
+            <% if user_signed_in? %>
+              <%= render "likes/button", post: @post %>
+            <% end %>
+
+            <% if user_signed_in? && @post.user == current_user %>
+              <%= link_to "編集", edit_post_path(@post), class: "btn btn-sm btn-outline-secondary" %>
+              <%= button_to "削除", post_path(@post), method: :delete,
+                    data: { turbo_confirm: "削除しますか？" },
+                    class: "btn btn-sm btn-outline-danger" %>
+            <% end %>
           </div>
         <% end %>
       </div>
