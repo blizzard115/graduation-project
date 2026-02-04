@@ -18,23 +18,34 @@
 
         <!-- ユーザー名 -->
         <div class="card-body py-2">
+          <div class="d-flex align-items-center justify-content-between">
             <div class="d-flex align-items-center gap-2">
-                <% if post.user&.avatar&.attached? %>
+              <% if post.user&.avatar&.attached? %>
                 <%= image_tag post.user.avatar, class: "avatar-xs" %>
-                <% else %>
+              <% else %>
                 <div class="avatar-xs bg-secondary-subtle d-flex align-items-center justify-content-center">
-                    <i class="bi bi-person"></i>
+                  <i class="bi bi-person"></i>
                 </div>
-                <% end %>
+              <% end %>
 
-                <div class="fw-semibold small">
+              <div class="fw-semibold small">
                 <%= link_to(
-                    post.user&.username.presence || "名無しユーザー",
-                    post.user ? user_path(post.user) : "#",
-                    class: "text-decoration-none text-dark"
+                  post.user&.username.presence || "名無しユーザー",
+                  post.user ? user_path(post.user) : "#",
+                  class: "text-decoration-none text-dark"
                 ) %>
-                </div>
+              </div>
             </div>
+
+            <div class="d-flex align-items-center gap-2">
+              <% if user_signed_in? %>
+                <%= render "likes/button", post: post %>
+              <% else %>
+                <i class="bi bi-heart text-muted"></i>
+              <% end %>
+              <span class="small text-muted"><%= post.likes_count %></span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
