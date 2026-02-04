@@ -136,3 +136,16 @@
   cursor: pointer;
   z-index: 2;
 }
+
+.like-chip {
+  transition: background .15s ease, transform .1s ease;
+}
+
+.like-chip:hover {
+  background: rgba(220,53,69,.08);
+  transform: translateY(-1px);
+}
+
+.like-chip i {
+  color: #dc3545; // bootstrapのdanger系
+}

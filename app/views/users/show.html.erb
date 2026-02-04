@@ -18,9 +18,19 @@
         <%= @user.username.presence || "名無しユーザー" %>
       </h1>
 
-      <div class="d-flex gap-3 text-muted small mb-2">
-        <div><strong><%= @posts.count %></strong> 投稿</div>
-        <div>0 いいね</div>
+      <div class="d-flex gap-2 flex-wrap mb-2">
+        <div class="px-3 py-1 border rounded-pill small text-muted">
+          <strong class="text-dark"><%= @posts.count %></strong> 投稿
+        </div>
+
+        <%= link_to likes_user_path(@user),
+            class: "px-3 py-1 border rounded-pill small text-decoration-none d-inline-flex align-items-center gap-1 like-chip" do %>
+          <i class="bi bi-heart-fill"></i>
+          <strong><%= @user.likes.count %></strong>
+          <span class="text-muted">
+            <%= (user_signed_in? && current_user == @user) ? "いいね一覧" : "いいね" %>
+          </span>
+        <% end %>
       </div>
 
       <% if @user.profile.present? %>
