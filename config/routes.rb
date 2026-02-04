@@ -5,7 +5,11 @@ Rails.application.routes.draw do
     resource :like, only: [:create, :destroy]
   end
 
-  resources :users, only: [:show]
+  resources :users, only: [:show] do
+    member do
+      get :likes   # /users/:id/likes
+    end
+  end
 
   root "home#index"
   get "up" => "rails/health#show", as: :rails_health_check
