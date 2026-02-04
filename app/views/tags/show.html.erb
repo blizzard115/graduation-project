@@ -1,0 +1,27 @@
+<div class="d-flex align-items-center justify-content-between mb-3">
+  <h1 class="h4 fw-bold mb-0">#<%= @tag.name %></h1>
+  <%= link_to "一覧へ戻る", posts_path, class: "btn btn-outline-secondary btn-sm" %>
+</div>
+
+<div class="row g-3">
+  <% @posts.each do |post| %>
+    <div class="col-6 col-md-4 col-lg-3">
+      <div class="card h-100 shadow-sm overflow-hidden">
+        <%= link_to post_path(post) do %>
+          <div class="insta-thumb-wrap">
+            <% if post.image.attached? %>
+              <%= image_tag post.image, class: "insta-thumb" %>
+            <% end %>
+          </div>
+        <% end %>
+
+        <div class="card-body py-2">
+          <div class="fw-semibold small">
+            <%= link_to(post.user.username.presence || "名無しユーザー", user_path(post.user),
+                class: "text-decoration-none text-dark") %>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

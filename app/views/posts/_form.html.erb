@@ -20,6 +20,15 @@
             <div class="form-text">写真＋ひとこと。まずは気軽に。</div>
           </div>
 
+          <div class="mb-3">
+            <%= label_tag :tag_names, "タグ（カンマ区切り）", class: "form-label fw-semibold" %>
+            <%= text_field_tag "post[tag_names]",
+                  (post.tag_names.presence || post.tags.pluck(:name).join(", ")),
+                  class: "form-control",
+                  placeholder: "street, monochrome, vintage" %>
+            <div class="form-text">例：street, monochrome</div>
+          </div>
+
           <div class="d-flex gap-2 mt-3">
             <%= link_to "キャンセル", posts_path, class: "btn btn-outline-secondary" %>
             <%= f.submit "投稿する", class: "btn btn-primary px-4 ms-auto" %>

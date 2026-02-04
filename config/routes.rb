@@ -11,6 +11,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :tags, only: [:show], param: :name
+
   root "home#index"
   get "up" => "rails/health#show", as: :rails_health_check
 end

@@ -16,6 +16,7 @@ class PostsController < ApplicationController
     @post = current_user.posts.build(post_params)
 
     if @post.save
+      @post.save_tags!(params.dig(:post, :tag_names))
       redirect_to posts_path, notice: "投稿しました"
     else
       render :new, status: :unprocessable_entity
@@ -33,6 +34,7 @@ class PostsController < ApplicationController
   def update
     @post = Post.find(params[:id])
     if @post.update(post_params)
+      @post.save_tags!(params.dig(:post, :tag_names))
       redirect_to @post, notice: "更新しました"
     else
       render :edit, status: :unprocessable_entity
