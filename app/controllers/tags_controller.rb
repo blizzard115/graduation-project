@@ -1,6 +1,9 @@
 class TagsController < ApplicationController
   def show
-    @tag = Tag.find_by!(name: params[:name].to_s.downcase)
-    @posts = @tag.posts.includes(:user, :tags, image_attachment: :blob).order(created_at: :desc)
+    @tag_name = params[:name]
+    @posts = Post.joins(:tags)
+                 .where(tags: { name: @tag_name })
+                 .includes(:user, image_attachment: :blob)
+                 .order(created_at: :desc)
   end
 end

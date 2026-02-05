@@ -1,27 +1,75 @@
-<div class="d-flex align-items-center justify-content-between mb-3">
-  <h1 class="h4 fw-bold mb-0">#<%= @tag.name %></h1>
-  <%= link_to "一覧へ戻る", posts_path, class: "btn btn-outline-secondary btn-sm" %>
+<div class="d-flex align-items-start justify-content-between mb-3">
+  <div>
+    <h1 class="h4 fw-bold mb-1">#<%= @tag_name %></h1>
+    <div class="text-muted small"><%= @posts.size %> 件の投稿</div>
+  </div>
+
+  <%= link_to "投稿一覧へ", posts_path, class: "btn btn-outline-secondary btn-sm" %>
 </div>
 
 <div class="row g-3">
   <% @posts.each do |post| %>
     <div class="col-6 col-md-4 col-lg-3">
       <div class="card h-100 shadow-sm overflow-hidden">
+
+        <!-- 画像 -->
         <%= link_to post_path(post) do %>
           <div class="insta-thumb-wrap">
             <% if post.image.attached? %>
               <%= image_tag post.image, class: "insta-thumb" %>
+            <% else %>
+              <div class="insta-thumb-placeholder">No Image</div>
             <% end %>
           </div>
         <% end %>
 
         <div class="card-body py-2">
-          <div class="fw-semibold small">
-            <%= link_to(post.user.username.presence || "名無しユーザー", user_path(post.user),
-                class: "text-decoration-none text-dark") %>
+          <div class="d-flex align-items-center justify-content-between">
+
+            <!-- ユーザー -->
+            <div class="d-flex align-items-center gap-2">
+              <% if post.user&.avatar&.attached? %>
+                <%= image_tag post.user.avatar, class: "avatar-xs" %>
+              <% else %>
+                <div class="avatar-xs bg-secondary-subtle d-flex align-items-center justify-content-center">
+                  <i class="bi bi-person"></i>
+                </div>
+              <% end %>
+
+              <div class="fw-semibold small">
+                <%= link_to(
+                  post.user&.username.presence || "名無しユーザー",
+                  post.user ? user_path(post.user) : "#",
+                  class: "text-decoration-none text-dark"
+                ) %>
+              </div>
+            </div>
+
+            <!-- いいね -->
+            <div class="d-flex align-items-center gap-2 like-area">
+              <% if user_signed_in? %>
+                <%= render "likes/button", post: post %>
+              <% else %>
+                <%= link_to new_user_session_path,
+                      class: "text-muted text-decoration-none",
+                      title: "ログインするといいねできます" do %>
+                  <i class="bi bi-heart"></i>
+                <% end %>
+              <% end %>
+              <span class="small text-muted"><%= post.likes_count %></span>
+            </div>
+
           </div>
         </div>
+
       </div>
     </div>
   <% end %>
 </div>
+
+<% if @posts.empty? %>
+  <div class="text-center text-muted py-5">
+    <div class="mb-2"><i class="bi bi-hash fs-2"></i></div>
+    このタグの投稿はまだありません
+  </div>
+<% end %>
