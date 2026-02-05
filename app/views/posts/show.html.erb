@@ -70,5 +70,47 @@
       </div>
     </div>
 
+    <div class="mt-4">
+      <h5>コメント</h5>
+
+      <% if user_signed_in? %>
+        <% if @comment&.errors&.any? %>
+          <div class="alert alert-danger">
+            <ul class="mb-0">
+              <% @comment.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+
+        <%= form_with model: [@post, Comment.new], local: true do |f| %>
+          <div class="mb-2">
+            <%= f.text_area :content, rows: 2, class: "form-control", placeholder: "コメントを入力..." %>
+          </div>
+          <%= f.submit "送信", class: "btn btn-primary btn-sm" %>
+        <% end %>
+      <% else %>
+        <p><%= link_to "ログイン", new_user_session_path %>するとコメントできます</p>
+      <% end %>
+
+      <hr>
+
+      <% @post.comments.order(created_at: :desc).each do |comment| %>
+        <div class="mb-2">
+          <strong><%= comment.user.username || "名無しユーザー" %></strong>
+          <span class="text-muted small">（<%= comment.created_at.strftime("%Y/%m/%d %H:%M") %>）</span>
+          <p class="mb-1"><%= simple_format(comment.content) %></p>
+
+          <% if user_signed_in? && comment.user == current_user %>
+            <%= button_to "削除", post_comment_path(@post, comment),
+                        method: :delete,
+                        data: { confirm: "削除しますか？" },
+                        class: "btn btn-sm btn-outline-danger" %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+
   </div>
 </div>
