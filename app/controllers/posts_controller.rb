@@ -4,8 +4,11 @@ class PostsController < ApplicationController
   before_action :authorize_post!, only: %i[edit update destroy]
 
   def index
-    @posts = Post.order(created_at: :desc)
-    @posts = Post.includes(:user, :likes, image_attachment: :blob).order(created_at: :desc)
+    @posts = Post.includes(:user, :likes, :tags, image_attachment: :blob).order(created_at: :desc)
+
+    if params[:tag].present?
+      @posts = @posts.joins(:tags).where(tags: { name: params[:tag] }).distinct
+    end
   end
 
   def new
