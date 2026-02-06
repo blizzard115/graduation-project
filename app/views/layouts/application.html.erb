@@ -8,7 +8,24 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
+
+    <!-- favicon -->
     <%= favicon_link_tag 'logo.svg' %>
+
+    <!-- OGP -->
+    <% ogp_image_url = "#{request.base_url}/ogp.png" %>
+
+    <meta property="og:title" content="Stylog - コーデをもっと気軽に" />
+    <meta property="og:description" content="写真1枚 + ひとこと で投稿できるコーデ記録アプリ" />
+    <meta property="og:image" content="<%= ogp_image_url %>" />
+    <meta property="og:url" content="<%= request.original_url %>" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Stylog" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Stylog - コーデをもっと気軽に" />
+    <meta name="twitter:description" content="写真1枚 + ひとこと で投稿できるコーデ記録アプリ" />
+    <meta name="twitter:image" content="<%= ogp_image_url %>" />
 
   </head>
 
