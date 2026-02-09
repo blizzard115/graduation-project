@@ -5,4 +5,10 @@ RSpec.describe Post, type: :model do
     post = build(:post)
     expect(post).to be_valid
   end
+
+  it "returns likes count" do
+    post = create(:post)
+    create_list(:like, 3, post: post)
+    expect(post.likes_count).to eq 3
+  end
 end
