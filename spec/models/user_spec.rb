@@ -1,8 +1,8 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe User, type: :model do
-  it 'is valid with a valid factory or basic attributes' do
-    user = User.new(email: 'test@example.com', password: 'password')
+  it "is valid with a factory" do
+    user = build(:user)
     expect(user).to be_valid
   end
 end
