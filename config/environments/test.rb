@@ -7,9 +7,12 @@ require "active_support/core_ext/integer/time"
 
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
-
+  config.action_dispatch.host_authorization = nil
+  puts "✅ loaded config/environments/test.rb"
   # While tests run files are not watched, reloading is not necessary.
   config.enable_reloading = false
+
+  config.hosts.clear
 
   # Eager loading loads your entire application. When running a single test locally,
   # this is usually not necessary, and can slow down your test suite. However, it's
@@ -36,6 +39,12 @@ Rails.application.configure do
 
   # Store uploaded files on the local file system in a temporary directory.
   config.active_storage.service = :test
+
+  # 画像解析（analyze）で詰まるのを防ぐ
+  config.active_storage.analyzers = []
+
+  # ジョブが外部に流れて待つのを防ぐ（念のため）
+  config.active_job.queue_adapter = :test
 
   config.action_mailer.perform_caching = false
 
