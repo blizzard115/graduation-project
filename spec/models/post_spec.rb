@@ -9,6 +9,6 @@ RSpec.describe Post, type: :model do
   it "returns likes count" do
     post = create(:post)
     create_list(:like, 3, post: post)
-    expect(post.likes_count).to eq 3
+    expect(post.likes_count).to eq(3)
   end
 end
