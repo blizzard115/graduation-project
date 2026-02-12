@@ -42,17 +42,15 @@
 }
 
 .insta-thumb-wrap {
-  aspect-ratio: 4 / 5;
   overflow: hidden;
   background: #f5f5f5;
+  border-radius: 14px;
 }
 
 .insta-thumb {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  height: auto;
   display: block;
-  transition: transform .2s ease;
 }
 
 .insta-thumb-wrap:hover .insta-thumb {
@@ -148,4 +146,218 @@
 
 .like-chip i {
   color: #dc3545; // bootstrapのdanger系
+}
+
+/* ===== LP base ===== */
+.lp-panel {
+  min-height: calc(100vh - 56px); /* navbar分を軽く引く。必要なら調整 */
+  display: flex;
+  align-items: center;
+}
+
+.lp-panel--discover { background: #fff7b3; }
+.lp-panel--how      { background: #e9fbff; }
+.lp-panel--explore  { background: #ffffff; }
+
+.lp-eyebrow {
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  opacity: .75;
+}
+
+.lp-title {
+  font-weight: 800;
+  line-height: 1.05;
+  font-size: clamp(2.2rem, 5vw, 4rem);
+}
+
+.lp-lead {
+  font-size: 1.05rem;
+  line-height: 1.9;
+  opacity: .9;
+  max-width: 42rem;
+}
+
+.lp-title-sm {
+  font-weight: 800;
+  font-size: clamp(1.6rem, 2.8vw, 2.2rem);
+}
+
+/* ===== collage ===== */
+.lp-collage {
+  display: grid;
+  grid-template-columns: 1.2fr .8fr;
+  gap: 16px;
+  align-items: stretch;
+}
+.lp-collage__stack { display: grid; gap: 16px; }
+
+.lp-collage__card {
+  background: #fff;
+  border-radius: 22px;
+  box-shadow: 0 18px 50px rgba(0,0,0,.10);
+  overflow: hidden;
+  position: relative;
+}
+.lp-collage__card--lg { min-height: 360px; }
+
+.lp-collage__badge {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(0,0,0,.75);
+  color: #fff;
+  font-weight: 700;
+  font-size: .85rem;
+}
+
+.lp-collage__mock { height: 100%; min-height: 170px; }
+.lp-collage__mock--img  { background: linear-gradient(135deg, #111, #444); }
+.lp-collage__mock--img2 { background: linear-gradient(135deg, #2b6, #0aa); height: 180px; }
+.lp-collage__mock--img3 { background: linear-gradient(135deg, #d66, #f9b); height: 180px; }
+.lp-collage__caption { padding: 10px 14px; font-weight: 700; opacity: .8; }
+
+.lp-hint { font-weight: 700; opacity: .7; }
+
+/* ===== how steps ===== */
+.lp-steps { display: grid; gap: 14px; }
+.lp-step {
+  display: grid;
+  grid-template-columns: 40px 1fr;
+  gap: 12px;
+  align-items: start;
+  background: rgba(255,255,255,.7);
+  border: 1px solid rgba(0,0,0,.06);
+  border-radius: 18px;
+  padding: 14px 16px;
+}
+.lp-step__num {
+  width: 40px; height: 40px;
+  border-radius: 12px;
+  display: grid; place-items: center;
+  background: rgba(0,0,0,.85);
+  color: #fff;
+  font-weight: 800;
+}
+.lp-step__title { font-weight: 800; }
+.lp-step__text  { opacity: .75; }
+
+/* ===== mock UI ===== */
+.lp-mock {
+  background: #fff;
+  border-radius: 22px;
+  box-shadow: 0 18px 50px rgba(0,0,0,.10);
+  overflow: hidden;
+}
+.lp-mock__header {
+  padding: 14px 16px;
+  font-weight: 800;
+  border-bottom: 1px solid rgba(0,0,0,.06);
+}
+.lp-mock__body { padding: 16px; display: grid; gap: 12px; }
+.lp-mock__img { border-radius: 16px; height: 280px; background: linear-gradient(135deg, #111, #777); }
+.lp-mock__field { height: 46px; border-radius: 14px; background: rgba(0,0,0,.06); }
+.lp-mock__field--sm { height: 38px; width: 70%; }
+.lp-mock__btn { height: 46px; border-radius: 14px; background: rgba(0,0,0,.85); }
+
+/* ===== Pinterest-like masonry (あなたのを整理版) ===== */
+.home-masonry {
+  column-width: 240px;
+  column-gap: 14px;
+}
+
+.home-masonry-item {
+  break-inside: avoid;
+  margin-bottom: 14px;
+}
+
+.pin {
+  display: inline-block;
+  width: 100%;
+  border-radius: 18px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 10px 26px rgba(0,0,0,.08);
+  transition: transform .12s ease, box-shadow .12s ease;
+}
+.pin:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 40px rgba(0,0,0,.12);
+}
+
+.pin:hover .pin__meta {
+  opacity: 1;
+}
+
+.pin__media { background: #f5f5f5; }
+
+/* 画像がない時でもカードが成立する */
+.pin__placeholder {
+  height: 220px;
+  display: grid;
+  place-items: center;
+  color: rgba(0,0,0,.45);
+  font-weight: 700;
+  letter-spacing: .02em;
+}
+
+.pin__meta{
+  padding: 10px 12px;
+  font-size: .9rem;
+  opacity: .65;
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  transition: opacity .15s ease;
+}
+
+.pin__user{
+  font-weight: 700;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.lp-inner{
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 24px; /* 端までベタにしたいなら 0 にする */
+}
+
+/* スマホでは余白を小さく */
+@media (max-width: 576px){
+  .lp-inner{ padding: 0 16px; }
+}
+
+/* masonry内ではカードやmediaを「伸びない」ようにする */
+.home-masonry .pin {
+  height: auto !important;
+  align-self: start;
+}
+
+.home-masonry .pin__media {
+  height: auto !important;
+  overflow: hidden;
+  border-radius: 18px 18px 0 0;
+}
+
+/* 画像は「自然比率」で表示（絶対に伸ばさない） */
+.home-masonry .pin__img {
+  width: 100%;
+  height: auto !important;
+  display: block;
+  object-fit: cover;
+}
+
+.home-masonry-item {
+  animation: fadeUp .3s ease both;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
 }

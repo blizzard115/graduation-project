@@ -8,3 +8,5 @@ import HelloController from "./hello_controller"
 application.register("hello", HelloController)
 import PreviewController from "./preview_controller"
 application.register("preview", PreviewController)
+import ScrollspyController from "./scrollspy_controller"
+application.register("scrollspy", ScrollspyController)
