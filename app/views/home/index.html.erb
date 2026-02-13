@@ -1,84 +1,139 @@
-<div class="hero mb-5" style="background-image: url('<%= asset_path("image.jpg") %>')">
-  <div class="hero-overlay"></div>
+<main data-controller="scrollspy" data-scrollspy-offset-value="120">
+  <!-- PANEL 1 -->
+  <section id="discover" class="lp-panel lp-panel--discover" data-scrollspy-target="section">
+    <div class="container-fluid px-0 py-5">
+      <div class="lp-inner">
+        <div class="row align-items-center g-5">
+          <div class="col-lg-6">
+            <p class="lp-eyebrow">Stylog</p>
+            <h1 class="lp-title">コーデを、もっと気軽に。</h1>
+            <p class="lp-lead">写真1枚 + ひとこと。日常のスタイルを残して、みんなのコーデから発見しよう。</p>
 
-  <div class="hero-content container-fluid">
-    <h1 class="hero-title">
-      コーデを、もっと気軽に。
-    </h1>
-
-    <p class="hero-text">
-      Stylogは、写真1枚＋ひとこと、で投稿できるコーデ記録アプリです。
-      気負わず、日常のスタイルを残せます。
-    </p>
-
-    <div class="d-flex align-items-center gap-3 mt-4">
-      <%= link_to "はじめる", new_user_registration_path, class: "btn btn-primary btn-lg px-4" %>
-      <%= link_to "投稿を見る", posts_path, class: "btn btn-outline-light btn-lg" %>
-    </div>
-  </div>
-</div>
-
-<div class="row g-4">
-  <div class="col-md-4">
-    <div class="card h-100">
-      <div class="card-body">
-        <h3 class="h5 fw-bold">投稿しやすい</h3>
-        <p class="text-muted mb-0">入力は最小限。コーデ日記感覚で続けられます。</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-md-4">
-    <div class="card h-100">
-      <div class="card-body">
-        <h3 class="h5 fw-bold">見やすい</h3>
-        <p class="text-muted mb-0">画像中心で、他人のリアルなスタイルを参考にできます。</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-md-4">
-    <div class="card h-100">
-      <div class="card-body">
-        <h3 class="h5 fw-bold">将来の拡張</h3>
-        <p class="text-muted mb-0">好みデータを蓄積し、提案機能につなげられる設計に。</p>
-      </div>
-    </div>
-  </div>
-</div>
-
-<section class="mt-5">
-  <div class="d-flex justify-content-between align-items-center mb-3">
-    <h2 class="h5 fw-bold mb-0">最新の投稿</h2>
-    <%= link_to "すべて見る", posts_path, class: "text-decoration-none small fw-semibold" %>
-  </div>
-
-  <div class="row g-3">
-    <% @latest_posts.each do |post| %>
-      <div class="col-6 col-md-3">
-        <div class="card h-100 shadow-sm">
-          <%= link_to post_path(post), class: "text-decoration-none text-dark" do %>
-            <div class="insta-thumb-wrap">
-              <% if post.image.attached? %>
-                <%= image_tag post.image, class: "insta-thumb" %>
+            <div class="d-flex flex-wrap gap-3 mt-4">
+              <% if user_signed_in? %>
+                <%= link_to "新規投稿", new_post_path, class: "btn btn-dark btn-lg px-4" %>
               <% else %>
-                <div class="insta-thumb-wrap d-flex align-items-center justify-content-center text-muted">
-                  No Image
-                </div>
+                <%= link_to "はじめる", new_user_registration_path, class: "btn btn-dark btn-lg px-4" %>
+                <%= link_to "ログイン", new_user_session_path, class: "btn btn-outline-dark btn-lg" %>
               <% end %>
-            </div>
 
-            <div class="card-body py-2">
-              <div class="fw-semibold small">
-                <%= post.user&.username.presence || "名無しユーザー" %>
+              <%= link_to "みんなのコーデを見る", "#explore", class: "btn btn-outline-dark btn-lg" %>
+            </div>
+          </div>
+
+          <div class="col-lg-6">
+            <!-- 右側：Pinterestっぽいカードのコラージュ -->
+            <div class="lp-collage">
+              <div class="lp-collage__card lp-collage__card--lg">
+                <div class="lp-collage__badge">#monochrome</div>
+                <div class="lp-collage__mock lp-collage__mock--img"></div>
               </div>
-              <div class="text-muted small">
-                <%= l post.created_at, format: :short %>
+              <div class="lp-collage__stack">
+                <div class="lp-collage__card">
+                  <div class="lp-collage__mock lp-collage__mock--img2"></div>
+                  <div class="lp-collage__caption">street</div>
+                </div>
+                <div class="lp-collage__card">
+                  <div class="lp-collage__mock lp-collage__mock--img3"></div>
+                  <div class="lp-collage__caption">vintage</div>
+                </div>
               </div>
             </div>
-          <% end %>
+            <div class="lp-hint mt-3">スクロールして使い方を見る</div>
+          </div>
         </div>
       </div>
-    <% end %>
-  </div>
-</section>
+    </div>
+  </section>
+
+  <!-- PANEL 2 -->
+  <section id="how" class="lp-panel lp-panel--how" data-scrollspy-target="section">
+    <div class="container-fluid px-0 py-5">
+      <div class="lp-inner">
+        <div class="row align-items-center g-5">
+          <div class="col-lg-6">
+            <p class="lp-eyebrow">How it works</p>
+            <h2 class="lp-title-sm">使い方はシンプル</h2>
+
+            <div class="lp-steps mt-4">
+              <div class="lp-step">
+                <div class="lp-step__num">1</div>
+                <div>
+                  <div class="lp-step__title">写真を選ぶ</div>
+                  <div class="lp-step__text">いつものコーデを1枚。</div>
+                </div>
+              </div>
+              <div class="lp-step">
+                <div class="lp-step__num">2</div>
+                <div>
+                  <div class="lp-step__title">ひとことを書く</div>
+                  <div class="lp-step__text">ブランドや気分をメモ。</div>
+                </div>
+              </div>
+              <div class="lp-step">
+                <div class="lp-step__num">3</div>
+                <div>
+                  <div class="lp-step__title">タグで見つける</div>
+                  <div class="lp-step__text">好みの雰囲気に出会える。</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-4">
+              <%= link_to "みんなのコーデへ", "#explore", class: "btn btn-light btn-lg" %>
+            </div>
+          </div>
+
+          <div class="col-lg-6">
+            <!-- 右側：投稿フォームっぽいダミーUI -->
+            <div class="lp-mock">
+              <div class="lp-mock__header">新規投稿</div>
+              <div class="lp-mock__body">
+                <div class="lp-mock__img"></div>
+                <div class="lp-mock__field"></div>
+                <div class="lp-mock__field lp-mock__field--sm"></div>
+                <div class="lp-mock__btn"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PANEL 3 -->
+  <section id="explore" class="lp-panel lp-panel--explore" data-scrollspy-target="section">
+    <div class="container-fluid py-5">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <div>
+          <p class="lp-eyebrow mb-1">Explore</p>
+          <h2 class="lp-title-sm mb-0">みんなのコーデ</h2>
+        </div>
+        <%= link_to "すべて見る", posts_path, class: "text-decoration-none fw-semibold" %>
+      </div>
+
+      <div class="home-masonry">
+        <% @latest_posts.each do |post| %>
+          <div class="home-masonry-item">
+            <%= link_to post_path(post), class: "text-decoration-none text-dark" do %>
+              <div class="pin">
+                <div class="pin__media">
+                  <% if post.image.attached? %>
+                    <%= image_tag post.image, class: "pin__img" %>
+                  <% else %>
+                    <div class="pin__placeholder">
+                      No Image
+                    </div>
+                  <% end %>
+                </div>
+                <div class="pin__meta">
+                  <span class="pin__user"><%= post.user&.username.presence || "名無しユーザー" %></span>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </section>
+</main>

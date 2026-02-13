@@ -92,16 +92,22 @@
     </nav>
 
     <main class="flex-grow-1">
-      <div class="container py-4">
-      <% if notice %>
-        <div class="alert alert-info"><%= notice %></div>
-      <% end %>
-
-      <% if alert %>
-        <div class="alert alert-warning"><%= alert %></div>
-      <% end %>
+      <% if controller_name == "home" && action_name == "index" %>
+        <%# LPは全幅で出す %>
         <%= yield %>
-      </div>
+      <% else %>
+        <div class="container-fluid py-4 px-3 px-0">
+          <% if notice %>
+            <div class="alert alert-info"><%= notice %></div>
+          <% end %>
+
+          <% if alert %>
+            <div class="alert alert-warning"><%= alert %></div>
+          <% end %>
+
+          <%= yield %>
+        </div>
+      <% end %>
     </main>
 
     <footer class="border-top py-3 bg-light">

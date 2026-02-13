@@ -1,5 +1,5 @@
 class HomeController < ApplicationController
   def index
-    @latest_posts = Post.includes(:user).with_attached_image.order(created_at: :desc).limit(4)
+    @latest_posts = Post.includes(:user, image_attachment: :blob).order(created_at: :desc).limit(12)
   end
 end
