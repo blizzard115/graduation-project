@@ -275,6 +275,7 @@
 }
 
 .pin {
+  position: relative;
   display: inline-block;
   width: 100%;
   border-radius: 18px;
@@ -283,20 +284,27 @@
   box-shadow: 0 10px 26px rgba(0,0,0,.08);
   transition: transform .12s ease, box-shadow .12s ease;
 }
+
 .pin:hover {
   transform: translateY(-2px);
   box-shadow: 0 16px 40px rgba(0,0,0,.12);
 }
 
-.pin:hover .pin__meta {
-  opacity: 1;
+/* ---------- media ---------- */
+.pin__media {
+  background: #f5f5f5;
+  overflow: hidden;
 }
 
-.pin__media { background: #f5f5f5; }
+.pin__img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
 
-/* 画像がない時でもカードが成立する */
+/* No Image */
 .pin__placeholder {
-  height: 220px;
+  min-height: 220px; /* heightより安全 */
   display: grid;
   place-items: center;
   color: rgba(0,0,0,.45);
@@ -304,17 +312,36 @@
   letter-spacing: .02em;
 }
 
-.pin__meta{
-  padding: 10px 12px;
-  font-size: .9rem;
-  opacity: .65;
+/* ---------- meta (overlay) ---------- */
+.pin__meta {
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  bottom: 10px;
+
   display: flex;
   align-items: center;
   min-width: 0;
-  transition: opacity .15s ease;
+
+  padding: 10px 12px;
+  font-size: .9rem;
+
+  background: rgba(255,255,255,.92);
+  backdrop-filter: blur(8px);
+  border-radius: 14px;
+
+  opacity: 0;
+  transform: translateY(6px);
+  pointer-events: none;
+  transition: opacity .15s ease, transform .15s ease;
 }
 
-.pin__user{
+.pin:hover .pin__meta {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.pin__user {
   font-weight: 700;
   min-width: 0;
   overflow: hidden;
