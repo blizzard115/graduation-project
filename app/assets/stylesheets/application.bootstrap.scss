@@ -135,6 +135,10 @@
   z-index: 2;
 }
 
+.post-preview-inner.is-invalid {
+  border: 2px solid #dc3545; /* Bootstrap danger */
+}
+
 .like-chip {
   transition: background .15s ease, transform .1s ease;
 }
@@ -401,3 +405,4 @@
   height: 100% !important;
   object-fit: cover;
 }
+
