@@ -388,3 +388,16 @@
   from { opacity: 0; transform: translateY(6px); }
   to   { opacity: 1; transform: translateY(0); }
 }
+
+/* === LPコラージュ内：画像をカード全面にフィット（余白ゼロ） === */
+.lp-collage__card--lg { height: 360px; } /* min-height でもいいが、見た目を固定したいなら height */
+
+.lp-collage__card .pin,
+.lp-collage__card .pin__media {
+  height: 100%;
+}
+
+.lp-collage__card .pin__img {
+  height: 100% !important;
+  object-fit: cover;
+}

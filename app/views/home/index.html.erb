@@ -24,21 +24,43 @@
           <div class="col-lg-6">
             <!-- 右側：Pinterestっぽいカードのコラージュ -->
             <div class="lp-collage">
+              <% post_main = @collage_posts[0] %>
+              <% post_sub1 = @collage_posts[1] %>
+              <% post_sub2 = @collage_posts[2] %>
+
+              <!-- メインカード -->
               <div class="lp-collage__card lp-collage__card--lg">
                 <div class="lp-collage__badge">#monochrome</div>
-                <div class="lp-collage__mock lp-collage__mock--img"></div>
+
+                <% if post_main&.image&.attached? %>
+                  <%= image_tag post_main.image, class: "pin__img" %>
+                <% else %>
+                  <div class="lp-collage__mock lp-collage__mock--img"></div>
+                <% end %>
               </div>
+
+              <!-- サブ2枚 -->
               <div class="lp-collage__stack">
                 <div class="lp-collage__card">
-                  <div class="lp-collage__mock lp-collage__mock--img2"></div>
-                  <div class="lp-collage__caption">street</div>
+                  <% if post_sub1&.image&.attached? %>
+                    <%= image_tag post_sub1.image, class: "pin__img" %>
+                  <% else %>
+                    <div class="lp-collage__mock lp-collage__mock--img2"></div>
+                    <div class="lp-collage__caption">street</div>
+                  <% end %>
                 </div>
+
                 <div class="lp-collage__card">
-                  <div class="lp-collage__mock lp-collage__mock--img3"></div>
-                  <div class="lp-collage__caption">vintage</div>
+                  <% if post_sub2&.image&.attached? %>
+                    <%= image_tag post_sub2.image, class: "pin__img" %>
+                  <% else %>
+                    <div class="lp-collage__mock lp-collage__mock--img3"></div>
+                    <div class="lp-collage__caption">vintage</div>
+                  <% end %>
                 </div>
               </div>
             </div>
+
             <div class="lp-hint mt-3">スクロールして使い方を見る</div>
           </div>
         </div>
