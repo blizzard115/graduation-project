@@ -24,21 +24,43 @@
           <div class="col-lg-6">
             <!-- 右側：Pinterestっぽいカードのコラージュ -->
             <div class="lp-collage">
+              <% post_main = @collage_posts[0] %>
+              <% post_sub1 = @collage_posts[1] %>
+              <% post_sub2 = @collage_posts[2] %>
+
+              <!-- メインカード -->
               <div class="lp-collage__card lp-collage__card--lg">
                 <div class="lp-collage__badge">#monochrome</div>
-                <div class="lp-collage__mock lp-collage__mock--img"></div>
+
+                <% if post_main&.image&.attached? %>
+                  <%= image_tag post_main.image, class: "lp-collage__img" %>
+                <% else %>
+                  <div class="lp-collage__mock lp-collage__mock--img"></div>
+                <% end %>
               </div>
+
+              <!-- サブ2枚 -->
               <div class="lp-collage__stack">
                 <div class="lp-collage__card">
-                  <div class="lp-collage__mock lp-collage__mock--img2"></div>
-                  <div class="lp-collage__caption">street</div>
+                  <% if post_sub1&.image&.attached? %>
+                    <%= image_tag post_sub1.image, class: "pin__img" %>
+                  <% else %>
+                    <div class="lp-collage__mock lp-collage__mock--img2"></div>
+                    <div class="lp-collage__caption">street</div>
+                  <% end %>
                 </div>
+
                 <div class="lp-collage__card">
-                  <div class="lp-collage__mock lp-collage__mock--img3"></div>
-                  <div class="lp-collage__caption">vintage</div>
+                  <% if post_sub2&.image&.attached? %>
+                    <%= image_tag post_sub2.image, class: "pin__img" %>
+                  <% else %>
+                    <div class="lp-collage__mock lp-collage__mock--img3"></div>
+                    <div class="lp-collage__caption">vintage</div>
+                  <% end %>
                 </div>
               </div>
             </div>
+
             <div class="lp-hint mt-3">スクロールして使い方を見る</div>
           </div>
         </div>
@@ -80,19 +102,36 @@
             </div>
 
             <div class="mt-4">
-              <%= link_to "みんなのコーデへ", "#explore", class: "btn btn-light btn-lg" %>
+              <%= link_to "#explore", class: "btn btn-outline-dark fw-semibold" do %>
+                みんなのコーデを見る →
+              <% end %>
             </div>
           </div>
 
           <div class="col-lg-6">
-            <!-- 右側：投稿フォームっぽいダミーUI -->
+            <!-- 右側：投稿プレビュー（ダミー） -->
             <div class="lp-mock">
-              <div class="lp-mock__header">新規投稿</div>
+              <div class="lp-mock__header">投稿プレビュー</div>
+
               <div class="lp-mock__body">
-                <div class="lp-mock__img"></div>
-                <div class="lp-mock__field"></div>
-                <div class="lp-mock__field lp-mock__field--sm"></div>
-                <div class="lp-mock__btn"></div>
+                <div class="lp-preview">
+                  <div class="lp-preview__img" aria-hidden="true"></div>
+
+                  <div class="lp-preview__content">
+                    <div class="lp-preview__caption">今日はモノトーンでまとめた</div>
+
+                    <div class="lp-preview__tags">
+                      <span class="lp-tag">monochrome</span>
+                      <span class="lp-tag">street</span>
+                      <span class="lp-tag">vintage</span>
+                    </div>
+
+                    <div class="lp-preview__footer">
+                      <span class="lp-preview__user">@stylog_user</span>
+                      <span class="lp-preview__like"><i class="fa-solid fa-heart"></i> 12</span>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -104,17 +143,19 @@
   <!-- PANEL 3 -->
   <section id="explore" class="lp-panel lp-panel--explore" data-scrollspy-target="section">
     <div class="container-fluid py-5">
-      <div class="d-flex justify-content-between align-items-center mb-3">
-        <div>
-          <p class="lp-eyebrow mb-1">Explore</p>
-          <h2 class="lp-title-sm mb-0">みんなのコーデ</h2>
+      <div class="lp-inner">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <div>
+            <p class="lp-eyebrow mb-1">Explore</p>
+            <h2 class="lp-title-sm mb-0">みんなのコーデ</h2>
+          </div>
+          <%= link_to "もっと見る →", posts_path, class: "btn btn-outline-dark" %>
         </div>
-        <%= link_to "すべて見る", posts_path, class: "text-decoration-none fw-semibold" %>
-      </div>
+
 
       <div class="home-masonry">
-        <% @latest_posts.each do |post| %>
-          <div class="home-masonry-item">
+        <% @latest_posts.each_with_index do |post, i| %>
+          <div class="home-masonry-item <%= 'home-masonry-item--lg' if i % 6 == 0 %>">
             <%= link_to post_path(post), class: "text-decoration-none text-dark" do %>
               <div class="pin">
                 <div class="pin__media">
@@ -127,7 +168,11 @@
                   <% end %>
                 </div>
                 <div class="pin__meta">
-                  <span class="pin__user"><%= post.user&.username.presence || "名無しユーザー" %></span>
+                  <span class="pin__user">@<%= post.user.username %></span>
+                  <div class="pin__actions">
+                    <i class="fa-regular fa-heart"></i>
+                    <span><%= post.likes_count %></span>
+                  </div>
                 </div>
               </div>
             <% end %>

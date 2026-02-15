@@ -38,8 +38,9 @@
         <!-- 右：プレビュー -->
         <div class="col-12 col-lg-6">
           <div class="post-preview card border-0">
-            <div class="post-preview-inner">
-              <%= f.file_field :image, accept: "image/*", class: "post-preview-input", data: { preview_target: "input" } %>
+            <% image_invalid = post.errors[:image].present? %>
+            <div class="post-preview-inner <%= "is-invalid" if image_invalid %>">
+              <%= f.file_field :image, accept: "image/*", required: true, class: "post-preview-input ", data: { preview_target: "input" } %>
               <div class="post-preview-placeholder text-muted" data-preview-target="placeholder">
                 <div class="mb-2">
                   <i class="fa-regular fa-image fa-2xl"></i>
@@ -53,6 +54,12 @@
                 alt="preview"
               />
             </div>
+
+            <% if image_invalid %>
+              <div class="invalid-feedback d-block">
+                <%= post.errors[:image].first %>
+              </div>
+            <% end %>
 
             <div class="mt-2 small text-muted">
               推奨：縦長（4:5）／明るめの写真が映えます

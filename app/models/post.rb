@@ -1,8 +1,10 @@
 class Post < ApplicationRecord
   belongs_to :user
   has_one_attached :image
-  validates :image, presence: true 
+
   validates :content, presence: true, length: { maximum: 1000 }
+  validate :image_presence
+
   has_many :likes, dependent: :destroy
   has_many :post_tags, dependent: :destroy
   has_many :tags, through: :post_tags
@@ -18,4 +20,11 @@ class Post < ApplicationRecord
   def likes_count
     likes.count
   end
+
+  private
+
+  def image_presence
+    errors.add(:image, "を選択してください") unless image.attached?
+  end
 end
+
