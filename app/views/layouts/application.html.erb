@@ -30,73 +30,59 @@
   </head>
 
   <body class="d-flex flex-column min-vh-100">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
-      <div class="container-fluid px-4">
-        <%= link_to "Stylog", root_path, class: "navbar-brand fw-bold" %>
+    <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom">
+  <div class="container-fluid px-4">
+    <%= link_to "Stylog", root_path, class: "navbar-brand fw-bold" %>
 
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar">
-          <span class="navbar-toggler-icon"></span>
-        </button>
+    <div class="ms-auto d-flex align-items-center gap-2">
+      <% if user_signed_in? %>
+        <%= link_to new_post_path, class: "btn btn-dark btn-sm px-3 rounded-pill" do %>
+          <i class="fa-solid fa-plus me-1"></i> 投稿
+        <% end %>
 
-        <div class="collapse navbar-collapse" id="navbar">
-          <ul class="navbar-nav ms-auto align-items-lg-center gap-2">
-            <li class="nav-item">
-              <%= link_to posts_path, class: "nav-link" do %>
-                <i class="fa-regular fa-image me-1"></i>
-                投稿を見る
+        <div class="dropdown">
+          <button class="btn btn-outline-secondary btn-sm rounded-pill dropdown-toggle"
+                  type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="fa-regular fa-user me-1"></i>
+          </button>
+
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li>
+              <%= link_to user_path(current_user), class: "dropdown-item" do %>
+                <i class="fa-regular fa-user me-2"></i> マイページ
               <% end %>
             </li>
-
-            <% if user_signed_in? %>
-              <li class="nav-item">
-                <%= link_to new_post_path, class: "btn btn-primary btn-sm" do %>
-                  <i class="fa-solid fa-plus me-1"></i>
-                  新規投稿
-                <% end %>
-              </li>
-
-              <li class="nav-item">
-                <%= link_to user_path(current_user), class: "btn btn-outline-secondary btn-sm" do %>
-                  <i class="fa-regular fa-user"></i>
-                  マイページ
-                <% end %>
-              </li>
-
-              <li class="nav-item">
-                <%= button_to destroy_user_session_path,
-                    method: :delete,
-                    class: "btn btn-outline-secondary btn-sm",
-                    form: { class: "d-inline" } do %>
-                  <i class="fa-solid fa-right-from-bracket me-1"></i>
-                  ログアウト
-                <% end %>
-              </li>
-            <% else %>
-              <li class="nav-item">
-                <%= link_to new_user_session_path, class: "btn btn-outline-secondary btn-sm" do %>
-                  <i class="fa-solid fa-right-to-bracket me-1"></i>
-                  ログイン
-                <% end %>
-              </li>
-              <li class="nav-item">
-                <%= link_to new_user_registration_path, class: "btn btn-primary btn-sm" do %>
-                  <i class="fa-solid fa-user-plus me-1"></i>
-                  新規登録
-                <% end %>
-              </li>
-            <% end %>
+            <li><hr class="dropdown-divider"></li>
+            <li>
+              <%= button_to destroy_user_session_path,
+                method: :delete,
+                class: "dropdown-item text-danger",
+                form: { class: "d-inline" } do %>
+                <i class="fa-solid fa-right-from-bracket me-2"></i> ログアウト
+              <% end %>
+            </li>
           </ul>
-
         </div>
-      </div>
-    </nav>
+
+      <% else %>
+        <%= link_to new_user_session_path, class: "btn btn-outline-secondary btn-sm rounded-pill" do %>
+          ログイン
+        <% end %>
+        <%= link_to new_user_registration_path, class: "btn btn-dark btn-sm px-3 rounded-pill" do %>
+          はじめる
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</nav>
+
 
     <main class="flex-grow-1">
       <% if controller_name == "home" && action_name == "index" %>
         <%# LPは全幅で出す %>
         <%= yield %>
       <% else %>
-        <div class="container-fluid py-4 px-3 px-0">
+        <div class="container-fluid py-4 px-4">
           <% if notice %>
             <div class="alert alert-info"><%= notice %></div>
           <% end %>

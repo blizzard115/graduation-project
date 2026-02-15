@@ -406,3 +406,14 @@
   object-fit: cover;
 }
 
+.navbar {
+  height: 64px;
+}
+
+.navbar-brand {
+  letter-spacing: .04em;
+}
+
+.navbar .btn {
+  box-shadow: none;
+}
