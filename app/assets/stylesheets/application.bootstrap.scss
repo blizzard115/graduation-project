@@ -1,6 +1,16 @@
+/* =========================================================
+   0) Libraries
+   - Bootstrap本体とBootstrap Iconsを読み込み
+   ========================================================= */
 @import 'bootstrap/scss/bootstrap';
 @import 'bootstrap-icons/font/bootstrap-icons';
 
+
+/* =========================================================
+   1) (旧) Hero系（※いまLPで使っていなければ「過去の名残」かも）
+   - .hero / .hero-overlay / .hero-content など
+   - もし画面上で使っていないなら、後で整理対象
+   ========================================================= */
 .hero {
   position: relative;
   min-height: 520px; // ← 大きくする核心
@@ -41,6 +51,12 @@
   margin-top: 1rem;
 }
 
+
+/* =========================================================
+   2) Insta thumbnail系（※過去UIの名残かも）
+   - 一覧で使う小サムネを想定したスタイル
+   - hoverで少し拡大（transform）
+   ========================================================= */
 .insta-thumb-wrap {
   overflow: hidden;
   background: #f5f5f5;
@@ -57,6 +73,11 @@
   transform: scale(1.03);
 }
 
+
+/* =========================================================
+   3) 投稿詳細の画像表示（.post-image-wrap / .post-image）
+   - 詳細ページ等で「画像だけ」を表示する用途
+   ========================================================= */
 .post-image-wrap {
   width: 100%;
   overflow: hidden;
@@ -69,6 +90,12 @@
   display: block;
 }
 
+
+/* =========================================================
+   4) アバター（丸画像）系
+   - object-fit: cover で「はみ出しOK・中央トリミング」
+   - サイズ違い（img / sm / xs）を用意
+   ========================================================= */
 .rounded-circle {
   object-fit: cover;
 }
@@ -99,6 +126,13 @@
   display: block;
 }
 
+
+/* =========================================================
+   5) 新規投稿フォームのプレビュー枠（画像選択）
+   - 4:5で固定して「インスタっぽい縦長」を作る
+   - file_inputを透明にして「枠全体クリックで選択」できる
+   - is-invalid で赤枠（画像必須のエラー表示）
+   ========================================================= */
 .post-form-card {
   border-radius: 16px;
 }
@@ -127,6 +161,7 @@
   display: block;
 }
 
+/* file_field を透明化してプレビュー枠の上に被せる */
 .post-preview-input {
   position: absolute;
   inset: 0;
@@ -135,10 +170,17 @@
   z-index: 2;
 }
 
+/* 画像未選択で投稿した時に、枠を赤くする用（JSで付与する想定） */
 .post-preview-inner.is-invalid {
   border: 2px solid #dc3545; /* Bootstrap danger */
 }
 
+
+/* =========================================================
+   6) Likeボタン/チップ系（一覧や詳細のUI）
+   - hoverで少し浮かせる
+   - アイコン色はBootstrap danger系
+   ========================================================= */
 .like-chip {
   transition: background .15s ease, transform .1s ease;
 }
@@ -152,7 +194,12 @@
   color: #dc3545; // bootstrapのdanger系
 }
 
-/* ===== LP base ===== */
+
+/* =========================================================
+   7) LP（ランディングページ）共通：Panelベース
+   - panelは基本「1画面っぽく」見せるため min-height を持つ
+   - Panelごとの背景色をここで管理
+   ========================================================= */
 .lp-panel {
   min-height: calc(100vh - 56px); /* navbar分を軽く引く。必要なら調整 */
   display: flex;
@@ -163,6 +210,8 @@
 .lp-panel--how      { background: #e9fbff; }
 .lp-panel--explore  { background: #ffffff; }
 
+
+/* LP見出しなどの共通タイポグラフィ */
 .lp-eyebrow {
   font-weight: 700;
   letter-spacing: .06em;
@@ -188,7 +237,11 @@
   font-size: clamp(1.6rem, 2.8vw, 2.2rem);
 }
 
-/* ===== collage ===== */
+
+/* =========================================================
+   8) Panel1：コラージュ（右側のPinterest風カード）
+   - Gridで「大1 + 小2」を作る
+   ========================================================= */
 .lp-collage {
   display: grid;
   grid-template-columns: 1.2fr .8fr;
@@ -204,8 +257,11 @@
   overflow: hidden;
   position: relative;
 }
-.lp-collage__card--lg { min-height: 360px; }
 
+/* メインカードの高さを固定（見た目を安定させる） */
+.lp-collage__card--lg { height: 360px; }
+
+/* 左上のタグバッジ */
 .lp-collage__badge {
   position: absolute;
   top: 14px;
@@ -218,6 +274,15 @@
   font-size: .85rem;
 }
 
+/* コラージュ内画像はカード全面にフィットさせる */
+.lp-collage__img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* 画像が無い時のダミー背景（開発用） */
 .lp-collage__mock { height: 100%; min-height: 170px; }
 .lp-collage__mock--img  { background: linear-gradient(135deg, #111, #444); }
 .lp-collage__mock--img2 { background: linear-gradient(135deg, #2b6, #0aa); height: 180px; }
@@ -226,8 +291,22 @@
 
 .lp-hint { font-weight: 700; opacity: .7; }
 
-/* ===== how steps ===== */
+
+/* =========================================================
+   9) Panel3だけ：Panelの高さ固定を解除
+   - Exploreは「一覧」なので縦に伸びてOK
+   ========================================================= */
+.lp-panel--explore{
+  align-items: flex-start;
+  min-height: auto; /* 1画面固定をやめたいなら */
+}
+
+
+/* =========================================================
+   10) Panel2：使い方ステップ（左側）
+   ========================================================= */
 .lp-steps { display: grid; gap: 14px; }
+
 .lp-step {
   display: grid;
   grid-template-columns: 40px 1fr;
@@ -238,6 +317,7 @@
   border-radius: 18px;
   padding: 14px 16px;
 }
+
 .lp-step__num {
   width: 40px; height: 40px;
   border-radius: 12px;
@@ -246,38 +326,54 @@
   color: #fff;
   font-weight: 800;
 }
+
 .lp-step__title { font-weight: 800; }
 .lp-step__text  { opacity: .75; }
 
-/* ===== mock UI ===== */
+
+/* =========================================================
+   11) Panel2：右側のダミーUI（枠）
+   - 投稿プレビュー風のモックカード
+   ========================================================= */
 .lp-mock {
   background: #fff;
   border-radius: 22px;
   box-shadow: 0 18px 50px rgba(0,0,0,.10);
   overflow: hidden;
 }
+
 .lp-mock__header {
   padding: 14px 16px;
   font-weight: 800;
   border-bottom: 1px solid rgba(0,0,0,.06);
 }
+
 .lp-mock__body { padding: 16px; display: grid; gap: 12px; }
 .lp-mock__img { border-radius: 16px; height: 280px; background: linear-gradient(135deg, #111, #777); }
 .lp-mock__field { height: 46px; border-radius: 14px; background: rgba(0,0,0,.06); }
 .lp-mock__field--sm { height: 38px; width: 70%; }
 .lp-mock__btn { height: 46px; border-radius: 14px; background: rgba(0,0,0,.85); }
 
-/* ===== Pinterest-like masonry (あなたのを整理版) ===== */
+
+/* =========================================================
+   12) Panel3：Pinterest風 Masonry（カラムレイアウト）
+   - column-width / column-gap が核心
+   - home-masonry-item は break-inside で分割防止
+   ========================================================= */
 .home-masonry {
-  column-width: 240px;
-  column-gap: 14px;
+  column-width: 220px;
+  column-gap: 16px;
 }
 
 .home-masonry-item {
   break-inside: avoid;
-  margin-bottom: 14px;
+  margin-bottom: 16px;
 }
 
+
+/* =========================================================
+   13) Panel3：Pinカード（見た目＆hover）
+   ========================================================= */
 .pin {
   position: relative;
   display: inline-block;
@@ -294,19 +390,22 @@
   box-shadow: 0 16px 40px rgba(0,0,0,.12);
 }
 
-/* ---------- media ---------- */
+
+/* =========================================================
+   14) Pin内：画像エリア
+   ========================================================= */
 .pin__media {
   background: #f5f5f5;
   overflow: hidden;
 }
 
 .pin__img {
-  display: block;
   width: 100%;
   height: auto;
+  display: block;
 }
 
-/* No Image */
+/* 画像が無い時（将来は基本不要：画像必須にするなら） */
 .pin__placeholder {
   min-height: 220px; /* heightより安全 */
   display: grid;
@@ -316,7 +415,11 @@
   letter-spacing: .02em;
 }
 
-/* ---------- meta (overlay) ---------- */
+
+/* =========================================================
+   15) Pin内：hoverで出るメタ情報（ユーザー名・いいね）
+   - 最初は opacity:0 で隠して hoverで表示
+   ========================================================= */
 .pin__meta {
   position: absolute;
   left: 10px;
@@ -353,39 +456,70 @@
   white-space: nowrap;
 }
 
+.pin__actions {
+  margin-left: auto;
+  display: flex;
+  gap: 8px;
+  opacity: .8;
+}
+
+
+/* =========================================================
+   16) LPの横幅制御（全パネルで使う内側コンテナ）
+   - 1400pxで止めて中央寄せ
+   - paddingで左右余白を作る（ベタにしたいなら 0）
+   ========================================================= */
 .lp-inner{
   max-width: 1400px;
   margin: 0 auto;
   padding: 0 24px; /* 端までベタにしたいなら 0 にする */
 }
 
-/* スマホでは余白を小さく */
+/* スマホだけ左右余白を少し小さく */
 @media (max-width: 576px){
   .lp-inner{ padding: 0 16px; }
 }
 
-/* masonry内ではカードやmediaを「伸びない」ようにする */
+
+/* =========================================================
+   17) Masonry内の補助（「伸びないように」「角丸統一」）
+   ========================================================= */
 .home-masonry .pin {
   height: auto !important;
   align-self: start;
 }
 
 .home-masonry .pin__media {
-  height: auto !important;
   overflow: hidden;
-  border-radius: 18px 18px 0 0;
+  border-radius: 18px;
 }
 
-/* 画像は「自然比率」で表示（絶対に伸ばさない） */
 .home-masonry .pin__img {
   width: 100%;
-  height: auto !important;
+  height: auto;
   display: block;
-  object-fit: cover;
 }
 
+
+/* =========================================================
+   18) Masonry：登場アニメーション
+   ========================================================= */
 .home-masonry-item {
   animation: fadeUp .3s ease both;
+}
+
+/* 大きめ表示にしたいアイテム用（HTMLで付ける想定） */
+.home-masonry-item--lg {
+  break-inside: avoid;
+}
+
+.home-masonry-item--lg .pin__img {
+  max-height: none;
+}
+
+/* lgだけ縦長比率にする（画像面だけ） */
+.home-masonry-item--lg .pin__media {
+  aspect-ratio: 3 / 5;
 }
 
 @keyframes fadeUp {
@@ -393,7 +527,11 @@
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* === LPコラージュ内：画像をカード全面にフィット（余白ゼロ） === */
+
+/* =========================================================
+   19) コラージュ内で pin クラスを使った時のフィット補助（※現在はlp-collage__img中心）
+   - もしlp-collage内で .pin を使う場合に備えたスタイル
+   ========================================================= */
 .lp-collage__card--lg { height: 360px; } /* min-height でもいいが、見た目を固定したいなら height */
 
 .lp-collage__card .pin,
@@ -406,6 +544,13 @@
   object-fit: cover;
 }
 
+
+/* =========================================================
+   20) Navbar（ヘッダー）見た目調整
+   - 高さ固定
+   - ブランド文字の字間
+   - btnの影を消してスッキリ
+   ========================================================= */
 .navbar {
   height: 64px;
 }
@@ -418,7 +563,11 @@
   box-shadow: none;
 }
 
-/* ===== Panel2 dummy preview ===== */
+
+/* =========================================================
+   21) Panel2：ダミー投稿プレビュー（中身）
+   - 右側カードの「投稿っぽいUI」を作る
+   ========================================================= */
 .lp-preview{
   display: grid;
   gap: 12px;
@@ -470,7 +619,6 @@
   margin-right: 6px;
   color: #dc3545;
 }
-
 
 .lp-preview:hover{
   transform: translateY(-2px);

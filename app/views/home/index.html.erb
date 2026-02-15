@@ -33,7 +33,7 @@
                 <div class="lp-collage__badge">#monochrome</div>
 
                 <% if post_main&.image&.attached? %>
-                  <%= image_tag post_main.image, class: "pin__img" %>
+                  <%= image_tag post_main.image, class: "lp-collage__img" %>
                 <% else %>
                   <div class="lp-collage__mock lp-collage__mock--img"></div>
                 <% end %>
@@ -143,20 +143,19 @@
   <!-- PANEL 3 -->
   <section id="explore" class="lp-panel lp-panel--explore" data-scrollspy-target="section">
     <div class="container-fluid py-5">
-      <div class="d-flex justify-content-between align-items-center mb-3">
-        <div>
-          <p class="lp-eyebrow mb-1">Explore</p>
-          <h2 class="lp-title-sm mb-0">みんなのコーデ</h2>
+      <div class="lp-inner">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <div>
+            <p class="lp-eyebrow mb-1">Explore</p>
+            <h2 class="lp-title-sm mb-0">みんなのコーデ</h2>
+          </div>
+          <%= link_to "もっと見る →", posts_path, class: "btn btn-outline-dark" %>
         </div>
-       <div class="text-center mt-4">
-        <%= link_to "もっと見る →", posts_path,
-            class: "btn btn-outline-dark btn-lg px-5" %>
-       </div>
-      </div>
+
 
       <div class="home-masonry">
-        <% @latest_posts.each do |post| %>
-          <div class="home-masonry-item">
+        <% @latest_posts.each_with_index do |post, i| %>
+          <div class="home-masonry-item <%= 'home-masonry-item--lg' if i % 6 == 0 %>">
             <%= link_to post_path(post), class: "text-decoration-none text-dark" do %>
               <div class="pin">
                 <div class="pin__media">
@@ -169,7 +168,11 @@
                   <% end %>
                 </div>
                 <div class="pin__meta">
-                  <span class="pin__user"><%= post.user&.username.presence || "名無しユーザー" %></span>
+                  <span class="pin__user">@<%= post.user.username %></span>
+                  <div class="pin__actions">
+                    <i class="fa-regular fa-heart"></i>
+                    <span><%= post.likes_count %></span>
+                  </div>
                 </div>
               </div>
             <% end %>
