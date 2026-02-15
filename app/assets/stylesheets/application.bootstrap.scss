@@ -417,3 +417,62 @@
 .navbar .btn {
   box-shadow: none;
 }
+
+/* ===== Panel2 dummy preview ===== */
+.lp-preview{
+  display: grid;
+  gap: 12px;
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+
+.lp-preview__img{
+  height: 280px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, #111, #666);
+}
+
+.lp-preview__content{
+  display: grid;
+  gap: 10px;
+}
+
+.lp-preview__caption{
+  font-weight: 800;
+  letter-spacing: .01em;
+  line-height: 1.4;
+}
+
+.lp-preview__tags{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.lp-tag{
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(0,0,0,.06);
+  font-weight: 700;
+  font-size: .9rem;
+}
+
+.lp-preview__footer{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  opacity: .8;
+  font-weight: 700;
+}
+
+.lp-preview__like i{
+  margin-right: 6px;
+  color: #dc3545;
+}
+
+
+.lp-preview:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 18px 40px rgba(0,0,0,.12);
+}
