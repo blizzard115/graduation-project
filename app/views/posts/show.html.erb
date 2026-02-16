@@ -2,18 +2,28 @@
   <div class="row g-4 justify-content-center">
 
     <!-- 左：画像（主役） -->
-    <div class="col-12 col-lg-8">
-      <div class="card shadow-sm post-show-media">
+    <div class="col-12 col-lg-7">
+      <div class="card shadow-sm post-show-media position-relative">
+
         <div class="card-body p-0">
           <% if @post.image.attached? %>
             <%= image_tag @post.image, class: "post-show-img" %>
           <% end %>
         </div>
+
+        <!-- ここがオーバーレイ（画像の上に重ねる） -->
+        <div class="post-like-overlay">
+          <div class="d-flex align-items-center gap-2">
+            <%= render "likes/button", post: @post %>
+            <span class="post-like-count"><%= @post.likes_count %></span>
+          </div>
+        </div>
+
       </div>
     </div>
 
     <!-- 右：メタ情報 + アクション + コメント（固定幅カード） -->
-    <div class="col-12 col-lg-4">
+    <div class="col-12 col-lg-5">
       <div class="post-show-side">
         <div class="card shadow-sm post-show-card">
           <div class="card-header bg-white d-flex justify-content-between align-items-center">
@@ -57,17 +67,7 @@
             <% else %>
               <p class="text-muted mb-3">本文はありません</p>
             <% end %>
-
-            <!-- アクション -->
-            <div class="d-flex align-items-center gap-2 mb-3">
-              <% if user_signed_in? %>
-                <%= render "likes/button", post: @post %>
-                <span class="small text-muted"><%= @post.likes_count %></span>
-              <% end %>
-
-              <%= link_to "一覧へ", posts_path, class: "btn btn-outline-secondary btn-sm ms-auto" %>
-            </div>
-
+            
             <!-- 投稿者のみ -->
             <% if user_signed_in? && @post.user == current_user %>
               <div class="d-flex gap-2 mb-3">
@@ -78,24 +78,11 @@
               </div>
             <% end %>
 
-            <hr>
-
-            <!-- コメント -->
+             <!-- コメント -->
             <div class="d-flex justify-content-between align-items-center mb-2">
               <h6 class="mb-0">コメント</h6>
               <span class="text-muted small"><%= @post.comments.count %>件</span>
             </div>
-
-            <% if user_signed_in? %>
-              <%= form_with model: [@post, Comment.new], local: true do |f| %>
-                <div class="mb-2">
-                  <%= f.text_area :content, rows: 2, class: "form-control", placeholder: "コメントを入力..." %>
-                </div>
-                <%= f.submit "送信", class: "btn btn-primary btn-sm" %>
-              <% end %>
-            <% else %>
-              <p class="mb-0"><%= link_to "ログイン", new_user_session_path %>するとコメントできます</p>
-            <% end %>
 
             <div class="mt-3 post-comments-list">
               <% @post.comments.order(created_at: :desc).each do |comment| %>
@@ -115,9 +102,19 @@
                   </div>
                   <p class="mb-1"><%= simple_format(comment.content) %></p>
                 </div>
-                <hr class="my-1">
               <% end %>
             </div>
+
+            <% if user_signed_in? %>
+              <%= form_with model: [@post, Comment.new], local: true do |f| %>
+                <div class="mb-2">
+                  <%= f.text_area :content, rows: 2, class: "form-control", placeholder: "コメントを入力..." %>
+                </div>
+                <%= f.submit "送信", class: "btn btn-primary btn-sm" %>
+              <% end %>
+            <% else %>
+              <p class="mb-0"><%= link_to "ログイン", new_user_session_path %>するとコメントできます</p>
+            <% end %>
 
           </div>
         </div>

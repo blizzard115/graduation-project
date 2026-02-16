@@ -38,8 +38,10 @@
    左：画像カード（丸み＋はみ出し防止）
    ----------------------------------------- */
 .post-show-media{
+  position: relative;
   border-radius: 16px; /* 角丸で今っぽいカード感 */
   overflow: hidden;    /* 角丸に合わせて画像も切り取る */
+  background: #f0f0f0; 
 }
 
 /* 画像は主役：余白なしで全面表示（縦横比を崩さない） */
@@ -47,8 +49,9 @@
   width: 100%;     /* 横は常にカード幅いっぱい */
   height: auto;    /* 縦は比率に合わせる */
   display: block;  /* 画像下の隙間対策 */
+  object-fit: contain; /* まずは全体を見せる */
+  max-height: calc(100vh - 160px); 
 }
-
 
 /* -----------------------------------------
    右：サイドカードを「固定っぽく」見せる（PCだけ）
@@ -62,18 +65,26 @@
   }
 }
 
-
 /* -----------------------------------------
    右カードの見た目
    ----------------------------------------- */
 .post-show-card{
   border-radius: 16px; /* 左の画像カードと統一感を出す */
+  overflow: hidden; /* ← 角丸に沿って中身（header含む）を切る */
+  font-size: 0.9rem;
+  font-weight: 600;
 }
 
 /* 本文は読みやすさ最優先：行間を広めに */
 .post-show-content{
   line-height: 1.8;
 }
+
+.post-show-card .card-header{
+  border-bottom: none;
+  padding-bottom: 12px;
+}
+
 
 
 /* -----------------------------------------
@@ -94,6 +105,9 @@
   opacity: .08;
 }
 
+.comment-item + hr {
+  opacity: .05;
+}
 
 /* =========================================================
    4) アバター（丸画像）系
@@ -180,24 +194,147 @@
 }
 
 
-/* =========================================================
-   6) Likeボタン/チップ系（一覧や詳細のUI）
-   - hoverで少し浮かせる
-   - アイコン色はBootstrap danger系
-   ========================================================= */
+/* ==================================================
+   Like Chip（ページ遷移・情報表示用）
+   - users/show の「いいね一覧」リンクで使用
+   - 数やラベルと並べる前提のUI
+   ================================================== */
+
+/* ボタン全体（チップ） */
 .like-chip {
-  transition: background .15s ease, transform .1s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  padding: 10px 12px;
+  border-radius: 999px;
+
+  background: #fff;
+  border: 1px solid rgba(0,0,0,.08);
+  box-shadow: 0 8px 20px rgba(0,0,0,.06);
+
+  transition: transform .12s ease, box-shadow .12s ease, background .12s ease, border-color .12s ease;
+  user-select: none;
 }
 
+/* hover：浮く */
 .like-chip:hover {
-  background: rgba(220,53,69,.08);
-  transform: translateY(-1px);
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px rgba(0,0,0,.10);
+  border-color: rgba(220,53,69,.25);
+  background: rgba(220,53,69,.04);
 }
 
+/* 押した瞬間：ぷにっ */
+.like-chip:active {
+  transform: translateY(0) scale(0.98);
+  box-shadow: 0 8px 18px rgba(0,0,0,.08);
+}
+
+/* ハートアイコン */
 .like-chip i {
-  color: #dc3545; // bootstrapのdanger系
+  font-size: 1.1rem;
+  transition: transform .12s ease;
 }
 
+/* hover時：ハートだけ少し弾む */
+.like-chip:hover i {
+  transform: scale(1.12);
+}
+
+/* カウント */
+.like-chip .like-count {
+  font-weight: 700;
+  opacity: .75;
+}
+
+/* いいね済み（active）状態用（クラスを付けられるなら） */
+.like-chip.is-liked {
+  background: rgba(220,53,69,.10);
+  border-color: rgba(220,53,69,.25);
+}
+
+.like-chip.is-liked i {
+  color: #dc3545;
+}
+
+/* ==================================================
+   Like Button（投稿へのアクション用）
+   - 投稿詳細 / 投稿一覧で使用
+   - 押す・トグル・アニメーションが主役
+   ================================================== */
+
+.like-btn {
+  border: none;
+  background: transparent;
+  padding: 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #dc3545; /* danger系 */
+  font-size: 1.2rem;
+
+  cursor: pointer;
+  transition: transform .12s ease, color .15s ease;
+}
+
+/* hover：ちょっと浮く */
+.like-btn:hover {
+  transform: translateY(-1px) scale(1.05);
+}
+
+/* 押した瞬間 */
+.like-btn:active {
+  transform: scale(0.9);
+}
+
+/* いいね済み */
+.like-btn.is-liked {
+  color: #dc3545;
+}
+
+/* ハートだけに責務を持たせる */
+.like-btn i {
+  pointer-events: none;
+}
+
+/* 画像の右下に乗る「いいね」エリア */
+.post-like-overlay{
+  position: absolute;
+  right: 14px;
+  bottom: 14px;
+  z-index: 5;
+
+  background: rgba(255,255,255,.92);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(0,0,0,.08);
+  border-radius: 999px;
+
+  padding: 8px 10px;
+  box-shadow: 0 10px 24px rgba(0,0,0,.10);
+}
+
+/* 数字 */
+.post-like-count{
+  font-weight: 700;
+  opacity: .75;
+}
+
+.post-like-overlay .like-btn{
+  padding: 4px;
+  font-size: 1.3rem;
+}
+
+.post-like-fab {
+  opacity: .9;
+  transition: opacity .15s ease, transform .15s ease;
+}
+
+.post-show-media:hover .post-like-fab {
+  opacity: 1;
+  transform: scale(1.05);
+}
 
 /* =========================================================
    7) LP（ランディングページ）共通：Panelベース
