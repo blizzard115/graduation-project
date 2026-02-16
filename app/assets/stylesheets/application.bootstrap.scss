@@ -64,6 +64,10 @@
   }
 }
 
+.comment-item {
+  border-bottom: 1px solid rgba(0,0,0,.06);
+}
+
 
 /* -----------------------------------------
    右カードの見た目
@@ -71,6 +75,8 @@
 .post-show-card{
   border-radius: 16px; /* 左の画像カードと統一感を出す */
   overflow: hidden; /* ← 角丸に沿って中身（header含む）を切る */
+  font-size: 0.9rem;
+  font-weight: 600;
 }
 
 /* 本文は読みやすさ最優先：行間を広めに */
