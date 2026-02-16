@@ -189,23 +189,111 @@
 }
 
 
-/* =========================================================
-   6) Likeボタン/チップ系（一覧や詳細のUI）
-   - hoverで少し浮かせる
-   - アイコン色はBootstrap danger系
-   ========================================================= */
+/* ==================================================
+   Like Chip（ページ遷移・情報表示用）
+   - users/show の「いいね一覧」リンクで使用
+   - 数やラベルと並べる前提のUI
+   ================================================== */
+
+/* ボタン全体（チップ） */
 .like-chip {
-  transition: background .15s ease, transform .1s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  padding: 10px 12px;
+  border-radius: 999px;
+
+  background: #fff;
+  border: 1px solid rgba(0,0,0,.08);
+  box-shadow: 0 8px 20px rgba(0,0,0,.06);
+
+  transition: transform .12s ease, box-shadow .12s ease, background .12s ease, border-color .12s ease;
+  user-select: none;
 }
 
+/* hover：浮く */
 .like-chip:hover {
-  background: rgba(220,53,69,.08);
-  transform: translateY(-1px);
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px rgba(0,0,0,.10);
+  border-color: rgba(220,53,69,.25);
+  background: rgba(220,53,69,.04);
 }
 
-.like-chip i {
-  color: #dc3545; // bootstrapのdanger系
+/* 押した瞬間：ぷにっ */
+.like-chip:active {
+  transform: translateY(0) scale(0.98);
+  box-shadow: 0 8px 18px rgba(0,0,0,.08);
 }
+
+/* ハートアイコン */
+.like-chip i {
+  font-size: 1.1rem;
+  transition: transform .12s ease;
+}
+
+/* hover時：ハートだけ少し弾む */
+.like-chip:hover i {
+  transform: scale(1.12);
+}
+
+/* カウント */
+.like-chip .like-count {
+  font-weight: 700;
+  opacity: .75;
+}
+
+/* いいね済み（active）状態用（クラスを付けられるなら） */
+.like-chip.is-liked {
+  background: rgba(220,53,69,.10);
+  border-color: rgba(220,53,69,.25);
+}
+
+.like-chip.is-liked i {
+  color: #dc3545;
+}
+
+/* ==================================================
+   Like Button（投稿へのアクション用）
+   - 投稿詳細 / 投稿一覧で使用
+   - 押す・トグル・アニメーションが主役
+   ================================================== */
+
+.like-btn {
+  border: none;
+  background: transparent;
+  padding: 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #dc3545; /* danger系 */
+  font-size: 1.2rem;
+
+  cursor: pointer;
+  transition: transform .12s ease, color .15s ease;
+}
+
+/* hover：ちょっと浮く */
+.like-btn:hover {
+  transform: translateY(-1px) scale(1.05);
+}
+
+/* 押した瞬間 */
+.like-btn:active {
+  transform: scale(0.9);
+}
+
+/* いいね済み */
+.like-btn.is-liked {
+  color: #dc3545;
+}
+
+/* ハートだけに責務を持たせる */
+.like-btn i {
+  pointer-events: none;
+}
+
 
 
 /* =========================================================
