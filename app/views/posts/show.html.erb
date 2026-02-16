@@ -3,12 +3,22 @@
 
     <!-- 左：画像（主役） -->
     <div class="col-12 col-lg-7">
-      <div class="card shadow-sm post-show-media">
+      <div class="card shadow-sm post-show-media position-relative">
+
         <div class="card-body p-0">
           <% if @post.image.attached? %>
             <%= image_tag @post.image, class: "post-show-img" %>
           <% end %>
         </div>
+
+        <!-- ここがオーバーレイ（画像の上に重ねる） -->
+        <div class="post-like-overlay">
+          <div class="d-flex align-items-center gap-2">
+            <%= render "likes/button", post: @post %>
+            <span class="post-like-count"><%= @post.likes_count %></span>
+          </div>
+        </div>
+
       </div>
     </div>
 
@@ -57,17 +67,7 @@
             <% else %>
               <p class="text-muted mb-3">本文はありません</p>
             <% end %>
-
-            <!-- アクション -->
-            <div class="d-flex align-items-center gap-2 mb-3">
-              <% if user_signed_in? %>
-                <%= render "likes/button", post: @post %>
-                <span class="small text-muted"><%= @post.likes_count %></span>
-              <% end %>
-
-              <%= link_to "一覧へ", posts_path, class: "btn btn-outline-secondary btn-sm ms-auto" %>
-            </div>
-
+            
             <!-- 投稿者のみ -->
             <% if user_signed_in? && @post.user == current_user %>
               <div class="d-flex gap-2 mb-3">

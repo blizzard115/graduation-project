@@ -38,6 +38,7 @@
    左：画像カード（丸み＋はみ出し防止）
    ----------------------------------------- */
 .post-show-media{
+  position: relative;
   border-radius: 16px; /* 角丸で今っぽいカード感 */
   overflow: hidden;    /* 角丸に合わせて画像も切り取る */
   background: #f0f0f0; 
@@ -46,7 +47,7 @@
 /* 画像は主役：余白なしで全面表示（縦横比を崩さない） */
 .post-show-img{
   width: 100%;     /* 横は常にカード幅いっぱい */
-  height: 100%;    /* 縦は比率に合わせる */
+  height: auto;    /* 縦は比率に合わせる */
   display: block;  /* 画像下の隙間対策 */
   object-fit: contain; /* まずは全体を見せる */
   max-height: calc(100vh - 160px); 
@@ -63,11 +64,6 @@
     top: 88px; /* ヘッダーの高さ(64px) + 余白ぶん。被るならここを微調整 */
   }
 }
-
-.comment-item {
-  border-bottom: 1px solid rgba(0,0,0,.06);
-}
-
 
 /* -----------------------------------------
    右カードの見た目
@@ -109,6 +105,9 @@
   opacity: .08;
 }
 
+.comment-item + hr {
+  opacity: .05;
+}
 
 /* =========================================================
    4) アバター（丸画像）系
@@ -300,7 +299,42 @@
   pointer-events: none;
 }
 
+/* 画像の右下に乗る「いいね」エリア */
+.post-like-overlay{
+  position: absolute;
+  right: 14px;
+  bottom: 14px;
+  z-index: 5;
 
+  background: rgba(255,255,255,.92);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(0,0,0,.08);
+  border-radius: 999px;
+
+  padding: 8px 10px;
+  box-shadow: 0 10px 24px rgba(0,0,0,.10);
+}
+
+/* 数字 */
+.post-like-count{
+  font-weight: 700;
+  opacity: .75;
+}
+
+.post-like-overlay .like-btn{
+  padding: 4px;
+  font-size: 1.3rem;
+}
+
+.post-like-fab {
+  opacity: .9;
+  transition: opacity .15s ease, transform .15s ease;
+}
+
+.post-show-media:hover .post-like-fab {
+  opacity: 1;
+  transform: scale(1.05);
+}
 
 /* =========================================================
    7) LP（ランディングページ）共通：Panelベース
