@@ -1,0 +1,12 @@
+<%= link_to post_path(post), class: "pin text-decoration-none" do %>
+  <div class="pin__media">
+    <%= image_tag post.image, class: "pin__img" if post.image.attached? %>
+  </div>
+
+  <div class="pin__meta">
+    <div class="pin__user"><%= post.user&.username.presence || "名無しユーザー" %></div>
+    <div class="pin__actions">
+      <%= render "likes/button", post: post if user_signed_in? %>
+    </div>
+  </div>
+<% end %>
