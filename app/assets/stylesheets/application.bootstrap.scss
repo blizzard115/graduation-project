@@ -496,20 +496,6 @@
 .lp-mock__field--sm { height: 38px; width: 70%; }
 .lp-mock__btn { height: 46px; border-radius: 14px; background: rgba(0,0,0,.85); }
 
-
-/* =========================================================
-   12) Panel3：Pinterest風 Masonry（カラムレイアウト）
-   - column-width / column-gap が核心
-   - home-masonry-item は break-inside で分割防止
-   ========================================================= */
-
-
-.home-masonry-item {
-  break-inside: avoid;
-  margin-bottom: 16px;
-}
-
-
 /* =========================================================
    13) Panel3：Pinカード（見た目＆hover）
    ========================================================= */
@@ -646,12 +632,12 @@
 @media (max-width: 576px){
   .home-masonry{ column-width: 160px; column-gap: 12px; }
 }
+
 .home-masonry-item{
   display: inline-block; /* ★重要：column内で安定 */
   width: 100%;
   break-inside: avoid;
   margin-bottom: 16px;
-
   animation: fadeUp .3s ease both;
 }
 
@@ -660,10 +646,6 @@
 /* =========================================================
    18) Masonry：登場アニメーション
    ========================================================= */
-.home-masonry-item {
-  animation: fadeUp .3s ease both;
-}
-
 /* 大きめ表示にしたいアイテム用（HTMLで付ける想定） */
 .home-masonry-item--lg {
   break-inside: avoid;
