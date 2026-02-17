@@ -1,39 +1,34 @@
-<div class="row g-3">
+<div class="container-fluid py-4 px-3 px-lg-5">
 
-  <%= form_with url: posts_path, method: :get, local: true, class: "mb-3" do %>
-    <div class="input-group">
-      <%= text_field_tag :tag, params[:tag], class: "form-control", placeholder: "タグを検索（例: スポーティ）" %>
-      <button type="submit" class="btn btn-outline-secondary">検索</button>
-    </div>
-  <% end %>
+  <div class="mb-3">
+    <%= form_with url: posts_path, method: :get, local: true do %>
+      <div class="input-group">
+        <%= text_field_tag :tag, params[:tag], class: "form-control", placeholder: "タグを検索（例: スポーティ）" %>
+        <button type="submit" class="btn btn-outline-secondary">検索</button>
+      </div>
+    <% end %>
 
-  <% if params[:tag].present? %>
-    <p class="text-muted">タグ「<strong><%= params[:tag] %></strong>」の検索結果</p>
-  <% end %>
+    <% if params[:tag].present? %>
+      <p class="text-muted mt-2 mb-0">
+        タグ「<strong><%= params[:tag] %></strong>」の検索結果
+      </p>
+    <% end %>
+  </div>
 
-  <% @posts.each do |post| %>
-    <div class="col-6 col-md-4 col-lg-3">
-      <div class="card h-100 shadow-sm overflow-hidden">
-
-        <!-- 画像 -->
-        <%= link_to post_path(post) do %>
-          <div class="insta-thumb-wrap">
+  <div class="home-masonry">
+    <% @posts.each do |post| %>
+      <div class="home-masonry-item">
+        <div class="pin">
+          <%= link_to post_path(post), class: "pin__media d-block" do %>
             <% if post.image.attached? %>
-              <%= image_tag post.image, class: "insta-thumb" %>
+              <%= image_tag post.image, class: "pin__img" %>
             <% else %>
-              <div class="insta-thumb-placeholder">
-                No Image
-              </div>
+              <div class="pin__placeholder">No Image</div>
             <% end %>
-          </div>
-        <% end %>
+          <% end %>
 
-        <!-- ユーザー名 -->
-        <div class="card-body py-2">
-
-          <!-- ① ユーザー + いいね -->
-          <div class="d-flex align-items-center justify-content-between">
-            <div class="d-flex align-items-center gap-2">
+          <div class="pin__meta">
+            <div class="d-flex align-items-center gap-2 min-w-0">
               <% if post.user&.avatar&.attached? %>
                 <%= image_tag post.user.avatar, class: "avatar-xs" %>
               <% else %>
@@ -42,40 +37,36 @@
                 </div>
               <% end %>
 
-              <div class="fw-semibold small">
-                <%= link_to(
-                  post.user&.username.presence || "名無しユーザー",
-                  post.user ? user_path(post.user) : "#",
-                  class: "text-decoration-none text-dark"
-                ) %>
-              </div>
+              <% if post.user %>
+                <%= link_to(post.user.username.presence || "名無しユーザー", user_path(post.user),
+                      class: "pin__user text-decoration-none text-dark") %>
+              <% else %>
+                <span class="pin__user text-muted">名無しユーザー</span>
+              <% end %>
             </div>
 
-            <div class="d-flex align-items-center gap-1">
+            <div class="pin__actions d-flex align-items-center gap-1">
               <% if user_signed_in? %>
                 <%= render "likes/button", post: post %>
               <% else %>
-                <%= link_to new_user_session_path,
-                      class: "text-muted text-decoration-none",
-                      title: "ログインするといいねできます" do %>
+                <%= link_to new_user_session_path, class: "like-btn", title: "ログインするといいねできます" do %>
                   <i class="bi bi-heart"></i>
                 <% end %>
               <% end %>
               <span class="small text-muted"><%= post.likes_count %></span>
             </div>
           </div>
-
-          <!-- ② タグ -->
-          <% if post.tags.any? %>
-            <div class="d-flex flex-wrap gap-1 mt-2">
-              <% post.tags.each do |tag| %>
-                <%= link_to "##{tag.name}", tag_path(tag.name),
-                  class: "badge rounded-pill text-bg-light border text-decoration-none" %>
-              <% end %>
-            </div>
-          <% end %>
         </div>
+
+        <% if post.tags.any? %>
+          <div class="d-flex flex-wrap gap-1 mt-2">
+            <% post.tags.each do |tag| %>
+              <%= link_to "##{tag.name}", tag_path(tag.name),
+                class: "badge rounded-pill text-bg-light border text-decoration-none" %>
+            <% end %>
+          </div>
+        <% end %>
       </div>
-    </div>
-  <% end %>
+    <% end %>
+  </div>
 </div>
