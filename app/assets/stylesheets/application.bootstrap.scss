@@ -502,10 +502,7 @@
    - column-width / column-gap が核心
    - home-masonry-item は break-inside で分割防止
    ========================================================= */
-.home-masonry {
-  column-width: 220px;
-  column-gap: 16px;
-}
+
 
 .home-masonry-item {
   break-inside: avoid;
@@ -650,8 +647,12 @@
   .home-masonry{ column-width: 160px; column-gap: 12px; }
 }
 .home-masonry-item{
+  display: inline-block; /* ★重要：column内で安定 */
+  width: 100%;
   break-inside: avoid;
   margin-bottom: 16px;
+
+  animation: fadeUp .3s ease both;
 }
 
 

@@ -1,0 +1,9 @@
+<%= link_to post_path(post), class: "pin text-decoration-none" do %>
+  <div class="pin__media">
+    <% if post.image.attached? %>
+      <%= image_tag post.image, class: "pin__img" %>
+    <% else %>
+      <div class="pin__placeholder">No Image</div>
+    <% end %>
+  </div>
+<% end %>
