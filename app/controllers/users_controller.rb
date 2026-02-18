@@ -14,4 +14,15 @@ class UsersController < ApplicationController
       .includes(:user, image_attachment: :blob)
       .order("likes.created_at DESC")
   end
+
+  def following
+    @user = User.find(params[:id])
+    @users = @user.following
+  end
+
+  def followers
+    @user = User.find(params[:id])
+    @users = @user.followers
+  end
+
 end

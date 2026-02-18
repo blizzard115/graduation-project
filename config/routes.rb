@@ -14,6 +14,15 @@ Rails.application.routes.draw do
 
   resources :tags, only: [:show], param: :name
 
+  resources :relationships, only: [:create, :destroy]
+  resources :users, only: [:show] do
+    member do
+      get :following
+      get :followers
+    end
+  end
+
+
   root "home#index"
   get "up" => "rails/health#show", as: :rails_health_check
 end
