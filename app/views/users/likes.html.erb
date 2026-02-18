@@ -1,22 +1,24 @@
-<div class="d-flex justify-content-between align-items-center mb-3">
-  <div>
-    <h1 class="h4 fw-bold mb-1">
-      <%= @user.username.presence || "名無しユーザー" %> のいいね
-    </h1>
-    <div class="text-muted small">いいねした投稿一覧</div>
+<div class="container-fluid py-4 px-3 px-lg-5">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <div>
+      <h1 class="h4 fw-bold mb-1">
+        <%= @user.username.presence || "名無しユーザー" %> のいいね
+      </h1>
+      <div class="text-muted small">いいねした投稿一覧</div>
+    </div>
+
+    <%= link_to "プロフィールへ戻る", user_path(@user), class: "btn btn-outline-secondary btn-sm" %>
   </div>
 
-  <%= link_to "プロフィールへ戻る", user_path(@user), class: "btn btn-outline-secondary btn-sm" %>
+  <% if @posts.any? %>
+    <div class="home-masonry">
+      <% @posts.each do |post| %>
+        <div class="home-masonry-item">
+          <%= render "posts/pin", post: post %>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="text-muted">まだいいねした投稿がありません。</div>
+  <% end %>
 </div>
-
-<% if @posts.any? %>
-  <div class="home-masonry">
-    <% @posts.each do |post| %>
-      <div class="home-masonry-item">
-        <%= render "posts/pin", post: post %>
-      </div>
-    <% end %>
-  </div>
-<% else %>
-  <div class="text-muted">まだいいねした投稿がありません。</div>
-<% end %>

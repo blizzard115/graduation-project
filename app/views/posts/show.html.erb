@@ -1,4 +1,4 @@
-<div class="container py-4">
+<div class="container-fluid py-4 px-3 px-lg-5">
   <div class="row g-4 justify-content-center">
 
     <!-- 左：画像（主役） -->
@@ -105,12 +105,16 @@
               <% end %>
             </div>
 
+            <hr class="my-3">
+
             <% if user_signed_in? %>
               <%= form_with model: [@post, Comment.new], local: true do |f| %>
                 <div class="mb-2">
                   <%= f.text_area :content, rows: 2, class: "form-control", placeholder: "コメントを入力..." %>
                 </div>
-                <%= f.submit "送信", class: "btn btn-primary btn-sm" %>
+                <div class="d-flex">
+                  <%= f.submit "送信", class: "btn btn-primary btn-sm ms-auto" %>
+                </div>
               <% end %>
             <% else %>
               <p class="mb-0"><%= link_to "ログイン", new_user_session_path %>するとコメントできます</p>
