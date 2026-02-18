@@ -11,17 +11,32 @@
   <% if @users.any? %>
     <div class="list-group">
       <% @users.each do |u| %>
-        <%= link_to user_path(u), class: "list-group-item list-group-item-action d-flex align-items-center gap-3 py-3" do %>
-          <% if u.avatar.attached? %>
-            <%= image_tag u.avatar, class: "avatar-sm" %>
-          <% else %>
-            <div class="avatar-sm bg-secondary-subtle d-flex align-items-center justify-content-center">
-              <i class="bi bi-person"></i>
-            </div>
+
+        <div class="list-group-item d-flex align-items-center gap-3 py-3">
+          <!-- 左：アバター（ここもリンクにしてOK） -->
+          <%= link_to user_path(u), class: "text-decoration-none" do %>
+            <% if u.avatar.attached? %>
+              <%= image_tag u.avatar, class: "avatar-sm" %>
+            <% else %>
+              <div class="avatar-sm bg-secondary-subtle d-flex align-items-center justify-content-center">
+                <i class="bi bi-person"></i>
+              </div>
+            <% end %>
           <% end %>
 
-          <div class="fw-semibold"><%= u.username.presence || "名無しユーザー" %></div>
-        <% end %>
+          <!-- 中：ユーザー名（ここだけリンク） -->
+          <div class="fw-semibold">
+            <%= link_to (u.username.presence || "名無しユーザー"),
+                  user_path(u),
+                  class: "text-decoration-none text-dark" %>
+          </div>
+
+          <!-- 右：フォローボタン（ここに入れる！） -->
+          <div class="ms-auto">
+            <%= render "relationships/button", user: u unless u == current_user %>
+          </div>
+        </div>
+
       <% end %>
     </div>
   <% else %>
