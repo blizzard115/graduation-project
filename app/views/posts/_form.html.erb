@@ -31,7 +31,7 @@
 
           <div class="d-flex gap-2 mt-3">
             <%= link_to "キャンセル", posts_path, class: "btn btn-outline-secondary" %>
-            <%= f.submit "投稿する", class: "btn btn-primary px-4 ms-auto" %>
+            <%= f.submit(post.persisted? ? "更新する" : "投稿する", class: "btn btn-primary px-4 ms-auto") %>
           </div>
         </div>
 
@@ -39,20 +39,26 @@
         <div class="col-12 col-lg-6">
           <div class="post-preview card border-0">
             <% image_invalid = post.errors[:image].present? %>
+
             <div class="post-preview-inner <%= "is-invalid" if image_invalid %>">
-              <%= f.file_field :image, accept: "image/*", required: true, class: "post-preview-input ", data: { preview_target: "input" } %>
-              <div class="post-preview-placeholder text-muted" data-preview-target="placeholder">
+              <%= f.file_field :image,
+                    accept: "image/*",
+                    required: post.new_record?,
+                    class: "post-preview-input",
+                    data: { preview_target: "input" } %>
+              <%= image_tag(
+                    (post.image.attached? ? post.image : ""),
+                    class: "post-preview-img #{post.image.attached? ? "" : "d-none"}",
+                    data: { preview_target: "img" },
+                    alt: "preview"
+                  ) %>
+              <div class="post-preview-placeholder text-muted <%= post.image.attached? ? "d-none" : "" %>"
+                  data-preview-target="placeholder">
                 <div class="mb-2">
-                  <i class="fa-regular fa-image fa-2xl"></i>
+                  <i class="bi bi-image fs-1"></i>
                 </div>
                 画像を選択するとここにプレビューが表示されます
               </div>
-
-              <img
-                class="post-preview-img d-none"
-                data-preview-target="img"
-                alt="preview"
-              />
             </div>
 
             <% if image_invalid %>

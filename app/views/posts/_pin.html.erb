@@ -1,12 +1,49 @@
-<%= link_to post_path(post), class: "pin text-decoration-none" do %>
-  <div class="pin__media">
-    <%= image_tag post.image, class: "pin__img" if post.image.attached? %>
-  </div>
+<div class="pin">
+  <%= link_to post_path(post), class: "pin__media d-block" do %>
+    <% if post.image.attached? %>
+      <%= image_tag post.image, class: "pin__img" %>
+    <% else %>
+      <div class="pin__placeholder">No Image</div>
+    <% end %>
+  <% end %>
 
   <div class="pin__meta">
-    <div class="pin__user"><%= post.user&.username.presence || "名無しユーザー" %></div>
-    <div class="pin__actions">
-      <%= render "likes/button", post: post if user_signed_in? %>
+    <div class="d-flex align-items-center gap-2 min-w-0">
+      <% if post.user&.avatar&.attached? %>
+        <%= image_tag post.user.avatar, class: "avatar-xs" %>
+      <% else %>
+        <div class="avatar-xs bg-secondary-subtle d-flex align-items-center justify-content-center">
+          <i class="bi bi-person"></i>
+        </div>
+      <% end %>
+
+      <% if post.user %>
+        <%= link_to(post.user.username.presence || "名無しユーザー",
+                    user_path(post.user),
+                    class: "pin__user text-decoration-none text-dark") %>
+      <% else %>
+        <span class="pin__user text-muted">名無しユーザー</span>
+      <% end %>
     </div>
+
+    <div class="pin__actions d-flex align-items-center gap-1">
+      <% if user_signed_in? %>
+        <%= render "likes/button", post: post %>
+      <% else %>
+        <%= link_to new_user_session_path, class: "like-btn", title: "ログインするといいねできます" do %>
+          <i class="bi bi-heart"></i>
+        <% end %>
+      <% end %>
+      <span class="small text-muted"><%= post.likes_count %></span>
+    </div>
+  </div>
+</div>
+
+<% if post.tags.any? %>
+  <div class="d-flex flex-wrap gap-1 mt-2">
+    <% post.tags.each do |tag| %>
+      <%= link_to "##{tag.name}", tag_path(tag.name),
+                  class: "badge rounded-pill text-bg-light border text-decoration-none" %>
+    <% end %>
   </div>
 <% end %>
