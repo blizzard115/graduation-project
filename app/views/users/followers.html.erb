@@ -1,0 +1,47 @@
+<div class="container-fluid py-4 px-3 px-lg-5">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <div>
+      <h1 class="h4 fw-bold mb-1">
+        <%= @user.username.presence || "名無しユーザー" %> のフォロワー
+      </h1>
+      <div class="text-muted small"><%= @users.count %> 人</div>
+    </div>
+
+    <%= link_to "プロフィールへ戻る", user_path(@user), class: "btn btn-outline-secondary btn-sm" %>
+  </div>
+
+  <% if @users.any? %>
+    <div class="list-group">
+      <% @users.each do |u| %>
+
+        <div class="list-group-item d-flex align-items-center gap-3 py-3">
+          <!-- 左：アバター -->
+          <%= link_to user_path(u), class: "text-decoration-none" do %>
+            <% if u.avatar.attached? %>
+              <%= image_tag u.avatar, class: "avatar-sm" %>
+            <% else %>
+              <div class="avatar-sm bg-secondary-subtle d-flex align-items-center justify-content-center">
+                <i class="bi bi-person"></i>
+              </div>
+            <% end %>
+          <% end %>
+
+          <!-- 中：ユーザー名 -->
+          <div class="fw-semibold">
+            <%= link_to (u.username.presence || "名無しユーザー"),
+                  user_path(u),
+                  class: "text-decoration-none text-dark" %>
+          </div>
+
+          <!-- 右：フォローボタン -->
+          <div class="ms-auto">
+            <%= render "relationships/button", user: u unless u == current_user %>
+          </div>
+        </div>
+
+      <% end %>
+    </div>
+  <% else %>
+    <div class="text-muted">フォロワーはいません。</div>
+  <% end %>
+</div>

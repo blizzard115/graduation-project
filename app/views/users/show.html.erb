@@ -1,9 +1,9 @@
 <div class="container-fluid py-4 px-3 px-lg-5">
-  <!-- プロフィールヘッダー -->
-  <div class="d-flex justify-content-between align-items-start mb-4 pb-3 border-bottom">
 
-    <!-- 左：アイコン＋情報 -->
-    <div class="d-flex align-items-center gap-3">
+  <div class="d-flex justify-content-between align-items-start mb-3 pb-2 border-bottom">
+
+    <!-- 左：アバター + 情報 -->
+    <div class="d-flex align-items-start gap-3">
 
       <% if @user.avatar.attached? %>
         <%= image_tag @user.avatar, class: "avatar-img" %>
@@ -13,50 +13,62 @@
         </div>
       <% end %>
 
-      <div>
-        <h1 class="h4 fw-bold mb-1">
-          <%= @user.username.presence || "名無しユーザー" %>
-        </h1>
+      <div class="min-w-0">
+        <div class="d-flex align-items-center gap-2 flex-wrap">
+          <h1 class="h4 fw-bold mb-0">
+            <%= @user.username.presence || "名無しユーザー" %>
+          </h1>
+        </div>
 
-        <div class="d-flex gap-2 flex-wrap mb-2">
+        <!-- チップ全部まとめる -->
+        <div class="d-flex gap-2 flex-wrap mt-2">
           <div class="px-3 py-1 border rounded-pill small text-muted">
             <strong class="text-dark"><%= @posts.count %></strong> 投稿
           </div>
 
           <%= link_to likes_user_path(@user),
-              class: "px-3 py-1 border rounded-pill small text-decoration-none d-inline-flex align-items-center gap-1 like-chip" do %>
+              class: "like-chip px-3 py-1 small text-decoration-none d-inline-flex align-items-center gap-1" do %>
             <i class="bi bi-heart-fill"></i>
             <strong><%= @user.likes.count %></strong>
-            <span class="text-muted">
-              <%= (user_signed_in? && current_user == @user) ? "いいね一覧" : "いいね" %>
-            </span>
+            <span class="text-muted"><%= (user_signed_in? && current_user == @user) ? "いいね一覧" : "いいね" %></span>
+          <% end %>
+
+          <%= link_to followers_user_path(@user),
+              class: "like-chip px-3 py-1 small text-decoration-none d-inline-flex align-items-center gap-1" do %>
+            <strong><%= @user.followers.count %></strong>
+            <span class="text-muted">フォロワー</span>
+          <% end %>
+
+          <%= link_to following_user_path(@user),
+              class: "like-chip px-3 py-1 small text-decoration-none d-inline-flex align-items-center gap-1" do %>
+            <strong><%= @user.following.count %></strong>
+            <span class="text-muted">フォロー中</span>
           <% end %>
         </div>
 
-        <% if @user.profile.present? %>
-          <p class="text-muted mb-0">
-            <%= simple_format(@user.profile) %>
-          </p>
-        <% else %>
-          <p class="text-muted mb-0 small">
-            プロフィールが未設定です
-          </p>
-        <% end %>
+        <div class="mt-2">
+          <% if @user.profile.present? %>
+            <p class="text-muted mb-0"><%= simple_format(@user.profile) %></p>
+          <% else %>
+            <p class="text-muted mb-0 small">プロフィールが未設定です</p>
+          <% end %>
+        </div>
       </div>
     </div>
 
-    <!-- 右：編集ボタン -->
-    <% if user_signed_in? && current_user == @user %>
-      <div>
+    <!-- 右：ボタン置き場（編集 or フォロー） -->
+    <div class="d-flex gap-2">
+      <% if user_signed_in? && current_user == @user %>
         <%= link_to "プロフィール編集",
             edit_user_registration_path,
             class: "btn btn-outline-secondary btn-sm" %>
-      </div>
-    <% end %>
+      <% elsif user_signed_in? %>
+        <%= render "relationships/button", user: @user %>
+      <% end %>
+    </div>
 
   </div>
 
-  <!-- 投稿一覧（完全に別ブロック） -->
   <div class="home-masonry">
     <% @posts.each do |post| %>
       <div class="home-masonry-item">

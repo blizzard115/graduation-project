@@ -47,6 +47,12 @@
                 </div>
               </div>
             </div>
+
+            <div>
+              <% if user_signed_in? %>
+                <%= render "relationships/button", user: @post.user unless @post.user == current_user %>
+              <% end %>
+            </div>
           </div>
 
           <div class="card-body">
