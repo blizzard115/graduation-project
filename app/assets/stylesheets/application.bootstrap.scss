@@ -432,7 +432,50 @@
 .lp-collage__mock--img3 { background: linear-gradient(135deg, #d66, #f9b); height: 180px; }
 .lp-collage__caption { padding: 10px 14px; font-weight: 700; opacity: .8; }
 
-.lp-hint { font-weight: 700; opacity: .7; }
+.lp-panel--discover{
+  position: relative;
+}
+
+.lp-scroll-indicator{
+  position: absolute;
+  left: 50%;
+  bottom: 48px;
+  transform: translateX(-50%);
+  text-align: center;
+  opacity: .85;
+}
+
+.lp-scroll-indicator span{
+  font-weight: 800;
+  letter-spacing: .12em;
+}
+
+.lp-scroll-mouse{
+  width: 22px;
+  height: 34px;
+  border: 2px solid #111;
+  border-radius: 14px;
+  margin: 10px auto 0;
+  position: relative;
+}
+
+.lp-scroll-dot{
+  width: 5px;
+  height: 7px;
+  background: #111;
+  border-radius: 2px;
+  position: absolute;
+  top: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: scrollDot 2s infinite;
+}
+
+@keyframes scrollDot{
+  0% { opacity: 0; transform: translate(-50%, 0); }
+  40% { opacity: 1; }
+  100% { opacity: 0; transform: translate(-50%, 12px); }
+}
 
 
 /* =========================================================
