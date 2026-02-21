@@ -389,6 +389,7 @@
   grid-template-columns: 1.2fr .8fr;
   gap: 16px;
   align-items: stretch;
+  margin-left: auto;
 }
 .lp-collage__stack { display: grid; gap: 16px; }
 
@@ -401,7 +402,7 @@
 }
 
 /* メインカードの高さを固定（見た目を安定させる） */
-.lp-collage__card--lg { height: 360px; }
+.lp-collage__card--lg { height: 480px; }
 
 /* 左上のタグバッジ */
 .lp-collage__badge {
@@ -431,7 +432,50 @@
 .lp-collage__mock--img3 { background: linear-gradient(135deg, #d66, #f9b); height: 180px; }
 .lp-collage__caption { padding: 10px 14px; font-weight: 700; opacity: .8; }
 
-.lp-hint { font-weight: 700; opacity: .7; }
+.lp-panel--discover{
+  position: relative;
+}
+
+.lp-scroll-indicator{
+  position: absolute;
+  left: 50%;
+  bottom: 48px;
+  transform: translateX(-50%);
+  text-align: center;
+  opacity: .85;
+}
+
+.lp-scroll-indicator span{
+  font-weight: 800;
+  letter-spacing: .12em;
+}
+
+.lp-scroll-mouse{
+  width: 22px;
+  height: 34px;
+  border: 2px solid #111;
+  border-radius: 14px;
+  margin: 10px auto 0;
+  position: relative;
+}
+
+.lp-scroll-dot{
+  width: 5px;
+  height: 7px;
+  background: #111;
+  border-radius: 2px;
+  position: absolute;
+  top: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: scrollDot 2s infinite;
+}
+
+@keyframes scrollDot{
+  0% { opacity: 0; transform: translate(-50%, 0); }
+  40% { opacity: 1; }
+  100% { opacity: 0; transform: translate(-50%, 12px); }
+}
 
 
 /* =========================================================
@@ -501,13 +545,11 @@
    ========================================================= */
 .pin {
   position: relative;
-  display: inline-block;
   width: 100%;
   border-radius: 18px;
   overflow: hidden;
   background: #fff;
   box-shadow: 0 10px 26px rgba(0,0,0,.08);
-  transition: transform .12s ease, box-shadow .12s ease;
 }
 
 .pin:hover {
@@ -520,14 +562,14 @@
    14) Pin内：画像エリア
    ========================================================= */
 .pin__media {
-  background: #f5f5f5;
+  display: block;
   overflow: hidden;
 }
 
 .pin__img {
-  width: 100%;
-  height: auto;
   display: block;
+  width: 100%;
+  height: auto;     /* ←ここがPinterestの基本 */
 }
 
 /* 画像が無い時（将来は基本不要：画像必須にするなら） */
@@ -640,8 +682,6 @@
   animation: fadeUp .3s ease both;
 }
 
-
-
 /* =========================================================
    18) Masonry：登場アニメーション
    ========================================================= */
@@ -651,7 +691,7 @@
 }
 
 .home-masonry-item--lg .pin__img {
-  max-height: none;
+  height: 100%; object-fit: cover;
 }
 
 /* lgだけ縦長比率にする（画像面だけ） */
@@ -669,7 +709,6 @@
    19) コラージュ内で pin クラスを使った時のフィット補助（※現在はlp-collage__img中心）
    - もしlp-collage内で .pin を使う場合に備えたスタイル
    ========================================================= */
-.lp-collage__card--lg { height: 360px; } /* min-height でもいいが、見た目を固定したいなら height */
 
 .lp-collage__card .pin,
 .lp-collage__card .pin__media {
