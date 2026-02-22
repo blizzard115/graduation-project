@@ -802,3 +802,9 @@
 }
 
 .min-w-0 { min-width: 0; }
+
+.site-footer{
+  column-span: all;
+  break-inside: avoid;
+  width: 100%;
+}

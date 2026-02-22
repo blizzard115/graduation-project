@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'static/terms'
+  get 'static/privacy'
   devise_for :users
 
   resources :posts do
@@ -22,6 +24,8 @@ Rails.application.routes.draw do
     end
   end
 
+  get "terms",   to: "static#terms"
+  get "privacy", to: "static#privacy"
 
   root "home#index"
   get "up" => "rails/health#show", as: :rails_health_check
