@@ -19,7 +19,7 @@ RSpec.describe "Post management", type: :system do
     fill_in "キャプション", with: "My first outfit post"
 
     attach_file "post_image",
-      Rails.root.join("spec/fixtures/files/test.png")
+      Rails.root.join("spec/fixtures/files/雪豹.png")
 
     click_button "投稿する"
 

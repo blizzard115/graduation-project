@@ -4,7 +4,6 @@ class CommentsController < ApplicationController
   before_action :set_comment, only: [:destroy]
 
   def create
-    @post = Post.find(params[:post_id])
     @comment = @post.comments.build(comment_params)
     @comment.user = current_user
 
