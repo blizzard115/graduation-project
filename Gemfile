@@ -67,6 +67,10 @@ gem "devise"
 
 gem 'rails-i18n'
 
+gem 'omniauth'
+gem 'omniauth-google-oauth2'
+gem "omniauth-rails_csrf_protection"
+
 group :development, :test do
   gem 'rspec-rails'
   gem 'factory_bot_rails'
