@@ -3,9 +3,7 @@ class LikesController < ApplicationController
   before_action :set_post
 
   def create
-    current_user.likes.create!(post: @post)
-    redirect_back fallback_location: post_path(@post)
-  rescue ActiveRecord::RecordNotUnique
+    current_user.likes.find_or_create_by(post: @post)
     redirect_back fallback_location: post_path(@post)
   end
 
