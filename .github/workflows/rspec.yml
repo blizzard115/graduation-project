@@ -12,11 +12,13 @@ jobs:
       postgres:
         image: postgres:16
         env:
+          POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: app_test
         ports:
           - 5432:5432
         options: >-
-          --health-cmd="pg_isready -U postgres"
+          --health-cmd="pg_isready -U postgres -d app_test"
           --health-interval=10s
           --health-timeout=5s
           --health-retries=5
@@ -28,7 +30,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install PostgreSQL client
+      - name: Install libpq (for pg gem)
         run: |
           sudo apt-get update
           sudo apt-get install -y libpq-dev
@@ -36,16 +38,12 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 3.3
+          ruby-version: .ruby-version
           bundler-cache: true
-
-      - name: Install dependencies
-        run: bundle install
 
       - name: Setup database
         run: |
-          bin/rails db:create
-          bin/rails db:schema:load
+          bin/rails db:prepare
 
       - name: Run RSpec
         run: bundle exec rspec
