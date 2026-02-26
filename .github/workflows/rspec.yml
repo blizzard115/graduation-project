@@ -43,6 +43,7 @@ jobs:
 
       - name: Setup database
         run: |
+          set -euxo pipefail
           bin/rails db:prepare
 
       - name: Run RSpec
