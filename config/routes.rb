@@ -1,22 +1,24 @@
+# frozen_string_literal: true
+
 Rails.application.routes.draw do
   get 'static/terms'
   get 'static/privacy'
-  devise_for :users, controllers: { omniauth_callbacks: "users/omniauth_callbacks" }
-  get "/users/auth/google_oauth2", to: redirect("/auth/google_oauth2")
+  devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
+  get '/users/auth/google_oauth2', to: redirect('/auth/google_oauth2')
   resources :posts do
-    resource :like, only: [:create, :destroy]
-    resources :comments, only: [:create, :destroy]
+    resource :like, only: %i[create destroy]
+    resources :comments, only: %i[create destroy]
   end
 
   resources :users, only: [:show] do
     member do
-      get :likes   # /users/:id/likes
+      get :likes # /users/:id/likes
     end
   end
 
   resources :tags, only: [:show], param: :name
 
-  resources :relationships, only: [:create, :destroy]
+  resources :relationships, only: %i[create destroy]
   resources :users, only: [:show] do
     member do
       get :following
@@ -24,9 +26,9 @@ Rails.application.routes.draw do
     end
   end
 
-  get "terms",   to: "static#terms"
-  get "privacy", to: "static#privacy"
+  get 'terms',   to: 'static#terms'
+  get 'privacy', to: 'static#privacy'
 
-  root "home#index"
-  get "up" => "rails/health#show", as: :rails_health_check
+  root 'home#index'
+  get 'up' => 'rails/health#show', as: :rails_health_check
 end

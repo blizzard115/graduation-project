@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CommentsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_post
@@ -8,19 +10,19 @@ class CommentsController < ApplicationController
     @comment.user = current_user
 
     if @comment.save
-        redirect_to post_path(@post), notice: "コメントを投稿しました"
+      redirect_to post_path(@post), notice: 'コメントを投稿しました'
     else
-        @comments = @post.comments.order(created_at: :desc) # 再取得
-        render 'posts/show', status: :unprocessable_entity
+      @comments = @post.comments.order(created_at: :desc) # 再取得
+      render 'posts/show', status: :unprocessable_entity
     end
   end
 
   def destroy
     if @comment.user == current_user
       @comment.destroy
-      redirect_to post_path(@post), notice: "コメントを削除しました"
+      redirect_to post_path(@post), notice: 'コメントを削除しました'
     else
-      redirect_to post_path(@post), alert: "削除できません"
+      redirect_to post_path(@post), alert: '削除できません'
     end
   end
 

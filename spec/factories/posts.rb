@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :post do
     association :user
@@ -8,9 +10,9 @@ FactoryBot.define do
       next if post.image.attached?
 
       post.image.attach(
-        io: File.open(Rails.root.join("spec/fixtures/files/雪豹.png")),
-        filename: "雪豹.png",
-        content_type: "image/png"
+        io: File.open(Rails.root.join('spec/fixtures/files/雪豹.png')),
+        filename: '雪豹.png',
+        content_type: 'image/png'
       )
     end
 
