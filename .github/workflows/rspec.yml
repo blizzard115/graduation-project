@@ -26,6 +26,9 @@ jobs:
     env:
       RAILS_ENV: test
       DATABASE_URL: postgres://postgres:postgres@localhost:5432/app_test
+      GOOGLE_CLIENT_ID: dummy
+      GOOGLE_CLIENT_SECRET: dummy
+      SECRET_KEY_BASE: dummy
 
     steps:
       - uses: actions/checkout@v4
