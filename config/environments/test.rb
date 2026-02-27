@@ -10,7 +10,7 @@ require 'active_support/core_ext/integer/time'
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
   config.action_dispatch.host_authorization = nil
-  puts '✅ loaded config/environments/test.rb'
+  Rails.logger.debug '✅ loaded config/environments/test.rb'
   # While tests run files are not watched, reloading is not necessary.
   config.enable_reloading = false
 

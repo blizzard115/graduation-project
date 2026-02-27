@@ -13,7 +13,7 @@ class CommentsController < ApplicationController
       redirect_to post_path(@post), notice: 'コメントを投稿しました'
     else
       @comments = @post.comments.order(created_at: :desc) # 再取得
-      render 'posts/show', status: :unprocessable_entity
+      render 'posts/show', status: :unprocessable_content
     end
   end
 

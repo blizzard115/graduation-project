@@ -6,12 +6,12 @@ class LikesController < ApplicationController
 
   def create
     current_user.likes.find_or_create_by(post: @post)
-    redirect_back fallback_location: post_path(@post)
+    redirect_back_or_to(post_path(@post))
   end
 
   def destroy
     current_user.likes.find_by(post: @post)&.destroy
-    redirect_back fallback_location: post_path(@post)
+    redirect_back_or_to(post_path(@post))
   end
 
   private

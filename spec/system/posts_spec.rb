@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Post management', type: :system do
+RSpec.describe 'Post management' do
   let(:password) { 'password' }
   let(:user) { create(:user, password: password, password_confirmation: password) }
 

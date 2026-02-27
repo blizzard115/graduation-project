@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Like, type: :model do
+RSpec.describe Like do
   it 'is valid with a factory' do
     like = build(:like)
     expect(like).to be_valid

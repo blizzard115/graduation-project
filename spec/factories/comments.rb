@@ -3,7 +3,7 @@
 FactoryBot.define do
   factory :comment do
     content { 'テストコメント' }
-    association :user
-    association :post
+    user
+    post
   end
 end

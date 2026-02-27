@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Statics', type: :request do
+RSpec.describe 'Statics' do
   describe 'GET /terms' do
     it 'returns http success' do
       get '/static/terms'

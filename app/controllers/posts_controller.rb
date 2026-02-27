@@ -8,13 +8,21 @@ class PostsController < ApplicationController
   def index
     @posts = Post.includes(:user, :likes, :tags, image_attachment: :blob).order(created_at: :desc)
 
-    return unless params[:tag].present?
+    return if params[:tag].blank?
 
     @posts = @posts.joins(:tags).where(tags: { name: params[:tag] }).distinct
   end
 
+  def show
+    @post = Post.find(params[:id])
+  end
+
   def new
     @post = Post.new
+  end
+
+  def edit
+    @post = Post.find(params[:id])
   end
 
   def create
@@ -24,16 +32,8 @@ class PostsController < ApplicationController
       @post.save_tags!(params.dig(:post, :tag_names))
       redirect_to posts_path, notice: '投稿しました'
     else
-      render :new, status: :unprocessable_entity
+      render :new, status: :unprocessable_content
     end
-  end
-
-  def show
-    @post = Post.find(params[:id])
-  end
-
-  def edit
-    @post = Post.find(params[:id])
   end
 
   def update
@@ -42,7 +42,7 @@ class PostsController < ApplicationController
       @post.save_tags!(params.dig(:post, :tag_names))
       redirect_to @post, notice: '更新しました'
     else
-      render :edit, status: :unprocessable_entity
+      render :edit, status: :unprocessable_content
     end
   end
 

@@ -8,7 +8,7 @@ module Users
       auth = auth.deep_symbolize_keys
 
       email = auth.dig(:info, :email) || auth.dig(:extra, :raw_info, :email)
-      return redirect_to new_user_session_path, alert: 'Googleからメールが取れませんでした' unless email.present?
+      return redirect_to new_user_session_path, alert: 'Googleからメールが取れませんでした' if email.blank?
 
       # ✅ 1) まず email で既存ユーザーを探す
       user = User.find_by(email: email)

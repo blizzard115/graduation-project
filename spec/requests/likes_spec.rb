@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Likes', type: :request do
+RSpec.describe 'Likes' do
   let(:user) { create(:user) }
   let(:post_record) { create(:post) }
 

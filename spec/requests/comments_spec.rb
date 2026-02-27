@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Comments', type: :request do
+RSpec.describe 'Comments' do
   let(:user) { create(:user) }
   let(:other_user) { create(:user) }
   let(:post_record) { create(:post) }
@@ -37,7 +37,7 @@ RSpec.describe 'Comments', type: :request do
              params: { comment: { content: '' } }
       end.not_to change(Comment, :count)
 
-      expect(response).to have_http_status(:unprocessable_entity) # 422
+      expect(response).to have_http_status(:unprocessable_content) # 422
       # render 'posts/show' なのでテンプレまで見るならこれ
       expect(response.body).to include('name="comment[content]"')
     end

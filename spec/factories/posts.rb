@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :post do
-    association :user
+    user
     content { Faker::Lorem.paragraph }
 
     # ✅ デフォルトで画像を付ける（image 必須バリデーション対策）
@@ -10,7 +10,7 @@ FactoryBot.define do
       next if post.image.attached?
 
       post.image.attach(
-        io: File.open(Rails.root.join('spec/fixtures/files/雪豹.png')),
+        io: Rails.root.join('spec/fixtures/files/雪豹.png').open,
         filename: '雪豹.png',
         content_type: 'image/png'
       )

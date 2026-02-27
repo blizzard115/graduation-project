@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Tag, type: :model do
+RSpec.describe Tag do
   it 'is valid with a factory' do
     tag = build(:tag)
     expect(tag).to be_valid
