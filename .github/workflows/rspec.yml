@@ -49,5 +49,8 @@ jobs:
           set -euxo pipefail
           bin/rails db:prepare
 
+      - name: Precompile assets
+        run: bin/rails assets:precompile
+        
       - name: Run RSpec
         run: bundle exec rspec
