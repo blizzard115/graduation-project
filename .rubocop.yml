@@ -21,3 +21,6 @@ RSpec/MultipleMemoizedHelpers:
 Rails/Exit:
   Exclude:
     - "spec/rails_helper.rb"
+
+Style/Documentation:
+  Enabled: false

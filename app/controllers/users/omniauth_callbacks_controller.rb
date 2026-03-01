@@ -8,22 +8,15 @@ module Users
       auth = auth.deep_symbolize_keys
 
       email = auth.dig(:info, :email) || auth.dig(:extra, :raw_info, :email)
-      return redirect_to new_user_session_path, alert: 'Googleからメールが取れませんでした' if email.blank?
+      return redirect_to new_user_session_path, alert: t('flash.oauth.email_missing') if email.blank?
 
-      # ✅ 1) まず email で既存ユーザーを探す
       user = User.find_by(email: email)
-
-      # ✅ 2) いなければ provider+uid で探す（または新規）
       user ||= User.find_or_initialize_by(provider: auth[:provider], uid: auth[:uid])
 
-      # ✅ 3) 既存ユーザーなら provider/uid を紐付ける（未設定なら）
       user.provider = auth[:provider] if user.provider.blank?
       user.uid      = auth[:uid]      if user.uid.blank?
 
-      # ✅ email は空なら埋める（空文字対策で blank?）
       user.email = email if user.email.blank?
-
-      # ✅ パスワード未設定なら作る
       user.password = Devise.friendly_token[0, 20] if user.encrypted_password.blank?
 
       user.save!
@@ -31,11 +24,11 @@ module Users
       sign_in_and_redirect user, event: :authentication
     rescue StandardError => e
       Rails.logger.error("[Google OAuth] #{e.class}: #{e.message}")
-      redirect_to new_user_session_path, alert: 'Googleログインに失敗しました'
+      redirect_to new_user_session_path, alert: t('flash.oauth.failure')
     end
 
     def failure
-      redirect_to new_user_session_path, alert: 'Googleログインに失敗しました'
+      redirect_to new_user_session_path, alert: t('flash.oauth.failure')
     end
   end
 end

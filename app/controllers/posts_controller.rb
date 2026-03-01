@@ -30,7 +30,7 @@ class PostsController < ApplicationController
 
     if @post.save
       @post.save_tags!(params.dig(:post, :tag_names))
-      redirect_to posts_path, notice: '投稿しました'
+      redirect_to posts_path, notice: t('flash.posts.created')
     else
       render :new, status: :unprocessable_content
     end
@@ -40,7 +40,7 @@ class PostsController < ApplicationController
     @post = Post.find(params[:id])
     if @post.update(post_params)
       @post.save_tags!(params.dig(:post, :tag_names))
-      redirect_to @post, notice: '更新しました'
+      redirect_to @post, notice: t('flash.posts.updated')
     else
       render :edit, status: :unprocessable_content
     end
@@ -49,7 +49,7 @@ class PostsController < ApplicationController
   def destroy
     @post = Post.find(params[:id])
     @post.destroy
-    redirect_to posts_path, notice: '削除しました'
+    redirect_to posts_path, notice: t('flash.posts.deleted')
   end
 
   private
@@ -59,7 +59,7 @@ class PostsController < ApplicationController
   end
 
   def authorize_post!
-    redirect_to posts_path, alert: '権限がありません' unless @post.user == current_user
+    redirect_to posts_path, alert: t('flash.posts.forbidden') unless @post.user == current_user
   end
 
   def post_params

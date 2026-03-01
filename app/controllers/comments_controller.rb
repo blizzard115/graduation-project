@@ -10,7 +10,7 @@ class CommentsController < ApplicationController
     @comment.user = current_user
 
     if @comment.save
-      redirect_to post_path(@post), notice: 'コメントを投稿しました'
+      redirect_to post_path(@post), notice: t('flash.comments.created')
     else
       @comments = @post.comments.order(created_at: :desc) # 再取得
       render 'posts/show', status: :unprocessable_content
@@ -20,9 +20,9 @@ class CommentsController < ApplicationController
   def destroy
     if @comment.user == current_user
       @comment.destroy
-      redirect_to post_path(@post), notice: 'コメントを削除しました'
+      redirect_to post_path(@post), notice: t('flash.comments.deleted')
     else
-      redirect_to post_path(@post), alert: '削除できません'
+      redirect_to post_path(@post), alert: t('flash.comments.forbidden')
     end
   end
 
