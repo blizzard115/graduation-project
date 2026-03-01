@@ -13,6 +13,7 @@ ja:
     oauth:
       failure: "Googleログインに失敗しました"
       email_missing: "Googleからメールが取れませんでした"
+      google_failed: "Googleログインに失敗しました"
 
   activerecord:
     errors:

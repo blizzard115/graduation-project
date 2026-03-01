@@ -1,8 +1,13 @@
 # frozen_string_literal: true
 
 class Relationship < ApplicationRecord
-  belongs_to :follower, class_name: 'User'
-  belongs_to :followed, class_name: 'User'
+  belongs_to :follower,
+             class_name: 'User',
+             inverse_of: :active_relationships
+
+  belongs_to :followed,
+             class_name: 'User',
+             inverse_of: :passive_relationships
 
   validates :follower_id, uniqueness: { scope: :followed_id }
   validate :cannot_follow_self

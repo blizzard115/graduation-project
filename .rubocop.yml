@@ -24,3 +24,15 @@ Rails/Exit:
 
 Style/Documentation:
   Enabled: false
+
+Metrics/BlockLength:
+  Exclude:
+    - "config/environments/development.rb"
+
+Metrics/MethodLength:
+  Exclude:
+    - "db/migrate/*"
+
+Metrics/AbcSize:
+  Exclude:
+    - "db/migrate/*"
