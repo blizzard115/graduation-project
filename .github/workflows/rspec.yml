@@ -59,7 +59,7 @@ jobs:
       - name: Setup database
         run: |
           set -euxo pipefail
-          bin/rails db:prepare
+          bin/rails db:prepare --trace
 
       - name: Precompile assets
         run: bin/rails assets:precompile
