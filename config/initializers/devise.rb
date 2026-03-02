@@ -14,7 +14,6 @@ Devise.setup do |config|
   # confirmation, reset password and unlock tokens in the database.
   # Devise will use the `secret_key_base` as its `secret_key`
   # by default. You can change it below and use your own secret key.
-  # config.secret_key = '89616c46cd5c4c348c47ca4be0bd3dcb36cf9d5d048ce775af91cee22859f1451af9a23558319092a61541a3dd2d19462f64daf794c1ef685dff4283a5e0815d'
 
   # ==> Controller configuration
   # Configure the parent class to the devise controllers.
@@ -124,9 +123,6 @@ Devise.setup do |config|
   # algorithm), the cost increases exponentially with the number of stretches (e.g.
   # a value of 20 is already extremely slow: approx. 60 seconds for 1 calculation).
   config.stretches = Rails.env.test? ? 1 : 12
-
-  # Set up a pepper to generate the hashed password.
-  # config.pepper = '875e8e994ce05c181593c01400f2f064a6452307ca98ca8008c5fec9ce7256f398782089c0b90975410602da557f18ac4dcd6b8112dcbb36e9fd11a52ed984df'
 
   # Send a notification to the original email when the user's email is changed.
   # config.send_email_changed_notification = false
@@ -310,11 +306,11 @@ Devise.setup do |config|
   # When set to false, does not sign a user in automatically after their password is
   # changed. Defaults to true, so a user is signed in automatically after changing a password.
   # config.sign_in_after_change_password = true
-  config.omniauth_path_prefix = "/users/auth"
-  OmniAuth.config.path_prefix = "/users/auth"
+  config.omniauth_path_prefix = '/users/auth'
+  OmniAuth.config.path_prefix = '/users/auth'
   config.omniauth :google_oauth2,
-    ENV.fetch("GOOGLE_CLIENT_ID"),
-    ENV.fetch("GOOGLE_CLIENT_SECRET"),
-    scope: "email,profile",
-    prompt: "select_account"
+                  ENV.fetch('GOOGLE_CLIENT_ID'),
+                  ENV.fetch('GOOGLE_CLIENT_SECRET'),
+                  scope: 'email,profile',
+                  prompt: 'select_account'
 end

@@ -1,5 +1,20 @@
 ---
 ja:
+  flash:
+    comments:
+      created: "コメントを投稿しました"
+      deleted: "コメントを削除しました"
+      forbidden: "削除できません"
+    posts:
+      created: "投稿しました"
+      updated: "投稿を更新しました"
+      deleted: "投稿を削除しました"
+      forbidden: "権限がありません"
+    oauth:
+      failure: "Googleログインに失敗しました"
+      email_missing: "Googleからメールが取れませんでした"
+      google_failed: "Googleログインに失敗しました"
+
   activerecord:
     errors:
       messages:
@@ -17,7 +32,7 @@ ja:
     - 金
     - 土
     abbr_month_names:
-    - 
+    -
     - 1月
     - 2月
     - 3月
@@ -43,7 +58,7 @@ ja:
       long: "%Y年%m月%d日(%a)"
       short: "%m/%d"
     month_names:
-    - 
+    -
     - 1月
     - 2月
     - 3月

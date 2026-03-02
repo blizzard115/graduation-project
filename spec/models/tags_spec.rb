@@ -1,12 +1,14 @@
-require "rails_helper"
+# frozen_string_literal: true
 
-RSpec.describe Tag, type: :model do
-  it "is valid with a factory" do
+require 'rails_helper'
+
+RSpec.describe Tag do
+  it 'is valid with a factory' do
     tag = build(:tag)
     expect(tag).to be_valid
   end
 
-  it "is invalid without a name" do
+  it 'is invalid without a name' do
     tag = build(:tag, name: nil)
     expect(tag).not_to be_valid
   end
