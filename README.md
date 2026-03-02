@@ -53,6 +53,7 @@
 def to_param
   uuid
 end
+```
 
 ### 2️⃣ フォロー機能の自己参照設計
 ```ruby
@@ -89,6 +90,8 @@ Figma：https://www.figma.com/design/MOaiD71mhWoOIQzpAOrrDl/%E5%8D%92%E6%A5%AD%E
 
 ## ER図
 https://i.gyazo.com/f0d1a4a58327cb92d29aaa3b37295d8a.png
+
+---
 
 ### 🧪 テスト実行
 ```bash
