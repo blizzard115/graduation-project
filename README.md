@@ -1,4 +1,4 @@
-# Stylink - コーデ共有アプリ
+# Stylog - コーデ共有アプリ
 
 ファッションコーディネートを投稿・共有できるRailsアプリケーション。
 拡張性・保守性・セキュリティを意識して設計しました。
@@ -53,7 +53,6 @@
 def to_param
   uuid
 end
-```
 
 ### 2️⃣ フォロー機能の自己参照設計
 ```ruby
@@ -82,7 +81,7 @@ Post.includes(:user, :likes, :tags, image_attachment: :blob)
  - RSpec（request / system spec）
  - FactoryBot
  - Docker環境で実行
- - CI連携済み
+ - GitHub ActionsによるCI連携
 
 ### 🗄 データベース設計
 ## 画面遷移図
@@ -92,16 +91,11 @@ Figma：https://www.figma.com/design/MOaiD71mhWoOIQzpAOrrDl/%E5%8D%92%E6%A5%AD%E
 https://i.gyazo.com/f0d1a4a58327cb92d29aaa3b37295d8a.png
 
 ### 🧪 テスト実行
-```docker compose exec web bundle exec rspec
+```bash
+docker compose exec web bundle exec rspec
 ```
 
 ### 🧹 静的解析
-```docker compose exec web bundle exec rubocop
+```bash
+docker compose exec web bundle exec rubocop
 ```
-
-## 使用する技術スタック
-- フレームワーク：Ruby on Rails 7
-- 言語：Ruby 3.1
-- DB：PostgreSQL
-- デプロイ：Render または Fly.io
-- 使用予定ライブラリ：devise、ActiveStorage、rubocop、tailwindcss or bootstrap
