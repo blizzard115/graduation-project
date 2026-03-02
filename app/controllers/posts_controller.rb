@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 class PostsController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
   before_action :set_post, only: %i[show edit update destroy]
@@ -14,7 +12,6 @@ class PostsController < ApplicationController
   end
 
   def show
-    @post = Post.find(params[:id])
   end
 
   def new
@@ -22,7 +19,6 @@ class PostsController < ApplicationController
   end
 
   def edit
-    @post = Post.find(params[:id])
   end
 
   def create
@@ -37,7 +33,6 @@ class PostsController < ApplicationController
   end
 
   def update
-    @post = Post.find(params[:id])
     if @post.update(post_params)
       @post.save_tags!(params.dig(:post, :tag_names))
       redirect_to @post, notice: t('flash.posts.updated')
@@ -47,7 +42,6 @@ class PostsController < ApplicationController
   end
 
   def destroy
-    @post = Post.find(params[:id])
     @post.destroy
     redirect_to posts_path, notice: t('flash.posts.deleted')
   end
@@ -55,11 +49,7 @@ class PostsController < ApplicationController
   private
 
   def set_post
-    @post = Post.find(params[:id])
-  end
-
-  def authorize_post!
-    redirect_to posts_path, alert: t('flash.posts.forbidden') unless @post.user == current_user
+    @post = Post.find_by!(uuid: params[:id])
   end
 
   def post_params
