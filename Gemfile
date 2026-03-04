@@ -22,6 +22,9 @@ gem 'omniauth-google-oauth2'
 gem 'omniauth-rails_csrf_protection'
 gem 'rails-i18n'
 
+gem "image_processing", "~> 1.12"
+gem "mini_magick"
+
 group :development, :test do
   gem 'debug', platforms: %i[mri windows]
 

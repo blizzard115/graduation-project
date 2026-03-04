@@ -84,6 +84,15 @@ Post.includes(:user, :likes, :tags, image_attachment: :blob)
  - Docker環境で実行
  - GitHub ActionsによるCI連携
 
+### 6️⃣ 画像処理
+
+ ActiveStorage + MiniMagick を使用し  
+ 投稿画像は用途に応じてvariantを生成しています。
+  - 一覧表示用サムネイル
+  - 詳細表示用画像
+
+これによりページ表示のパフォーマンスを最適化しています。
+
 ### 🗄 データベース設計
 ## 画面遷移図
 Figma：https://www.figma.com/design/MOaiD71mhWoOIQzpAOrrDl/%E5%8D%92%E6%A5%AD%E5%88%B6%E4%BD%9C?node-id=0-1&t=UyLnZ2JTuP0qgDMV-1
