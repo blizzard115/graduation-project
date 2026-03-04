@@ -1,7 +1,7 @@
 <div class="pin">
   <%= link_to post_path(post), class: "pin__media d-block" do %>
     <% if post.image.attached? %>
-      <%= image_tag post.image, class: "pin__img" %>
+      <%= image_tag post.image_masonry.processed, class: "pin__img", loading: "lazy" %>
     <% else %>
       <div class="pin__placeholder">No Image</div>
     <% end %>

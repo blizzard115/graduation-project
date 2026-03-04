@@ -7,7 +7,7 @@
 
         <div class="card-body p-0">
           <% if @post.image.attached? %>
-            <%= image_tag @post.image, class: "post-show-img" %>
+            <%= image_tag @post.image_show.processed, class: "post-show-img" %>
           <% end %>
         </div>
 
