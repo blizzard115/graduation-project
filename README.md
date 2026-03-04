@@ -1,7 +1,9 @@
 # Stylog - コーデ共有アプリ
 
-ファッションコーディネートを投稿・共有できるRailsアプリケーション。
-拡張性・保守性・セキュリティを意識して設計しました。
+ファッションコーディネートを画像付きで投稿・共有できるSNSアプリです。
+ユーザーは投稿・いいね・コメント・フォローを通じてコーディネートを共有できます。
+
+Railsの設計原則を意識し、拡張性・保守性・パフォーマンスを考慮して実装しました。
 
 ---
 
@@ -19,6 +21,7 @@
 
 | 種別 | 技術 |
 |------|------|
+| Frontend | ERB / Bootstrap |
 | Backend | Ruby 3.3 / Rails 7.1 |
 | DB | PostgreSQL 16 |
 | 認証 | Devise / OmniAuth(Google) |
@@ -42,6 +45,16 @@
 - ユーザーページ（投稿一覧）
 
 ---
+
+## 🚀 開発環境構築
+
+git clone https://github.com/blizzard115/graduation-project.git
+cd stylog
+```bash
+docker compose build
+docker compose up
+docker compose exec web bin/rails db:create db:migrate
+```
 
 ## 🏗 設計の工夫
 
@@ -85,13 +98,19 @@ Post.includes(:user, :likes, :tags, image_attachment: :blob)
  - GitHub ActionsによるCI連携
 
 ### 6️⃣ 画像処理
+ActiveStorage + MiniMagick を使用し
+投稿画像は用途ごとに variant を生成しています。
 
- ActiveStorage + MiniMagick を使用し  
- 投稿画像は用途に応じてvariantを生成しています。
-  - 一覧表示用サムネイル
-  - 詳細表示用画像
+- 一覧表示：軽量サムネイル
+- 詳細表示：高解像度画像
 
-これによりページ表示のパフォーマンスを最適化しています。
+画像サイズを最適化することでページ表示速度を改善しています。
+
+### 7️⃣ セキュリティ対策
+
+- Strong Parametersによるパラメータ制御
+- 公開URLにUUIDを使用
+- Deviseによる認証管理
 
 ### 🗄 データベース設計
 ## 画面遷移図
