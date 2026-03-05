@@ -52,6 +52,10 @@ class PostsController < ApplicationController
     @post = Post.find_by!(uuid: params[:id])
   end
 
+  def authorize_post!
+    redirect_to posts_path, alert: t('flash.posts.forbidden') unless @post.user == current_user
+  end
+
   def post_params
     params.require(:post).permit(:content, :image)
   end
