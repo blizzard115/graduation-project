@@ -1,4 +1,4 @@
-<%= form_with model: post, local: true, data: { controller: "preview" }, html: { class: "post-form" } do |f| %>
+<%= form_with model: post, local: true, data: { controller: "preview loading", action: "submit->loading#submit" }, html: { class: "post-form" } do |f| %>
   <% if post.errors.any? %>
     <div class="alert alert-danger">
       <ul class="mb-0">
@@ -31,7 +31,7 @@
 
           <div class="d-flex gap-2 mt-3">
             <%= link_to "キャンセル", posts_path, class: "btn btn-outline-secondary" %>
-            <%= f.submit(post.persisted? ? "更新する" : "投稿する", class: "btn btn-primary px-4 ms-auto") %>
+            <%= f.submit(post.persisted? ? "更新する" : "投稿する", class: "btn btn-primary px-4 ms-auto", data: { turbo_submits_with: "投稿中..." }) %>
           </div>
         </div>
 
@@ -46,12 +46,16 @@
                     required: post.new_record?,
                     class: "post-preview-input",
                     data: { preview_target: "input" } %>
-              <%= image_tag(
-                    (post.image.attached? ? post.image : ""),
-                    class: "post-preview-img #{post.image.attached? ? "" : "d-none"}",
-                    data: { preview_target: "img" },
-                    alt: "preview"
-                  ) %>
+              <% if post.image.attached? %>
+                <%= image_tag post.image,
+                      class: "post-preview-img",
+                      data: { preview_target: "img" },
+                      alt: "preview" %>
+              <% else %>
+                <img class="post-preview-img d-none"
+                    data-preview-target="img"
+                    alt="preview">
+              <% end %>
               <div class="post-preview-placeholder text-muted <%= post.image.attached? ? "d-none" : "" %>"
                   data-preview-target="placeholder">
                 <div class="mb-2">
