@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   get 'static/privacy'
   devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
   get '/users/auth/google_oauth2', to: redirect('/auth/google_oauth2')
-  resources :posts do
+  resources :posts, param: :uuid do
     resource :like, only: %i[create destroy]
     resources :comments, only: %i[create destroy]
   end

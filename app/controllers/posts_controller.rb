@@ -49,7 +49,7 @@ class PostsController < ApplicationController
   private
 
   def set_post
-    @post = Post.find_by!(uuid: params[:id])
+    @post = Post.find_by!(uuid: params[:uuid])
   end
 
   def authorize_post!
