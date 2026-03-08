@@ -24,6 +24,7 @@ gem 'rails-i18n'
 
 gem "image_processing", "~> 1.12"
 gem "mini_magick"
+gem "aws-sdk-s3", require: false
 
 group :development, :test do
   gem 'debug', platforms: %i[mri windows]
