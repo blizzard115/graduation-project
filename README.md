@@ -140,10 +140,10 @@ docker compose exec web bundle exec rubocop
 ## 📷 画面イメージ
 
 ### 投稿一覧
-![posts](https://i.gyazo.com/5ead5d3ec79208105f9f46225cb41c3d.png)
+![posts](https://i.gyazo.com/9fb53d11db9ac47bc823a9ee90115ff1.jpg)
 
 ### 投稿詳細
-![post-show](https://i.gyazo.com/cd6c85950f922bdcb1d7df1d08366a3e.png)
+![post-show](https://i.gyazo.com/6fbcd07279ca61d9ef891fd5cced70fe.jpg)
 
 ### ユーザーページ
-![user](https://i.gyazo.com/6b6ff4078ccf98f32f80772afae394bc.png)
+![user](https://i.gyazo.com/ffa34b244887c46866e880e4d0371d09.jpg)
