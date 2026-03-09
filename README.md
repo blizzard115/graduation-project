@@ -1,6 +1,9 @@
 # Stylog - コーデ共有アプリ
 
 ファッションコーディネートを画像付きで投稿・共有できるSNSアプリです。
+
+日々のコーディネートを「写真1枚＋ひとこと」で気軽に記録でき、
+他ユーザーのコーディネートを参考に新しいスタイルを発見できます。
 ユーザーは投稿・いいね・コメント・フォローを通じてコーディネートを共有できます。
 
 Railsの設計原則を意識し、拡張性・保守性・パフォーマンスを考慮して実装しました。
@@ -9,7 +12,7 @@ Railsの設計原則を意識し、拡張性・保守性・パフォーマンス
 
 ## 🌐 デモ
 
-（デプロイURLを記載）
+[Stylog デモサイト](https://graduation-project-mjhg.onrender.com)
 
 テストアカウント
 - email: test@example.com
@@ -25,10 +28,10 @@ Railsの設計原則を意識し、拡張性・保守性・パフォーマンス
 | Backend | Ruby 3.3 / Rails 7.1 |
 | DB | PostgreSQL 16 |
 | 認証 | Devise / OmniAuth(Google) |
-| 画像管理 | ActiveStorage |
+| 画像管理 | ActiveStorage / Amazon S3 |
 | テスト | RSpec / FactoryBot |
 | 静的解析 | RuboCop |
-| CI | GitHub Actions |
+| CI | GitHub Actions（RSpec自動実行） |
 | 環境構築 | Docker |
 
 ---
@@ -48,9 +51,10 @@ Railsの設計原則を意識し、拡張性・保守性・パフォーマンス
 
 ## 🚀 開発環境構築
 
-git clone https://github.com/blizzard115/graduation-project.git
-cd stylog
 ```bash
+git clone https://github.com/blizzard115/graduation-project.git
+cd graduation-project
+
 docker compose build
 docker compose up
 docker compose exec web bin/rails db:create db:migrate
@@ -112,12 +116,14 @@ ActiveStorage + MiniMagick を使用し
 - 公開URLにUUIDを使用
 - Deviseによる認証管理
 
-### 🗄 データベース設計
-## 画面遷移図
-Figma：https://www.figma.com/design/MOaiD71mhWoOIQzpAOrrDl/%E5%8D%92%E6%A5%AD%E5%88%B6%E4%BD%9C?node-id=0-1&t=UyLnZ2JTuP0qgDMV-1
+## 🗄 データベース設計
 
-## ER図
-https://i.gyazo.com/f0d1a4a58327cb92d29aaa3b37295d8a.png
+### 画面遷移図
+Figma
+https://www.figma.com/design/MOaiD71mhWoOIQzpAOrrDl/%E5%8D%92%E6%A5%AD%E5%88%B6%E4%BD%9C?node-id=0-1&t=UyLnZ2JTuP0qgDMV-1
+
+### ER図
+![ER図](https://i.gyazo.com/f0d1a4a58327cb92d29aaa3b37295d8a.png)
 
 ---
 
@@ -130,3 +136,14 @@ docker compose exec web bundle exec rspec
 ```bash
 docker compose exec web bundle exec rubocop
 ```
+
+## 📷 画面イメージ
+
+### 投稿一覧
+![posts](https://i.gyazo.com/5ead5d3ec79208105f9f46225cb41c3d.png)
+
+### 投稿詳細
+![post-show](https://i.gyazo.com/cd6c85950f922bdcb1d7df1d08366a3e.png)
+
+### ユーザーページ
+![user](https://i.gyazo.com/6b6ff4078ccf98f32f80772afae394bc.png)
