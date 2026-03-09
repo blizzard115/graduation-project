@@ -102,6 +102,7 @@ Post.includes(:user, :likes, :tags, image_attachment: :blob)
  - GitHub ActionsによるCI連携
 
 ### 6️⃣ 画像処理
+
 ActiveStorage + MiniMagick を使用し
 投稿画像は用途ごとに variant を生成しています。
 
