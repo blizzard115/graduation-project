@@ -38,12 +38,3 @@
     </div>
   </div>
 </div>
-
-<% if post.tags.any? %>
-  <div class="d-flex flex-wrap gap-1 mt-2">
-    <% post.tags.each do |tag| %>
-      <%= link_to "##{tag.name}", tag_path(tag.name),
-                  class: "badge rounded-pill text-bg-light border text-decoration-none" %>
-    <% end %>
-  </div>
-<% end %>
