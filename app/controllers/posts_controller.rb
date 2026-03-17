@@ -4,7 +4,7 @@ class PostsController < ApplicationController
   before_action :authorize_post!, only: %i[edit update destroy]
 
   def index
-    @posts = Post.includes(:user, :likes, :tags, image_attachment: :blob).order(created_at: :desc)
+    @posts = Post.includes(:likes, :tags, image_attachment: :blob, user: [avatar_attachment: :blob]).order(created_at: :desc)
 
     return if params[:tag].blank?
 
@@ -12,6 +12,7 @@ class PostsController < ApplicationController
   end
 
   def show
+    @comments = @post.comments.includes(:user).order(created_at: :desc)
   end
 
   def new
@@ -49,7 +50,7 @@ class PostsController < ApplicationController
   private
 
   def set_post
-    @post = Post.find_by!(uuid: params[:uuid])
+  @post = Post.includes(:tags, :likes, image_attachment: :blob, user: [avatar_attachment: :blob], comments: :user).find_by!(uuid: params[:uuid])
   end
 
   def authorize_post!
@@ -57,6 +58,6 @@ class PostsController < ApplicationController
   end
 
   def post_params
-    params.require(:post).permit(:content, :image)
+    params.require(:post).permit(:content, :image, :worn_on, :temperature, :weather, :scene)
   end
 end
