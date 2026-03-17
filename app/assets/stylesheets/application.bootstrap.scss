@@ -630,6 +630,13 @@
   opacity: .8;
 }
 
+@media (max-width: 768px){
+  .pin__meta {
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+  }
+}
 
 /* =========================================================
    16) LPの横幅制御（全パネルで使う内側コンテナ）
