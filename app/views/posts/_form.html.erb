@@ -72,15 +72,19 @@
                     required: post.new_record?,
                     class: "post-preview-input",
                     data: { preview_target: "input" } %>
-              <% if post.image.attached? %>
+              <% if post.persisted? && post.image.attached? %>
                 <%= image_tag post.image,
                       class: "post-preview-img",
                       data: { preview_target: "img" },
                       alt: "preview" %>
               <% else %>
-                <img class="post-preview-img d-none"
-                    data-preview-target="img"
-                    alt="preview">
+                <%= image_tag "",
+                      class: "post-preview-img d-none",
+                      data: { preview_target: "img" },
+                      alt: "preview" %>
+                <div class="post-preview-placeholder" data-preview-target="placeholder">
+                  <p class="mb-0 text-muted">画像を選択してください</p>
+                </div>
               <% end %>
               <div class="post-preview-placeholder text-muted <%= post.image.attached? ? "d-none" : "" %>"
                   data-preview-target="placeholder">

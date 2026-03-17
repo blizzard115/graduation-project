@@ -83,6 +83,14 @@ class Post < ApplicationRecord
     }[scene]
   end
 
+  after_initialize :set_defaults, if: :new_record?
+
+  def set_defaults
+    self.worn_on ||= Date.current
+    self.weather ||= :sunny
+    self.scene ||= :casual_outing
+  end
+
   delegate :count, to: :likes, prefix: true
 
   private

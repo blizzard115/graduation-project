@@ -130,10 +130,12 @@
                   <div class="d-flex justify-content-between align-items-start">
                     <div>
                       <strong><%= comment.user.username || "名無しユーザー" %></strong>
-                      <span class="text-muted small">（<%= comment.created_at.strftime("%Y/%m/%d %H:%M") %>）</span>
+                        <% if comment.created_at.present? %>
+                          <span class="text-muted small">（<%= comment.created_at.strftime("%Y/%m/%d %H:%M") %>）</span>
+                        <% end %>
                     </div>
 
-                    <% if user_signed_in? && comment.user == current_user %>
+                    <% if comment.persisted? && user_signed_in? && comment.user == current_user %>
                       <%= button_to "削除", post_comment_path(@post, comment),
                             method: :delete,
                             data: { confirm: "削除しますか？" },

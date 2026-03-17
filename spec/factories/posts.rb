@@ -4,8 +4,12 @@ FactoryBot.define do
   factory :post do
     user
     content { Faker::Lorem.paragraph }
+    worn_on { Date.current }
+    temperature { 18 }
+    weather { :sunny }
+    scene { :casual_outing }
 
-    # ✅ デフォルトで画像を付ける（image 必須バリデーション対策）
+    # デフォルトで画像を付ける（image 必須バリデーション対策）
     after(:build) do |post|
       next if post.image.attached?
 
