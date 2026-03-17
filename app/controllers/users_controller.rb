@@ -3,27 +3,44 @@
 class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
-    @posts = @user.posts.order(created_at: :desc)
+    @posts = @user.posts.includes(
+      :likes,
+      :tags,
+      image_attachment: :blob,
+      user: [avatar_attachment: :blob]
+    ).order(created_at: :desc)
   end
 
   def likes
     @user = User.find(params[:id])
 
-    # いいねした投稿を新しい順で表示（N+1回避）
     @posts = Post
              .joins(:likes)
              .where(likes: { user_id: @user.id })
-             .includes(:user, image_attachment: :blob)
+             .includes(
+               :likes,
+               :tags,
+               image_attachment: :blob,
+               user: [avatar_attachment: :blob]
+             )
              .order('likes.created_at DESC')
   end
 
   def following
     @user = User.find(params[:id])
-    @users = @user.following
+    @users = @user.following.includes(avatar_attachment: :blob)
+
+    if user_signed_in?
+      @following_relationships = current_user.active_relationships.where(followed_id: @users.map(&:id)).index_by(&:followed_id)
+    end
   end
 
   def followers
     @user = User.find(params[:id])
-    @users = @user.followers
+    @users = @user.followers.includes(avatar_attachment: :blob)
+
+    if user_signed_in?
+      @following_relationships = current_user.active_relationships.where(followed_id: @users.map(&:id)).index_by(&:followed_id)
+    end
   end
 end
