@@ -1,0 +1,44 @@
+<div class="container py-4">
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-11 col-lg-9 col-xl-8">
+      <div class="auth-card shadow-sm">
+        <div class="row g-0 align-items-stretch">
+
+          <!-- 左：フォーム -->
+          <div class="col-12 col-lg-6">
+            <div class="auth-card__body h-100">
+              <div class="mb-4">
+                <div class="auth-eyebrow">Stylog</div>
+                <h1 class="auth-title"><%= title %></h1>
+                <% if subtitle.present? %>
+                  <p class="auth-subtitle"><%= subtitle %></p>
+                <% end %>
+              </div>
+
+              <%= yield %>
+
+              <div class="auth-links mt-4">
+                <%= render "devise/shared/links" %>
+              </div>
+            </div>
+          </div>
+
+          <!-- 右：ビジュアル -->
+          <div class="col-12 col-lg-6">
+            <div class="auth-visual h-100">
+              <div class="auth-visual__inner">
+                <div class="auth-visual__eyebrow">Share your style</div>
+                <h2 class="auth-visual__title">日々の服選びを、もっと気軽に。</h2>
+                <p class="auth-visual__text">
+                  コーデを記録して、振り返って、次の服選びに活かせる。<br>
+                  Stylogは、投稿SNSとコーデ記録をつなぐアプリです。
+                </p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
