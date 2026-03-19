@@ -2,11 +2,11 @@
 
 class HomeController < ApplicationController
   def index
-    @latest_posts = Post
-                    .includes(:user, image_attachment: :blob)
-                    .with_attached_image
-                    .order(created_at: :desc)
-                    .limit(12)
-    @collage_posts = @latest_posts.take(3)
+    posts = Post.includes(:user, :tags, image_attachment: :blob)
+            .order(created_at: :desc)
+
+    @collage_posts = posts.limit(3)
+    @preview_post  = posts.offset(3).first || posts.first
+    @latest_posts  = posts.limit(12)
   end
 end

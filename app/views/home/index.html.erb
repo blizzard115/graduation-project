@@ -114,29 +114,62 @@
           </div>
 
           <div class="col-lg-6">
-            <!-- 右側：投稿プレビュー（ダミー） -->
             <div class="lp-mock">
               <div class="lp-mock__header">投稿プレビュー</div>
 
               <div class="lp-mock__body">
-                <div class="lp-preview">
-                  <div class="lp-preview__img" aria-hidden="true"></div>
-
-                  <div class="lp-preview__content">
-                    <div class="lp-preview__caption">今日はモノトーンでまとめた</div>
-
-                    <div class="lp-preview__tags">
-                      <span class="lp-tag">monochrome</span>
-                      <span class="lp-tag">street</span>
-                      <span class="lp-tag">vintage</span>
+                <% if @preview_post.present? %>
+                  <div class="lp-preview">
+                    <div class="lp-preview__img-wrap">
+                      <% if @preview_post.image.attached? %>
+                        <%= image_tag @preview_post.image, class: "lp-preview__img" %>
+                      <% else %>
+                        <div class="lp-preview__img" aria-hidden="true"></div>
+                      <% end %>
                     </div>
 
-                    <div class="lp-preview__footer">
-                      <span class="lp-preview__user">@stylog_user</span>
-                      <span class="lp-preview__like"><i class="fa-solid fa-heart"></i> 12</span>
+                    <div class="lp-preview__content">
+                      <div class="lp-preview__caption">
+                        <%= truncate(@preview_post.content.presence || "今日のコーデ", length: 40) %>
+                      </div>
+
+                      <% if @preview_post.tags.any? %>
+                        <div class="lp-preview__tags">
+                          <% @preview_post.tags.limit(3).each do |tag| %>
+                            <span class="lp-tag"><%= tag.name %></span>
+                          <% end %>
+                        </div>
+                      <% end %>
+
+                      <div class="lp-preview__footer">
+                        <span class="lp-preview__user">
+                          @<%= @preview_post.user.username.presence || "stylog_user" %>
+                        </span>
+                        <span class="lp-preview__like">
+                          <i class="fa-solid fa-heart"></i> <%= @preview_post.likes_count %>
+                        </span>
+                      </div>
                     </div>
                   </div>
-                </div>
+                <% else %>
+                  <div class="lp-preview">
+                    <div class="lp-preview__img-wrap">
+                      <div class="lp-preview__img" aria-hidden="true"></div>
+                    </div>
+
+                    <div class="lp-preview__content">
+                      <div class="lp-preview__caption">今日のコーデを投稿してみよう</div>
+                      <div class="lp-preview__tags">
+                        <span class="lp-tag">style</span>
+                        <span class="lp-tag">daily</span>
+                      </div>
+                      <div class="lp-preview__footer">
+                        <span class="lp-preview__user">@stylog_user</span>
+                        <span class="lp-preview__like"><i class="fa-solid fa-heart"></i> 0</span>
+                      </div>
+                    </div>
+                  </div>
+                <% end %>
               </div>
             </div>
           </div>

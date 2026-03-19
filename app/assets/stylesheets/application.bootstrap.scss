@@ -751,46 +751,60 @@
    21) Panel2：ダミー投稿プレビュー（中身）
    - 右側カードの「投稿っぽいUI」を作る
    ========================================================= */
-.lp-preview{
+.lp-preview {
+  display: grid;
+  gap: 16px;
+}
+
+.lp-preview__img-wrap {
+  width: 100%;
+  height: 420px;
+  border-radius: 18px;
+  background: linear-gradient(180deg, #f7f8fa 0%, #eef3f6 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+
+.lp-preview__img-wrap::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(0,0,0,.04), transparent 70%);
+  pointer-events: none;
+}
+
+.lp-preview__img {
+  max-width: 72%;
+  max-height: 100%;
+  object-fit: contain;
+  display: block;
+  position: relative;
+  z-index: 1;
+  border-radius: 14px;
+  box-shadow: 0 12px 30px rgba(0,0,0,.14);
+}
+
+.lp-preview__content {
   display: grid;
   gap: 12px;
-  transition: transform .15s ease, box-shadow .15s ease;
 }
 
-.lp-preview__img{
-  height: 280px;
-  border-radius: 18px;
-  background: linear-gradient(135deg, #111, #666);
-}
-
-.lp-preview__content{
-  display: grid;
-  gap: 10px;
-}
-
-.lp-preview__caption{
+.lp-preview__caption {
   font-weight: 800;
   letter-spacing: .01em;
-  line-height: 1.4;
+  line-height: 1.5;
 }
 
-.lp-preview__tags{
+.lp-preview__tags {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
 }
 
-.lp-tag{
-  display: inline-flex;
-  align-items: center;
-  padding: 6px 10px;
-  border-radius: 999px;
-  background: rgba(0,0,0,.06);
-  font-weight: 700;
-  font-size: .9rem;
-}
-
-.lp-preview__footer{
+.lp-preview__footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
