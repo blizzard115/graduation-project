@@ -1,77 +1,80 @@
 <main data-controller="scrollspy" data-scrollspy-offset-value="120">
   <!-- PANEL 1 -->
   <section id="discover" class="lp-panel lp-panel--discover" data-scrollspy-target="section">
-    <div class="container-fluid px-0 py-5">
-      <div class="lp-inner">
-        <div class="row align-items-start g-5">
-          <div class="col-lg-6">
-            <p class="lp-eyebrow">Stylog</p>
-            <h1 class="lp-title">コーデを、もっと気軽に。</h1>
-            <p class="lp-lead">写真1枚 + ひとこと。日常のスタイルを残して、みんなのコーデから発見しよう。</p>
+  <div class="container-fluid px-0 py-5">
+    <div class="lp-inner">
+      <div class="row align-items-start g-5">
+        <div class="col-lg-6">
+          <p class="lp-eyebrow">Stylog</p>
+          <h1 class="lp-title">コーデを、<br>もっと気軽に。</h1>
+          <p class="lp-lead">日々のコーデを記録して、みんなのスタイルから新しい発見を。</p>
 
-            <div class="d-flex flex-wrap gap-3 mt-4">
-              <% if user_signed_in? %>
-                <%= link_to "新規投稿", new_post_path, class: "btn btn-dark btn-lg px-4" %>
-              <% else %>
-                <%= link_to "はじめる", new_user_registration_path, class: "btn btn-dark btn-lg px-4" %>
-                <%= link_to "ログイン", new_user_session_path, class: "btn btn-outline-dark btn-lg" %>
-              <% end %>
-
-              <%= link_to "みんなのコーデを見る", "#explore", class: "btn btn-outline-dark btn-lg" %>
-            </div>
+          <div class="d-flex flex-wrap gap-3 mt-4 align-items-center">
+            <% if user_signed_in? %>
+              <%= link_to "新規投稿", new_post_path, class: "btn btn-dark btn-lg px-4 rounded-pill" %>
+              <%= link_to "みんなのコーデを見る", "#explore", class: "btn btn-outline-dark btn-lg rounded-pill" %>
+            <% else %>
+              <%= link_to "はじめる", new_user_registration_path, class: "btn btn-dark btn-lg px-4 rounded-pill" %>
+              <%= link_to "みんなのコーデを見る", "#explore", class: "btn btn-outline-dark btn-lg rounded-pill" %>
+              <%= link_to "ログイン", new_user_session_path, class: "text-dark text-decoration-none fw-semibold" %>
+            <% end %>
           </div>
+        </div>
 
-          <div class="col-lg-6">
-            <!-- 右側：Pinterestっぽいカードのコラージュ -->
-            <div class="lp-collage">
-              <% post_main = @collage_posts[0] %>
-              <% post_sub1 = @collage_posts[1] %>
-              <% post_sub2 = @collage_posts[2] %>
+        <div class="col-lg-6">
+          <div class="lp-collage">
+            <% post_main = @collage_posts[0] %>
+            <% post_sub1 = @collage_posts[1] %>
+            <% post_sub2 = @collage_posts[2] %>
 
-              <!-- メインカード -->
-              <div class="lp-collage__card lp-collage__card--lg">
-                <div class="lp-collage__badge">#monochrome</div>
-
-                <% if post_main&.image&.attached? %>
-                  <%= image_tag post_main.image, class: "lp-collage__img" %>
+            <div class="lp-collage__card lp-collage__card--lg">
+              <div class="lp-collage__badge">
+                <% if post_main&.tags&.any? %>
+                  #<%= post_main.tags.first.name %>
                 <% else %>
-                  <div class="lp-collage__mock lp-collage__mock--img"></div>
+                  #style
                 <% end %>
               </div>
 
-              <!-- サブ2枚 -->
-              <div class="lp-collage__stack">
-                <div class="lp-collage__card">
-                  <% if post_sub1&.image&.attached? %>
-                    <%= image_tag post_sub1.image, class: "pin__img" %>
-                  <% else %>
-                    <div class="lp-collage__mock lp-collage__mock--img2"></div>
-                    <div class="lp-collage__caption">street</div>
-                  <% end %>
-                </div>
-
-                <div class="lp-collage__card">
-                  <% if post_sub2&.image&.attached? %>
-                    <%= image_tag post_sub2.image, class: "pin__img" %>
-                  <% else %>
-                    <div class="lp-collage__mock lp-collage__mock--img3"></div>
-                    <div class="lp-collage__caption">vintage</div>
-                  <% end %>
-                </div>
-              </div>
+              <% if post_main&.image&.attached? %>
+                <%= image_tag post_main.image, class: "lp-collage__img" %>
+              <% else %>
+                <div class="lp-collage__mock lp-collage__mock--img"></div>
+              <% end %>
             </div>
 
-            <div class="lp-scroll-indicator">
-              <span>How it works</span>
-              <div class="lp-scroll-mouse">
-                <div class="lp-scroll-dot"></div>
+            <div class="lp-collage__stack">
+              <div class="lp-collage__card">
+                <% if post_sub1&.image&.attached? %>
+                  <%= image_tag post_sub1.image, class: "lp-collage__img" %>
+                <% else %>
+                  <div class="lp-collage__mock lp-collage__mock--img2"></div>
+                  <div class="lp-collage__caption">street</div>
+                <% end %>
               </div>
+
+              <div class="lp-collage__card">
+                <% if post_sub2&.image&.attached? %>
+                  <%= image_tag post_sub2.image, class: "lp-collage__img" %>
+                <% else %>
+                  <div class="lp-collage__mock lp-collage__mock--img3"></div>
+                  <div class="lp-collage__caption">vintage</div>
+                <% end %>
+              </div>
+            </div>
+          </div>
+
+          <div class="lp-scroll-indicator">
+            <span>How it works</span>
+            <div class="lp-scroll-mouse">
+              <div class="lp-scroll-dot"></div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
   <!-- PANEL 2 -->
   <section id="how" class="lp-panel lp-panel--how" data-scrollspy-target="section">

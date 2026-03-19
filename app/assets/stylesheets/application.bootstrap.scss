@@ -348,30 +348,33 @@
   align-items: center;
 }
 
-.lp-panel--discover { background: #fff7b3; }
+.lp-panel--discover { background: #f1efcf; }
 .lp-panel--how      { background: #e9fbff; }
 .lp-panel--explore  { background: #ffffff; }
 
-
-/* LP見出しなどの共通タイポグラフィ */
 .lp-eyebrow {
-  font-weight: 700;
-  letter-spacing: .06em;
+  font-size: .82rem;
+  font-weight: 800;
+  letter-spacing: .14em;
   text-transform: uppercase;
-  opacity: .75;
+  color: rgba(0,0,0,.45);
+  margin-bottom: 16px;
 }
 
 .lp-title {
   font-weight: 800;
-  line-height: 1.05;
-  font-size: clamp(2.2rem, 5vw, 4rem);
+  line-height: 1.02;
+  font-size: clamp(2.8rem, 6vw, 5rem);
+  letter-spacing: -.03em;
+  margin-bottom: 20px;
+  max-width: 7.5em;
 }
 
 .lp-lead {
   font-size: 1.05rem;
-  line-height: 1.9;
-  opacity: .9;
-  max-width: 42rem;
+  line-height: 2;
+  color: rgba(0,0,0,.68);
+  max-width: 34rem;
 }
 
 .lp-title-sm {
@@ -395,26 +398,28 @@
 
 .lp-collage__card {
   background: #fff;
-  border-radius: 22px;
-  box-shadow: 0 18px 50px rgba(0,0,0,.10);
+  border-radius: 28px;
+  box-shadow: 0 20px 50px rgba(0,0,0,.08);
   overflow: hidden;
   position: relative;
 }
 
 /* メインカードの高さを固定（見た目を安定させる） */
-.lp-collage__card--lg { height: 480px; }
+.lp-collage__card--lg { height: 460px; }
 
 /* 左上のタグバッジ */
 .lp-collage__badge {
   position: absolute;
-  top: 14px;
-  left: 14px;
-  padding: 6px 10px;
+  top: 16px;
+  left: 16px;
+  padding: 7px 12px;
   border-radius: 999px;
-  background: rgba(0,0,0,.75);
+  background: rgba(0,0,0,.72);
   color: #fff;
   font-weight: 700;
-  font-size: .85rem;
+  font-size: .88rem;
+  letter-spacing: .01em;
+  backdrop-filter: blur(6px);
 }
 
 /* コラージュ内画像はカード全面にフィットさせる */
@@ -439,15 +444,17 @@
 .lp-scroll-indicator{
   position: absolute;
   left: 50%;
-  bottom: 48px;
+  bottom: 36px;
   transform: translateX(-50%);
   text-align: center;
-  opacity: .85;
+  opacity: .72;
 }
 
 .lp-scroll-indicator span{
+  font-size: .8rem;
   font-weight: 800;
-  letter-spacing: .12em;
+  letter-spacing: .14em;
+  color: rgba(0,0,0,.55);
 }
 
 .lp-scroll-mouse{
