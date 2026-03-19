@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Stylog</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <script src="/assets/application.js" defer></script>
+  </head>
+
+  <body class="auth-page">
+    <div class="container py-3 auth-topbar">
+        <div class="row justify-content-center">
+        <div class="col-12 col-md-11 col-lg-9 col-xl-8">
+            <%= link_to "Stylog", root_path, class: "navbar-brand fw-bold text-dark text-decoration-none auth-brand" %>
+        </div>
+        </div>
+    </div>
+
+    <%= yield %>
+  </body>
+</html>
