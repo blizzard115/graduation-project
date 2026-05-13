@@ -10,12 +10,6 @@ Rails.application.routes.draw do
     resources :comments, only: %i[create destroy]
   end
 
-  resources :users, only: [:show] do
-    member do
-      get :likes # /users/:id/likes
-    end
-  end
-
   resources :tags, only: [:show], param: :name
 
   resources :relationships, only: %i[create destroy]
@@ -23,6 +17,7 @@ Rails.application.routes.draw do
     member do
       get :following
       get :followers
+      get :likes
     end
   end
 
