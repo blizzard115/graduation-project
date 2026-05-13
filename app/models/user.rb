@@ -37,6 +37,7 @@ class User < ApplicationRecord
 
   def follow(other_user)
     return if self == other_user
+    return if following?(other_user)
 
     active_relationships.create(followed: other_user)
   end
@@ -46,6 +47,6 @@ class User < ApplicationRecord
   end
 
   def following?(other_user)
-    following.exists?(other_user.id)
+    following.exists?(id: other_user.id)
   end
 end

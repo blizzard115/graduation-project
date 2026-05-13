@@ -1,8 +1,7 @@
-# frozen_string_literal: true
-
 class UsersController < ApplicationController
+  before_action :set_user, only: %i[show likes following followers]
+
   def show
-    @user = User.find(params[:id])
     @posts = @user.posts.includes(
       :likes,
       :tags,
@@ -12,8 +11,6 @@ class UsersController < ApplicationController
   end
 
   def likes
-    @user = User.find(params[:id])
-
     @posts = Post
              .joins(:likes)
              .where(likes: { user_id: @user.id })
@@ -27,20 +24,28 @@ class UsersController < ApplicationController
   end
 
   def following
-    @user = User.find(params[:id])
     @users = @user.following.includes(avatar_attachment: :blob)
-
-    if user_signed_in?
-      @following_relationships = current_user.active_relationships.where(followed_id: @users.map(&:id)).index_by(&:followed_id)
-    end
+    set_following_relationships
   end
 
   def followers
-    @user = User.find(params[:id])
     @users = @user.followers.includes(avatar_attachment: :blob)
+    set_following_relationships
+  end
 
-    if user_signed_in?
-      @following_relationships = current_user.active_relationships.where(followed_id: @users.map(&:id)).index_by(&:followed_id)
-    end
+  private
+
+  def set_user
+    @user = User.find(params[:id])
+  end
+
+  def set_following_relationships
+    return unless user_signed_in?
+
+    @following_relationships =
+      current_user
+      .active_relationships
+      .where(followed_id: @users.ids)
+      .index_by(&:followed_id)
   end
 end
