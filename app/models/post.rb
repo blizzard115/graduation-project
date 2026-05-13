@@ -40,14 +40,12 @@ class Post < ApplicationRecord
 
     # 一覧（masonry）用：幅を抑えて比率維持（高さはバラバラでOK）
   def image_masonry
-    image.variant(resize_to_limit: [600, 2000]
-    )
+    image.variant(resize_to_limit: [600, 2000])
   end
 
   # 詳細（show）用：少し大きめ
   def image_show
-    image.variant(resize_to_limit: [1200, 3000]
-    )
+    image.variant(resize_to_limit: [1200, 3000])
   end
 
   before_create :set_uuid

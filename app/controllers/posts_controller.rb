@@ -50,7 +50,7 @@ class PostsController < ApplicationController
   private
 
   def set_post
-  @post = Post.includes(:tags, :likes, image_attachment: :blob, user: [avatar_attachment: :blob], comments: :user).find_by!(uuid: params[:uuid])
+    @post = Post.includes(:tags, :likes, image_attachment: :blob, user: [avatar_attachment: :blob], comments: :user).find_by!(uuid: params[:uuid])
   end
 
   def authorize_post!
