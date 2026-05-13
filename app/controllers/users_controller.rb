@@ -8,6 +8,8 @@ class UsersController < ApplicationController
       image_attachment: :blob,
       user: [avatar_attachment: :blob]
     ).order(created_at: :desc)
+
+    set_following_relationships_for([@user])
   end
 
   def likes
@@ -25,12 +27,12 @@ class UsersController < ApplicationController
 
   def following
     @users = @user.following.includes(avatar_attachment: :blob)
-    set_following_relationships
+    set_following_relationships_for(@users)
   end
 
   def followers
     @users = @user.followers.includes(avatar_attachment: :blob)
-    set_following_relationships
+    set_following_relationships_for(@users)
   end
 
   private
@@ -39,13 +41,13 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
   end
 
-  def set_following_relationships
+  def set_following_relationships_for(users)
     return unless user_signed_in?
 
     @following_relationships =
       current_user
       .active_relationships
-      .where(followed_id: @users.ids)
+      .where(followed_id: users.map(&:id))
       .index_by(&:followed_id)
   end
 end
