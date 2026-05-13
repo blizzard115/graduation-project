@@ -13,6 +13,7 @@ class PostsController < ApplicationController
 
   def show
     @comments = @post.comments.includes(:user).order(created_at: :desc)
+    set_following_relationships_for([@post.user])
   end
 
   def new
@@ -59,5 +60,15 @@ class PostsController < ApplicationController
 
   def post_params
     params.require(:post).permit(:content, :image, :worn_on, :temperature, :weather, :scene)
+  end
+
+  def set_following_relationships_for(users)
+    return unless user_signed_in?
+
+    @following_relationships =
+      current_user
+      .active_relationships
+      .where(followed_id: users.map(&:id))
+      .index_by(&:followed_id)
   end
 end
