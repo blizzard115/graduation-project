@@ -4,6 +4,7 @@ class CommentsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_post
   before_action :set_comment, only: [:destroy]
+  before_action :authorize_comment!, only: [:destroy]
 
   def create
     @comment = @post.comments.build(comment_params)
@@ -12,18 +13,15 @@ class CommentsController < ApplicationController
     if @comment.save
       redirect_to post_path(@post), notice: t('flash.comments.created')
     else
-      @comments = @post.comments.order(created_at: :desc) # 再取得
+      @comments = @post.comments.includes(:user).order(created_at: :desc)
+      set_following_relationships_for([@post.user])
       render 'posts/show', status: :unprocessable_content
     end
   end
 
   def destroy
-    if @comment.user == current_user
-      @comment.destroy
-      redirect_to post_path(@post), notice: t('flash.comments.deleted')
-    else
-      redirect_to post_path(@post), alert: t('flash.comments.forbidden')
-    end
+    @comment.destroy
+    redirect_to post_path(@post), notice: t('flash.comments.deleted')
   end
 
   private
@@ -34,6 +32,11 @@ class CommentsController < ApplicationController
 
   def set_comment
     @comment = @post.comments.find(params[:id])
+  end
+
+  def authorize_comment!
+    return if @comment.user == current_user
+    redirect_to post_path(@post), alert: t('flash.comments.forbidden')
   end
 
   def comment_params
