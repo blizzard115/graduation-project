@@ -24,4 +24,14 @@ class ApplicationController < ActionController::Base
   def layout_by_resource
     devise_controller? ? "auth" : "application"
   end
+
+  def set_following_relationships_for(users)
+    return unless user_signed_in?
+
+    @following_relationships =
+      current_user
+      .active_relationships
+      .where(followed_id: users.map(&:id))
+      .index_by(&:followed_id)
+  end
 end

@@ -40,14 +40,4 @@ class UsersController < ApplicationController
   def set_user
     @user = User.find(params[:id])
   end
-
-  def set_following_relationships_for(users)
-    return unless user_signed_in?
-
-    @following_relationships =
-      current_user
-      .active_relationships
-      .where(followed_id: users.map(&:id))
-      .index_by(&:followed_id)
-  end
 end
