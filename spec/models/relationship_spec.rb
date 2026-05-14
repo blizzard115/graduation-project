@@ -1,3 +1,7 @@
+# frozen_string_literal: true
+
+require 'rails_helper'
+
 RSpec.describe Relationship do
   it 'is valid with a follower and followed' do
     follower = create(:user)

@@ -43,4 +43,34 @@ RSpec.describe Post do
     post = create(:post)
     expect(post.to_param).to eq(post.uuid)
   end
+
+  it 'is invalid without content' do
+    post = build(:post, content: nil)
+    expect(post).not_to be_valid
+  end
+
+  it 'is invalid without worn_on' do
+    post = build(:post, worn_on: nil)
+    expect(post).not_to be_valid
+  end
+
+  it 'is invalid when temperature is less than -20' do
+    post = build(:post, temperature: -21)
+    expect(post).not_to be_valid
+  end
+
+  it 'is invalid when temperature is greater than 50' do
+    post = build(:post, temperature: 51)
+    expect(post).not_to be_valid
+  end
+
+  it 'sets uuid before create' do
+    post = create(:post)
+    expect(post.uuid).to be_present
+  end
+
+  it 'returns uuid as to_param' do
+    post = create(:post)
+    expect(post.to_param).to eq(post.uuid)
+  end
 end
