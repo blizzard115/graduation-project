@@ -88,6 +88,40 @@
   padding-bottom: 12px;
 }
 
+.post-show-card .card-body{
+  font-weight: 400;
+}
+
+.post-show-section{
+  padding: 14px 0;
+  border-top: 1px solid rgba(0,0,0,.06);
+}
+
+.post-show-section:first-child{
+  padding-top: 0;
+  border-top: 0;
+}
+
+.post-show-section--comments{
+  padding-bottom: 0;
+}
+
+.post-show-section-title{
+  margin-bottom: 8px;
+  color: rgba(0,0,0,.55);
+  font-size: .78rem;
+  font-weight: 700;
+}
+
+.post-show-content p:last-child,
+.post-comment-content p:last-child{
+  margin-bottom: 0;
+}
+
+.post-outfit-info .badge{
+  font-weight: 600;
+}
+
 /* -----------------------------------------
    コメント一覧が長くてもUIが崩れないようにする（PCだけ）
    - 右カード全体が長くなりすぎるのを防ぐ
@@ -108,6 +142,21 @@
 
 .comment-item + hr {
   opacity: .05;
+}
+
+.comment-item + .comment-item {
+  border-top: 1px solid rgba(0,0,0,.06);
+}
+
+.post-comment-content{
+  line-height: 1.7;
+}
+
+.post-comment-empty{
+  padding: 14px;
+  border: 1px solid rgba(0,0,0,.06);
+  border-radius: 12px;
+  background: #f8f9fa;
 }
 
 /* =========================================================

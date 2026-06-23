@@ -7,7 +7,9 @@
 
         <div class="card-body p-0">
           <% if @post.image.attached? %>
-            <%= image_tag @post.image_show.processed, class: "post-show-img" %>
+            <%= image_tag @post.image_show.processed,
+              class: "post-show-img",
+              alt: "#{@post.user&.username || 'ユーザー'}のコーデ投稿画像" %>
           <% end %>
         </div>
 
@@ -58,56 +60,67 @@
           <div class="card-body">
 
             <!-- タグ -->
-            <% if @post.tags.any? %>
-              <div class="d-flex flex-wrap gap-1 mb-2">
-                <% @post.tags.each do |tag| %>
-                  <%= link_to "##{tag.name}", tag_path(tag.name),
-                    class: "badge rounded-pill text-bg-light border text-decoration-none" %>
-                <% end %>
-              </div>
-            <% end %>
+            <section class="post-show-section">
+              <h6 class="post-show-section-title">タグ</h6>
+              <% if @post.tags.any? %>
+                <div class="d-flex flex-wrap gap-1">
+                  <% @post.tags.each do |tag| %>
+                    <%= link_to "##{tag.name}", tag_path(tag.name),
+                      class: "badge rounded-pill text-bg-light border text-decoration-none" %>
+                  <% end %>
+                </div>
+              <% else %>
+                <p class="text-muted small mb-0">タグはありません</p>
+              <% end %>
+            </section>
 
             <!-- 本文 -->
-            <% if @post.content.present? %>
-              <p class="mb-3 post-show-content"><%= simple_format(@post.content) %></p>
-            <% else %>
-              <p class="text-muted mb-3">本文はありません</p>
-            <% end %>
-
-            <div class="d-flex flex-wrap gap-2 mb-3">
-              <% if @post.worn_on.present? %>
-                <span class="badge rounded-pill text-bg-light border px-3 py-2">
-                  <i class="bi bi-calendar-event me-1"></i>
-                  着用日 <%= @post.worn_on.strftime("%Y/%m/%d") %>
-                </span>
+            <section class="post-show-section">
+              <h6 class="post-show-section-title">本文</h6>
+              <% if @post.content.present? %>
+                <div class="post-show-content"><%= simple_format(@post.content) %></div>
+              <% else %>
+                <p class="text-muted mb-0">本文はありません</p>
               <% end %>
+            </section>
 
-              <% if @post.temperature.present? %>
-                <span class="badge rounded-pill text-bg-light border px-3 py-2">
-                  <i class="bi bi-thermometer-half me-1"></i>
-                  <%= @post.temperature %>℃
-                </span>
-              <% end %>
+            <!-- コーデ情報 -->
+            <section class="post-show-section">
+              <h6 class="post-show-section-title">コーデ情報</h6>
+              <div class="post-outfit-info d-flex flex-wrap gap-2">
+                <% if @post.worn_on.present? %>
+                  <span class="badge rounded-pill text-bg-light border px-3 py-2">
+                    <i class="bi bi-calendar-event me-1"></i>
+                    着用日 <%= @post.worn_on.strftime("%Y/%m/%d") %>
+                  </span>
+                <% end %>
 
-              <% if @post.weather.present? %>
-                <span class="badge rounded-pill text-bg-light border px-3 py-2">
-                  <%= case @post.weather
-                    when "sunny" then "☀️"
-                    when "cloudy" then "☁️"
-                    when "rainy" then "🌧"
-                    when "snowy" then "❄️"
-                  end %>
-                  <%= @post.weather_i18n %>
-                </span>
-              <% end %>
+                <% if @post.temperature.present? %>
+                  <span class="badge rounded-pill text-bg-light border px-3 py-2">
+                    <i class="bi bi-thermometer-half me-1"></i>
+                    <%= @post.temperature %>℃
+                  </span>
+                <% end %>
 
-              <% if @post.scene.present? %>
-                <span class="badge rounded-pill text-bg-light border px-3 py-2">
-                  👕 <%= @post.scene_i18n %>
-                </span>
-              <% end %>
+                <% if @post.weather.present? %>
+                  <span class="badge rounded-pill text-bg-light border px-3 py-2">
+                    <%= case @post.weather
+                      when "sunny" then "☀️"
+                      when "cloudy" then "☁️"
+                      when "rainy" then "🌧"
+                      when "snowy" then "❄️"
+                    end %>
+                    <%= @post.weather_i18n %>
+                  </span>
+                <% end %>
 
-            </div>
+                <% if @post.scene.present? %>
+                  <span class="badge rounded-pill text-bg-light border px-3 py-2">
+                    👕 <%= @post.scene_i18n %>
+                  </span>
+                <% end %>
+              </div>
+            </section>
 
             <!-- 投稿者のみ -->
             <% if user_signed_in? && @post.user == current_user %>
@@ -119,49 +132,55 @@
               </div>
             <% end %>
 
-             <!-- コメント -->
-            <div class="d-flex justify-content-between align-items-center mb-2">
-              <h6 class="mb-0">コメント</h6>
-              <span class="text-muted small"><%= @comments.size %>件</span>
-            </div>
+            <!-- コメント -->
+            <section class="post-show-section post-show-section--comments">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <h6 class="post-show-section-title mb-0">コメント</h6>
+                <span class="text-muted small"><%= @comments.size %>件</span>
+              </div>
 
-            <div class="mt-3 post-comments-list">
-              <% @comments.each do |comment| %>
-                <div class="comment-item py-2">
-                  <div class="d-flex justify-content-between align-items-start">
-                    <div>
-                      <strong><%= comment.user.username || "名無しユーザー" %></strong>
-                        <% if comment.created_at.present? %>
-                          <span class="text-muted small">（<%= comment.created_at.strftime("%Y/%m/%d %H:%M") %>）</span>
+              <div class="mt-3 post-comments-list">
+                <% if @comments.any? %>
+                  <% @comments.each do |comment| %>
+                    <div class="comment-item py-2">
+                      <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                          <strong><%= comment.user.username || "名無しユーザー" %></strong>
+                            <% if comment.created_at.present? %>
+                              <span class="text-muted small">（<%= comment.created_at.strftime("%Y/%m/%d %H:%M") %>）</span>
+                            <% end %>
+                        </div>
+
+                        <% if comment.persisted? && user_signed_in? && comment.user == current_user %>
+                          <%= button_to "削除", post_comment_path(@post, comment),
+                                method: :delete,
+                                data: { turbo_confirm: "削除しますか？" },
+                                class: "btn btn-sm btn-outline-danger" %>
                         <% end %>
+                      </div>
+                      <div class="mb-1 post-comment-content"><%= simple_format(comment.content) %></div>
                     </div>
+                  <% end %>
+                <% else %>
+                  <p class="post-comment-empty text-muted mb-0">まだコメントはありません</p>
+                <% end %>
+              </div>
 
-                    <% if comment.persisted? && user_signed_in? && comment.user == current_user %>
-                      <%= button_to "削除", post_comment_path(@post, comment),
-                            method: :delete,
-                            data: { turbo_confirm: "削除しますか？" },
-                            class: "btn btn-sm btn-outline-danger" %>
-                    <% end %>
+              <hr class="my-3">
+
+              <% if user_signed_in? %>
+                <%= form_with model: [@post, Comment.new], local: true do |f| %>
+                  <div class="mb-2">
+                    <%= f.text_area :content, rows: 2, class: "form-control", placeholder: "コメントを入力..." %>
                   </div>
-                  <p class="mb-1"><%= simple_format(comment.content) %></p>
-                </div>
+                  <div class="d-flex">
+                    <%= f.submit "送信", class: "btn btn-primary btn-sm ms-auto" %>
+                  </div>
+                <% end %>
+              <% else %>
+                <p class="mb-0"><%= link_to "ログイン", new_user_session_path %>するとコメントできます</p>
               <% end %>
-            </div>
-
-            <hr class="my-3">
-
-            <% if user_signed_in? %>
-              <%= form_with model: [@post, Comment.new], local: true do |f| %>
-                <div class="mb-2">
-                  <%= f.text_area :content, rows: 2, class: "form-control", placeholder: "コメントを入力..." %>
-                </div>
-                <div class="d-flex">
-                  <%= f.submit "送信", class: "btn btn-primary btn-sm ms-auto" %>
-                </div>
-              <% end %>
-            <% else %>
-              <p class="mb-0"><%= link_to "ログイン", new_user_session_path %>するとコメントできます</p>
-            <% end %>
+            </section>
 
           </div>
         </div>
