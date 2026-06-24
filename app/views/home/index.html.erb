@@ -9,6 +9,13 @@
           <h1 class="lp-title">コーデを、<br>もっと気軽に。</h1>
           <p class="lp-lead">日々のコーデを記録して、みんなのスタイルから新しい発見を。</p>
 
+          <ul class="lp-value-chips" aria-label="Stylogの特徴">
+            <li class="lp-value-chip">写真でコーデ記録</li>
+            <li class="lp-value-chip">天気や気温もメモ</li>
+            <li class="lp-value-chip">タグで振り返り</li>
+            <li class="lp-value-chip">シーン別に整理</li>
+          </ul>
+
           <div class="d-flex flex-wrap gap-3 mt-4 align-items-center">
             <% if user_signed_in? %>
               <%= link_to "新規投稿", new_post_path, class: "btn btn-dark btn-lg px-4 rounded-pill" %>
@@ -37,7 +44,9 @@
               </div>
 
               <% if post_main&.image&.attached? %>
-                <%= image_tag post_main.image, class: "lp-collage__img" %>
+                <%= image_tag post_main.image,
+                              class: "lp-collage__img",
+                              alt: post_main.user&.username.present? ? "#{post_main.user.username}さんのコーディネート" : "Stylogユーザーのコーディネート" %>
               <% else %>
                 <div class="lp-collage__mock lp-collage__mock--img"></div>
               <% end %>
@@ -46,7 +55,9 @@
             <div class="lp-collage__stack">
               <div class="lp-collage__card">
                 <% if post_sub1&.image&.attached? %>
-                  <%= image_tag post_sub1.image, class: "lp-collage__img" %>
+                  <%= image_tag post_sub1.image,
+                                class: "lp-collage__img",
+                                alt: post_sub1.user&.username.present? ? "#{post_sub1.user.username}さんのコーディネート" : "Stylogユーザーのコーディネート" %>
                 <% else %>
                   <div class="lp-collage__mock lp-collage__mock--img2"></div>
                   <div class="lp-collage__caption">street</div>
@@ -55,7 +66,9 @@
 
               <div class="lp-collage__card">
                 <% if post_sub2&.image&.attached? %>
-                  <%= image_tag post_sub2.image, class: "lp-collage__img" %>
+                  <%= image_tag post_sub2.image,
+                                class: "lp-collage__img",
+                                alt: post_sub2.user&.username.present? ? "#{post_sub2.user.username}さんのコーディネート" : "Stylogユーザーのコーディネート" %>
                 <% else %>
                   <div class="lp-collage__mock lp-collage__mock--img3"></div>
                   <div class="lp-collage__caption">vintage</div>
@@ -125,7 +138,9 @@
                   <div class="lp-preview">
                     <div class="lp-preview__img-wrap">
                       <% if @preview_post.image.attached? %>
-                        <%= image_tag @preview_post.image, class: "lp-preview__img" %>
+                        <%= image_tag @preview_post.image,
+                                      class: "lp-preview__img",
+                                      alt: @preview_post.user&.username.present? ? "#{@preview_post.user.username}さんのコーディネート" : "Stylogユーザーのコーディネート" %>
                       <% else %>
                         <div class="lp-preview__img" aria-hidden="true"></div>
                       <% end %>
@@ -201,7 +216,9 @@
                 <div class="pin">
                   <div class="pin__media">
                     <% if post.image.attached? %>
-                      <%= image_tag post.image, class: "pin__img" %>
+                      <%= image_tag post.image,
+                                    class: "pin__img",
+                                    alt: post.user&.username.present? ? "#{post.user.username}さんのコーディネート" : "Stylogユーザーのコーディネート" %>
                     <% else %>
                       <div class="pin__placeholder">
                         No Image

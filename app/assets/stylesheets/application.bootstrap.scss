@@ -426,6 +426,26 @@
   max-width: 34rem;
 }
 
+.lp-value-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  list-style: none;
+  padding: 0;
+  margin: 20px 0 0;
+}
+
+.lp-value-chip {
+  padding: 7px 12px;
+  border: 1px solid rgba(0,0,0,.14);
+  border-radius: 999px;
+  background: rgba(255,255,255,.55);
+  color: rgba(0,0,0,.72);
+  font-size: .88rem;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
 .lp-title-sm {
   font-weight: 800;
   font-size: clamp(1.6rem, 2.8vw, 2.2rem);
