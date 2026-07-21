@@ -40,8 +40,8 @@ Stylogは、日々のコーディネートを記録・共有できるアプリ�
 ## 💡 工夫した点 / 差別化
 
 - 投稿のハードルを下げるシンプルなUI設計
-- 着用日・気温・天気・シーンを記録できる設計
-- 記録したデータ（気温・天気・シーン）をもとに、後から似た状況のコーデを探せる設計
+- 着用日・気温・天気・シーンを記録し、過去のコーデを振り返りやすくした設計
+- タグをクリックすると、同じタグが付いた投稿を一覧で確認できる設計
 - LPを設計し、初見でもサービスの価値が伝わる構成にした点
 - 投稿フォームでは画像プレビューを表示し、投稿前に見た目を確認できるUXを意識
 - Masonryレイアウトを採用し、ファッションアプリとして画像を探しやすいUIを設計
@@ -55,7 +55,7 @@ Stylogは、日々のコーディネートを記録・共有できるアプリ�
 - 写真でコーデ記録
 - 天気や気温もメモ
 - タグで振り返り
-- シーン別に整理
+- シーンも記録
 
 これにより、初めて訪れたユーザーにも、Stylogでできることが伝わりやすくなるようにしました。
 
@@ -72,15 +72,17 @@ Stylogは、日々のコーディネートを記録・共有できるアプリ�
 | 種別 | 技術 |
 |------|------|
 | Frontend | ERB / Bootstrap / Sass |
-| JavaScript | esbuild / Stimulus / Bootstrap |
+| JavaScript | esbuild / Stimulus |
 | Backend | Ruby 3.3 / Rails 7.1 |
 | DB | PostgreSQL 16 |
-| 認証 | Devise / OmniAuth(Google) |
-| 画像管理 | ActiveStorage / Amazon S3 |
+| 認証 | Devise / OmniAuth (Google) |
+| 画像管理 | Active Storage / Amazon S3 |
+| 画像処理 | MiniMagick |
 | テスト | RSpec / FactoryBot |
 | 静的解析 | RuboCop |
 | CI | GitHub Actions（RSpec自動実行） |
 | 環境構築 | Docker |
+| デプロイ | Render |
 
 ---
 
@@ -92,7 +94,7 @@ Stylogは、日々のコーディネートを記録・共有できるアプリ�
 - いいね機能
 - コメント機能
 - フォロー / アンフォロー機能
-- タグ検索
+- タグによる投稿の絞り込み
 - ユーザーページ（投稿一覧）
 - コーデ情報の記録（着用日 / 気温 / 天気 / シーン）
 
@@ -113,7 +115,9 @@ docker compose exec web bin/rails db:create db:migrate
 
 ### 1️⃣ 公開IDにUUIDを採用
 
-内部ID（integer）と公開ID（uuid）を分離。
+データベース内部では主キーとして`bigint`型のIDを使用し、投稿の公開URLにはUUIDを使用しています。
+
+これにより、URLから連番IDを推測されにくい設計にしています。
 
 ```ruby
 def to_param
@@ -163,21 +167,23 @@ ActiveStorage + MiniMagick を使用し
 
 ### 7️⃣ セキュリティ対策
 
-- Strong Parametersによるパラメータ制御
-- 公開URLにUUIDを使用
+- Strong Parametersによる受信パラメータの制限
 - Deviseによる認証管理
+- 投稿者本人以外による編集・削除を防ぐ認可処理
+- 投稿URLにUUIDを使用し、連番IDを公開しない設計
 
 ## 🗄 データベース設計
 
 ### 画面遷移図
-Figma
-https://www.figma.com/design/MOaiD71mhWoOIQzpAOrrDl/%E5%8D%92%E6%A5%AD%E5%88%B6%E4%BD%9C?node-id=0-1&t=UyLnZ2JTuP0qgDMV-1
+[Figmaで画面遷移図を見る](https://www.figma.com/design/MOaiD71mhWoOIQzpAOrrDl/%E5%8D%92%E6%A5%AD%E5%88%B6%E4%BD%9C?node-id=0-1&t=UyLnZ2JTuP0qgDMV-1)
 
 ### ER図
 
 ![Stylog ER図](docs/stylog_er_diagram.svg)
 
 ---
+
+## ✅ テスト・静的解析
 
 ### 🧪 テスト実行
 ```bash
@@ -204,9 +210,10 @@ docker compose exec web bundle exec rubocop
 
 ## 🚀 今後の展望
 
-- シーン別・悩み別の検索機能の追加
-- 天気APIと連携した自動入力機能
-- 動的OGPによるSNSシェアの強化
+- 気温・天気・シーンによる投稿の絞り込み機能
+- 天気APIと連携した気温・天気の自動入力
+- 動的OGPによるSNSシェア機能の強化
 
-蓄積された気温・天気・シーン情報を活用し、
-将来的には状況に応じたコーデ提案機能へ発展させたいと考えています。
+蓄積された着用日・気温・天気・シーンの情報を活用し、
+将来的には状況に合った過去のコーデを探しやすくする機能や、
+コーデ提案機能へ発展させたいと考えています。
